@@ -312,11 +312,11 @@
         let currentDetailProduct = null;
 
         const dictionary = {
-            fa: { detail: "مشاهده محصول", addCart: "افزودن به سبد", cart: "سبد خرید", emptyCart: "سبد خرید خالی است", total: "جمع", orderSent: "درخواست سفارش آماده شد", slogan: "اکوسیستم اختصاصی سازه‌های پیشرفته پرینت سه بعدی", all: "همه محصولات", mat: "متریال", dim: "ابعاد", pay: "پرداخت رمز‌ارز", about: "درباره ما", contact: "تماس با ما", aboutText: "پیوند دهنده هنر و تکنولوژی", cryptoDiscount: "۱۰ درصد تخفیف برای پرداخت با رمزارز" },
-            en: { detail: "View Product", addCart: "Add to Cart", cart: "Cart", emptyCart: "Your cart is empty", total: "Total", orderSent: "Order request ready", slogan: "Exclusive Ecosystem of Advanced 3D Printed Structures", all: "All Products", mat: "Material", dim: "Dimensions", pay: "Crypto Pay", about: "About Us", contact: "Contact Us", aboutText: "Bridging Art and Technology", cryptoDiscount: "10% discount for cryptocurrency payments" },
-            ar: { detail: "عرض المنتج", addCart: "أضف إلى السلة", cart: "السلة", emptyCart: "السلة فارغة", total: "الإجمالي", orderSent: "تم تجهيز طلب الشراء", slogan: "النظام البيئي الحصري للهياكل المتقدمة المطبوعة ثلاثية الأبعاد", all: "جميع المنتجات", mat: "المواد", dim: "الأبعاد", pay: "دفع الكريپتو", about: "من نحن", contact: "اتصل بنا", aboutText: "حلقة وصل بين الفن والتكنولوجيا", cryptoDiscount: "خصم 10٪ عند الدفع بالعملات المشفرة" },
-            zh: { detail: "查看产品", addCart: "加入购物车", cart: "购物车", emptyCart: "购物车为空", total: "总计", orderSent: "订单请求已准备", slogan: "先进3D打印结构的专属生态系统", all: "所有产品", mat: "材料", dim: "尺寸", pay: "加密货币支付", about: "关于我们", contact: "联系我们", aboutText: "连接艺术与科技", cryptoDiscount: "使用加密货币支付可享受10%优惠" },
-            ru: { detail: "Открыть товар", addCart: "В корзину", cart: "Корзина", emptyCart: "Корзина пуста", total: "Итого", orderSent: "Запрос заказа готов", slogan: "Эксклюзивная экосистема передовых 3D-печатных конструкций", all: "Все продукты", mat: "Материал", dim: "Размеры", pay: "Крипто оплата", about: "О нас", contact: "Связаться с нами", aboutText: "Объединяем искусство и технологии", cryptoDiscount: "Скидка 10% при оплате криптовалютой" }
+            fa: { detail: "مشاهده محصول", addCart: "افزودن به سبد", cart: "سبد خرید", emptyCart: "سبد خرید خالی است", total: "جمع کل", remove: "حذف", name: "نام", contact: "ایمیل یا شماره تماس", checkout: "ارسال درخواست سفارش", checkoutNote: "این سایت در این نسخه پرداخت آنلاین را انجام نمی‌دهد؛ درخواست سفارش از طریق ایمیل ارسال می‌شود.", orderSent: "درخواست سفارش آماده شد", slogan: "اکوسیستم اختصاصی سازه‌های پیشرفته پرینت سه بعدی", all: "همه محصولات", mat: "متریال", dim: "ابعاد", pay: "پرداخت رمز‌ارز", about: "درباره ما", contact: "تماس با ما", aboutText: "پیوند دهنده هنر و تکنولوژی", cryptoDiscount: "۱۰ درصد تخفیف برای پرداخت با رمزارز" },
+            en: { detail: "View Product", addCart: "Add to Cart", cart: "Cart", emptyCart: "Your cart is empty", total: "Total", remove: "Remove", name: "Name", contact: "Email or phone", checkout: "Send Order Request", checkoutNote: "Online payment is not available in this version; the order request will be sent by email.", orderSent: "Order request ready", slogan: "Exclusive Ecosystem of Advanced 3D Printed Structures", all: "All Products", mat: "Material", dim: "Dimensions", pay: "Crypto Pay", about: "About Us", contact: "Contact Us", aboutText: "Bridging Art and Technology", cryptoDiscount: "10% discount for cryptocurrency payments" },
+            ar: { detail: "عرض المنتج", addCart: "أضف إلى السلة", cart: "السلة", emptyCart: "السلة فارغة", total: "الإجمالي", remove: "حذف", name: "الاسم", contact: "البريد الإلكتروني أو الهاتف", checkout: "إرسال طلب الشراء", checkoutNote: "الدفع الإلكتروني غير متاح في هذه النسخة؛ سيتم إرسال طلب الشراء عبر البريد الإلكتروني.", orderSent: "تم تجهيز طلب الشراء", slogan: "النظام البيئي الحصري للهياكل المتقدمة المطبوعة ثلاثية الأبعاد", all: "جميع المنتجات", mat: "المواد", dim: "الأبعاد", pay: "دفع الكريپتو", about: "من نحن", contact: "اتصل بنا", aboutText: "حلقة وصل بين الفن والتكنولوجيا", cryptoDiscount: "خصم 10٪ عند الدفع بالعملات المشفرة" },
+            zh: { detail: "查看产品", addCart: "加入购物车", cart: "购物车", emptyCart: "购物车为空", total: "总计", remove: "删除", name: "姓名", contact: "邮箱或电话", checkout: "发送订单请求", checkoutNote: "此版本暂不支持在线支付；订单请求将通过电子邮件发送。", orderSent: "订单请求已准备", slogan: "先进3D打印结构的专属生态系统", all: "所有产品", mat: "材料", dim: "尺寸", pay: "加密货币支付", about: "关于我们", contact: "联系我们", aboutText: "连接艺术与科技", cryptoDiscount: "使用加密货币支付可享受10%优惠" },
+            ru: { detail: "Открыть товар", addCart: "В корзину", cart: "Корзина", emptyCart: "Корзина пуста", total: "Итого", remove: "Удалить", name: "Имя", contact: "Email или телефон", checkout: "Отправить запрос заказа", checkoutNote: "Онлайн-оплата в этой версии недоступна; запрос заказа будет отправлен по электронной почте.", orderSent: "Запрос заказа готов", slogan: "Эксклюзивная экосистема передовых 3D-печатных конструкций", all: "Все продукты", mat: "Материал", dim: "Размеры", pay: "Крипто оплата", about: "О нас", contact: "Связаться с нами", aboutText: "Объединяем искусство и технологии", cryptoDiscount: "Скидка 10% при оплате криптовалютой" }
         };
 
         function authHeaders() {
@@ -427,8 +427,8 @@
             if (!id) return null;
             if (imageCache.has(String(id))) return imageCache.get(String(id));
             try {
-                const data = await dbRequest(`products?id=eq.${encodeURIComponent(id)}&select=id,image_data`);
-                const image = data?.[0]?.image_data || null;
+                const data = await dbRequest(`products?id=eq.${encodeURIComponent(id)}&select=id,image_url,image_data`);
+                const image = data?.[0]?.image_url || data?.[0]?.image_data || null;
                 if (image) imageCache.set(String(id), image);
                 return image;
             } catch (e) {
@@ -440,9 +440,15 @@
         async function loadCardImage(id, img, placeholder) {
             const image = await fetchProductImage(id);
             if (!image) return;
+            img.onload = () => {
+                img.style.visibility = 'visible';
+                if (placeholder) placeholder.style.display = 'none';
+            };
+            img.onerror = () => {
+                img.style.visibility = 'hidden';
+                if (placeholder) placeholder.style.display = 'flex';
+            };
             img.src = image;
-            img.style.display = 'block';
-            if (placeholder) placeholder.style.display = 'none';
         }
 
         function setupLazyProductImages() {
@@ -486,7 +492,7 @@
 
         async function loadProducts() {
             try {
-                const data = await dbRequest("products?select=id,created_at,product_line,name_fa,name_en,name_ar,name_zh,name_ru,material_fa,material_en,material_ar,material_zh,material_ru,dimensions_fa,dimensions_en,dimensions_ar,dimensions_zh,dimensions_ru,price_usdt,price_btc,price_eth&order=created_at.desc");
+                const data = await dbRequest("products?select=id,created_at,product_line,image_url,name_fa,name_en,name_ar,name_zh,name_ru,material_fa,material_en,material_ar,material_zh,material_ru,dimensions_fa,dimensions_en,dimensions_ar,dimensions_zh,dimensions_ru,price_usdt,price_btc,price_eth&order=created_at.desc");
                 allProducts = Array.isArray(data) ? data : [];
                 writeCache(PRODUCTS_CACHE_KEY, sanitizeProductsForCache(allProducts));
                 renderProducts();
@@ -504,9 +510,15 @@
             document.getElementById('headerSlogan').innerText = dictionary[lang].slogan;
             document.getElementById('tabAll').innerText = dictionary[lang].all;
             updateSiteInfoLanguage();
-            const cartHeading=document.getElementById('cartHeading'); if(cartHeading) cartHeading.innerText=dictionary[lang].cart;
-            const cartTotalLabel=document.getElementById('cartTotalLabel'); if(cartTotalLabel) cartTotalLabel.innerText=dictionary[lang].total;
+            const d = dictionary[lang];
+            const cartHeading=document.getElementById('cartHeading'); if(cartHeading) cartHeading.innerText=d.cart;
+            const cartTotalLabel=document.getElementById('cartTotalLabel'); if(cartTotalLabel) cartTotalLabel.innerText=d.total;
+            const orderNameLabel=document.getElementById('orderNameLabel'); if(orderNameLabel) orderNameLabel.innerText=d.name;
+            const orderContactLabel=document.getElementById('orderContactLabel'); if(orderContactLabel) orderContactLabel.innerText=d.contact;
+            const checkoutBtn=document.getElementById('checkoutBtn'); if(checkoutBtn) checkoutBtn.innerText=d.checkout;
+            const checkoutNote=document.getElementById('checkoutNote'); if(checkoutNote) checkoutNote.innerText=d.checkoutNote;
             renderProducts();
+            if (document.getElementById('cartModal')?.style.display === 'flex') renderCart();
         }
 
         function toggleTheme() {
@@ -551,7 +563,7 @@
                 card.innerHTML = `
                     <div class="card-img-wrap">
                         <div class="image-placeholder">NIX-BUILDS</div>
-                        <img src="" class="card-img" data-product-image-id="${p.id}" alt="${escapeHtml(title)}" style="display:none;" loading="lazy" decoding="async">
+                        <img src="" class="card-img" data-product-image-id="${p.id}" alt="${escapeHtml(title)}" style="visibility:hidden;" loading="lazy" decoding="async">
                     </div>
                     <div class="card-body">
                         <div class="card-tag">${escapeHtml(p.product_line || '')}</div>
@@ -659,39 +671,59 @@
         async function renderCart() {
             const box = document.getElementById('cartItems');
             const items = cart.map(i => ({...i, product:getProductById(i.id)})).filter(i => i.product);
+
             if (!items.length) {
                 box.innerHTML = `<div class="cart-empty">${dictionary[currentLang].emptyCart}</div>`;
                 document.getElementById('cartTotal').textContent = '0';
                 updateCartUI();
                 return;
             }
+
             box.innerHTML = '';
-            let totalLabel = [];
+            const currencyTotals = {};
+
             for (const item of items) {
                 const p = item.product;
-                const price = productPrice(p) || '—';
+                const rawPrice = p.price_usdt || p.price_btc || p.price_eth || '';
+                const priceText = productPrice(p) || '—';
+                const currency = p.price_usdt ? 'USDT' : (p.price_btc ? 'BTC' : (p.price_eth ? 'ETH' : ''));
+                const numericPrice = parseFloat(String(rawPrice).replace(/,/g, '').trim());
+
+                if (currency && Number.isFinite(numericPrice)) {
+                    currencyTotals[currency] = (currencyTotals[currency] || 0) + numericPrice * Number(item.qty || 0);
+                }
+
                 const row = document.createElement('div');
                 row.className = 'cart-item';
                 row.innerHTML = `
-                    <img src="" alt="${escapeHtml(productTitle(p))}">
+                    <img src="" alt="${escapeHtml(productTitle(p))}" style="visibility:hidden;">
                     <div>
                         <div class="cart-item-title">${escapeHtml(productTitle(p))}</div>
-                        <div style="color:var(--muted);font-size:12px;">${escapeHtml(price)}</div>
+                        <div style="color:var(--muted);font-size:12px;">${escapeHtml(priceText)}</div>
                         <div class="cart-controls">
                             <button onclick="changeCartQty('${p.id}',-1)">−</button>
                             <span>${item.qty}</span>
                             <button onclick="changeCartQty('${p.id}',1)">+</button>
-                            <button class="btn-danger" onclick="removeFromCart('${p.id}')">حذف</button>
+                            <button class="btn-danger" onclick="removeFromCart('${p.id}')">${escapeHtml(dictionary[currentLang].remove)}</button>
                         </div>
                     </div>
-                    <div class="cart-price">${escapeHtml(price)} × ${item.qty}</div>
+                    <div class="cart-price">${escapeHtml(priceText)} × ${item.qty}</div>
                 `;
                 box.appendChild(row);
+
                 const img = row.querySelector('img');
                 const image = await fetchProductImage(p.id);
-                if (image) img.src = image;
+                if (image) {
+                    img.onload = () => { img.style.visibility = 'visible'; };
+                    img.src = image;
+                }
             }
-            document.getElementById('cartTotal').textContent = items.map(i => `${productPrice(i.product) || '—'} × ${i.qty}`).join(' + ');
+
+            const totalText = Object.entries(currencyTotals)
+                .map(([currency, total]) => `${Number(total.toFixed(8)).toString()} ${currency}`)
+                .join(' + ');
+
+            document.getElementById('cartTotal').textContent = totalText || '—';
             updateCartUI();
         }
 
