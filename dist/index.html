@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ========== SEO Meta Tags ========== -->
+    <meta name="description" content="نیکس‌بیلدز | فروشگاه تخصصی محصولات پرینت سه‌بعدی، قطعات الکترونیکی (ESP32، رزبری پای، ماژول‌ها)، متریال‌های چوب، فلز و بامبو و تجهیزات پرینتر سه‌بعدی. خلق آثار هنری و معماری با متریال‌های دوستدار طبیعت و زیست‌تخریب‌پذیر.">
+    <meta name="keywords" content="پرینت سه بعدی, فروشگاه پرینت سه بعدی, 3D Printing, Bambu Lab P1S, ESP32, Raspberry Pi, رزبری پای, ماژول الکترونیکی, متریال دوستدار طبیعت, فیلامان زیست تخریب پذیر, چوب و فلز, آثار هنری سه بعدی, ماکت معماری, تجهیزات پرینتر سه بعدی, نیکس بیلدز, NIX-BUILDS">
+    <meta name="author" content="NIX-BUILDS">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="google-site-verification" content="ITgZjMO4rLrdMVRWzIcCNdDwj63ZiK1qKDL_1Ye9Ux0">
+    <meta name="theme-color" content="#050506">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NIX-BUILDS">
+    <meta name="application-name" content="NIX-BUILDS">
+    <meta name="format-detection" content="telephone=yes">
+    <meta name="color-scheme" content="dark light">
+    <link rel="canonical" href="https://nixbuilds.nixshop.workers.dev/">
+
+    <!-- ========== Open Graph (Telegram/WhatsApp/Twitter cards) ========== -->
+    <meta property="og:site_name" content="NIX-BUILDS">
+    <meta property="og:title" content="NIX-BUILDS | اکوسیستم پرینت سه‌بعدی و قطعات الکترونیکی">
+    <meta property="og:description" content="محصولات پرینت سه‌بعدی با بامبو لب P1S، قطعات ESP32 و رزبری پای، متریال‌های چوب، فلز و زیست‌تخریب‌پذیر دوستدار طبیعت.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nixbuilds.nixshop.workers.dev/">
+    <meta property="og:locale" content="fa_IR">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- ========== Favicon & Icons (prevent 404) ========== -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <title>NIX-BUILDS | فروشگاه محصولات پرینت سه‌بعدی و تجهیزات</title>
+    <meta name="subject" content="NIX-BUILDS 3D printed products, electronics and eco-friendly materials">
+    <meta name="classification" content="ecommerce, 3D printing, electronics, design">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <style>
+        :root {
+            --bg: #050506; --surface: #0b0b0d; --surface-hover: #111114; --border: #1f1f23;
+            --text: #f5f5f7; --muted: #86868b; --accent: #10b981; --accent-hover: #059669; --nav-bg: rgba(11, 11, 13, 0.8);
+        }
+        [data-theme="light"] {
+            --bg: #f5f5f7; --surface: #ffffff; --surface-hover: #f9f9fb; --border: #d2d2d7;
+            --text: #1d1d1f; --muted: #6e6e73; --accent: #0071e3; --accent-hover: #0077ed; --nav-bg: rgba(255, 255, 255, 0.8);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.2s, color 0.2s; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding-top: 80px; min-height: 100vh; }
+        header { position: fixed; top: 0; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .logo { font-weight: 800; font-size: 20px; letter-spacing: 2px; }
+        .nav-controls { display: flex; gap: 15px; align-items: center; }
+        select, button { background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        button.btn-accent { background: var(--accent); color: #fff; border: none; }
+        button.btn-accent:hover { background: var(--accent-hover); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .hero { text-align: center; margin-bottom: 60px; }
+        .hero h1 { font-size: 32px; margin-bottom: 15px; font-weight: 700; }
+        .hero p { color: var(--muted); font-size: 16px; }
+        .tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .tab-btn { padding: 10px 24px; border-radius: 30px; font-weight: 600; }
+        .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+        .card:hover { border-color: var(--muted); transform: translateY(-2px); }
+        .card-img { width: 100%; height: 220px; object-fit: cover; background: #1f1f23; }
+        .card-body { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-tag { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+        .card-title { font-size: 20px; margin-bottom: 12px; }
+        .spec-list { margin-bottom: 20px; flex-grow: 1; }
+        .spec-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .spec-item span:first-child { color: var(--muted); }
+        .crypto-pay { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .qr-code { width: 75px; height: 75px; background: white; padding: 4px; border-radius: 6px; }
+        .nav-controls button { background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .pay-details { display: flex; flex-direction: column; gap: 4px; }
+        .pay-price { font-weight: 700; font-size: 14px; color: var(--accent); }
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 650px; padding: 30px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 20px; left: 20px; cursor: pointer; font-size: 24px; }
+        [dir="ltr"] .close-btn { left: auto; right: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: var(--muted); }
+        .form-group input, .form-group select { width: 100%; padding: 10px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; }
+        .lang-tabs { display: flex; gap: 8px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .lang-tab { padding: 6px 12px; font-size: 12px; border-radius: 4px; background: var(--surface); color: var(--text); border: 1px solid var(--border); cursor: pointer; }
+        .lang-tab.active { background: var(--text); color: var(--bg); }
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+        .admin-header-box { background: var(--bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .actions-cell { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-danger { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 500; }
+        .btn-edit { background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 500; }
+        .btn-edit:hover { background: #2563eb; }
+        .btn-cancel-edit { background: #6b7280; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; display: none; }
+        .site-info-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 60px; padding-bottom: 40px; }
+        .site-info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-align: center; }
+        .site-info-card h2 { font-size: 20px; margin-bottom: 18px; }
+        .site-info-card p { color: var(--muted); line-height: 1.9; }
+        .site-contact-line { direction: ltr; unicode-bidi: plaintext; margin: 8px 0; }
+        .crypto-discount { color: #10b981 !important; font-weight: 700; margin-top: 12px; }
+        @media (max-width: 700px) { .site-info-sections { grid-template-columns: 1fr; } }
+
+        .card-img-wrap { position: relative; width:100%; height:220px; background:#1f1f23; overflow:hidden; }
+        .card-img { display:block; width:100%; height:100%; object-fit:cover; background:#1f1f23; }
+        .image-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; }
+        .card-actions { display:flex; gap:8px; margin-top:14px; }
+        .card-actions button { flex:1; padding:9px 10px; }
+        .btn-secondary { background:transparent; color:var(--text); border:1px solid var(--border); }
+        .detail-modal .modal-content { max-width:900px; }
+        .detail-layout { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr); gap:28px; align-items:start; }
+        .detail-image { width:100%; max-height:520px; object-fit:contain; background:#0a0a0c; border:1px solid var(--border); border-radius:14px; min-height:260px; }
+        .detail-actions { display:flex; gap:10px; flex-wrap:wrap; }
+        .detail-actions > button { flex:1; min-width:150px; }
+        .server-product-seo { max-width:1200px; margin:0 auto 20px; padding:24px 20px 0; }
+        .server-product-seo-card { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:28px; }
+        .server-product-seo-card h1 { font-size:32px; margin-bottom:12px; }
+        .server-product-seo-card p { color:var(--muted); line-height:2; max-width:850px; }
+        .server-product-seo-card .seo-price { color:var(--accent); font-weight:700; margin-top:12px; }
+        .server-product-seo-card img { max-width:260px; max-height:260px; object-fit:contain; border-radius:14px; border:1px solid var(--border); margin-top:18px; }
+        .product-breadcrumbs { font-size:12px; color:var(--muted); margin-bottom:14px; }
+        .product-breadcrumbs a { color:var(--accent); text-decoration:none; }
+        body.product-route .home-catalog { display:none; }
+        body.product-route .site-info-sections { display:none; }
+        @media (max-width:700px) { .server-product-seo-card h1 { font-size:24px; } .server-product-seo-card { padding:20px; } }
+        .detail-meta { display:flex; flex-direction:column; gap:14px; }
+        .detail-title { font-size:28px; margin-bottom:4px; }
+        .detail-tag { color:var(--accent); font-weight:700; font-size:12px; }
+        .detail-specs { border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+        .detail-spec { display:flex; justify-content:space-between; gap:15px; padding:12px 14px; border-bottom:1px solid var(--border); }
+        .detail-spec:last-child { border-bottom:none; }
+        .detail-spec span:first-child { color:var(--muted); }
+        .cart-modal .modal-content { max-width:720px; }
+        .cart-item { display:grid; grid-template-columns:70px 1fr auto; gap:14px; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
+        .cart-item img { width:70px; height:70px; object-fit:cover; border-radius:10px; background:#1f1f23; }
+        .cart-item-title { font-weight:600; }
+        .cart-controls { display:flex; align-items:center; gap:7px; margin-top:8px; }
+        .cart-controls button { padding:4px 9px; }
+        .cart-summary { margin-top:18px; display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:18px; }
+        .cart-empty { text-align:center; color:var(--muted); padding:35px 10px; }
+        .cart-badge { display:inline-flex; min-width:18px; height:18px; padding:0 5px; border-radius:9px; align-items:center; justify-content:center; background:var(--accent); color:#fff; font-size:10px; margin-right:4px; }
+        .checkout-box { margin-top:18px; padding:15px; background:var(--bg); border:1px solid var(--border); border-radius:12px; }
+        .detail-description { margin-top:18px; padding:16px; background:var(--bg); border:1px solid var(--border); border-radius:12px; line-height:2; }
+        .detail-description h3 { margin-bottom:8px; font-size:16px; }
+        .detail-gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(72px,1fr)); gap:8px; margin-top:10px; }
+        .detail-gallery button { padding:0; border-radius:9px; overflow:hidden; aspect-ratio:1; background:var(--surface); }
+        .detail-gallery img { width:100%; height:100%; object-fit:cover; display:block; }
+        .site-footer { border-top:1px solid var(--border); margin-top:30px; padding:24px 20px 35px; text-align:center; color:var(--muted); font-size:12px; line-height:1.9; }
+        .site-footer strong { color:var(--text); }
+        .pwa-note { display:none; }
+        .tag-help { color:var(--muted); font-size:11px; line-height:1.6; margin-top:5px; }
+        @media (max-width:700px) { .site-footer { padding-bottom:28px; } }
+        .site-nav { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin: -22px auto 24px; max-width:1200px; padding:0 20px; }
+        .site-nav a { color:var(--muted); text-decoration:none; border:1px solid var(--border); background:var(--surface); padding:7px 12px; border-radius:999px; font-size:12px; }
+        .site-nav a:hover { color:var(--text); border-color:var(--muted); }
+        .catalog-tools { display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin:0 0 28px; }
+        .search-box { flex:1; min-width:220px; position:relative; }
+        .search-box input { width:100%; padding:12px 14px; background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:12px; outline:none; }
+        .search-box input:focus { border-color:var(--accent); }
+        .sort-select { min-width:150px; }
+        .category-intro { max-width:850px; margin:0 auto 34px; text-align:center; color:var(--muted); line-height:2; }
+        .route-page .home-catalog { display:none !important; }
+        .route-page .site-nav { margin-top:0; }
+        .route-content { max-width:1050px; margin:0 auto; padding:40px 20px; }
+        .route-card { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:28px; margin-bottom:20px; }
+        .route-card h1 { font-size:30px; margin-bottom:14px; }
+        .route-card h2 { font-size:20px; margin:24px 0 10px; }
+        .route-card p, .route-card li { color:var(--muted); line-height:2; }
+        .route-card ul { padding-right:22px; }
+        .route-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:20px; }
+        .route-link { display:block; padding:14px; border:1px solid var(--border); border-radius:12px; color:var(--text); text-decoration:none; background:var(--bg); }
+        .route-link:hover { border-color:var(--accent); }
+        .related-products { margin-top:28px; padding-top:20px; border-top:1px solid var(--border); }
+        .related-products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+        .related-products-grid a { text-decoration:none; color:var(--text); border:1px solid var(--border); border-radius:12px; padding:12px; background:var(--bg); }
+        .product-route .server-product-seo-card { max-width:1050px; margin:0 auto; padding:24px 20px; }
+        .product-route .server-product-seo-card img { max-height:480px; object-fit:contain; border-radius:14px; display:block; margin:18px auto; max-width:100%; }
+        .product-route .server-product-seo-card h1 { font-size:32px; }
+        .product-route .server-product-seo-card p { max-width:850px; margin:10px auto; line-height:2; color:var(--muted); }
+        .product-route .home-catalog { display:none !important; }
+        .footer-links { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:10px 0; }
+        .footer-links a { color:var(--muted); text-decoration:none; }
+        .footer-links a:hover { color:var(--text); }
+        .result-count { color:var(--muted); font-size:12px; margin-top:8px; }
+        @media (max-width:700px) { .catalog-tools { align-items:stretch; } .sort-select { width:100%; } .route-card h1 { font-size:25px; } .product-route .server-product-seo-card h1 { font-size:26px; } }
+
+
+        @media (max-width:700px) {
+            .detail-layout { grid-template-columns:1fr; }
+            .detail-title { font-size:23px; }
+            .cart-item { grid-template-columns:55px 1fr; }
+            .cart-item > .cart-price { grid-column:2; }
+        }
+
+    </style>
+    <script type="application/ld+json" id="siteStructuredData">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "name":"NIX-BUILDS",
+      "url":"https://nixbuilds.nixshop.workers.dev/",
+      "inLanguage":["fa","en","ar","zh","ru"],
+      "potentialAction":{"@type":"SearchAction","target":"https://nixbuilds.nixshop.workers.dev/?q={search_term_string}","query-input":"required name=search_term_string"}
+    }
+    </script>
+    <script type="application/ld+json" id="organizationStructuredData">
+    {
+      "@context":"https://schema.org",
+      "@type":"Organization",
+      "name":"NIX-BUILDS",
+      "url":"https://nixbuilds.nixshop.workers.dev/",
+      "logo":"https://nixbuilds.nixshop.workers.dev/icon.svg",
+      "description":"NIX-BUILDS — طراحی و تولید محصولات کاربردی و مدرن با پرینت سه‌بعدی و فناوری ساخت."
+    }
+    </script>
+    <script type="application/ld+json" id="dynamicProductSchema">{}</script>
+    <script type="application/ld+json" id="itemListStructuredData">{}</script>
+</head>
+<body>
+    <header>
+        <div class="logo">NIX-BUILDS</div>
+        <div class="nav-controls">
+            <select id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="fa">FA (فارسی)</option>
+                <option value="en">EN (English)</option>
+                <option value="ar">AR (العربية)</option>
+                <option value="zh">ZH (中文)</option>
+                <option value="ru">RU (Русский)</option>
+            </select>
+            <button onclick="openCart()" id="cartBtn">🛒 <span class="cart-badge" id="cartBadge">0</span></button>
+            <button onclick="toggleTheme()" id="themeBtn">🌙</button>
+            <button onclick="openAdmin()">🔒</button>
+        </div>
+    </header>
+
+    <section id="serverProductSEO" class="server-product-seo" aria-label="Product information" style="display:none;"></section>
+
+    <div class="container home-catalog">
+        <div class="hero">
+            <h1 id="brandTitle">NIX-BUILDS</h1>
+            <p id="headerSlogan">اکوسیستم اختصاصی سازه‌های پیشرفته پرینت سه بعدی</p>
+            <p class="category-intro" id="catalogIntro">طراحی و تولید محصولات کاربردی و مدرن با تمرکز بر پرینت سه‌بعدی، ساخت دیجیتال و راهکارهای خلاقانه برای خانه، ابزار و زندگی روزمره.</p>
+        </div>
+        <nav class="site-nav" aria-label="دسترسی سریع">
+            <a href="/products">همه محصولات</a>
+            <a href="/category/nix-home">NIX-HOME</a>
+            <a href="/category/nix-gear">NIX-GEAR</a>
+            <a href="/category/nix-care">NIX-CARE</a>
+            <a href="/about">درباره NIX-BUILDS</a>
+            <a href="/contact">تماس و سفارش</a>
+        </nav>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="filterLine('ALL')" id="tabAll">همه محصولات</button>
+            <button class="tab-btn" onclick="filterLine('NIX-HOME')">NIX-HOME</button>
+            <button class="tab-btn" onclick="filterLine('NIX-GEAR')">NIX-GEAR</button>
+            <button class="tab-btn" onclick="filterLine('NIX-CARE')">NIX-CARE</button>
+        </div>
+        <div class="catalog-tools">
+            <div class="search-box"><input id="productSearch" type="search" inputmode="search" autocomplete="off" placeholder="جستجوی محصول، متریال یا تگ..." aria-label="جستجوی محصولات"></div>
+            <select id="productSort" class="sort-select" aria-label="مرتب‌سازی محصولات">
+                <option value="newest">جدیدترین</option>
+                <option value="name">نام محصول</option>
+                <option value="price">قیمت</option>
+            </select>
+        </div>
+        <div class="result-count" id="resultCount" aria-live="polite"></div>
+        <div class="grid" id="productsGrid"></div>
+    </div>
+
+    <section class="container site-info-sections home-catalog">
+        <div class="site-info-card" id="aboutSection">
+            <h2 id="aboutHeading">درباره ما</h2>
+            <p id="aboutText">پیوند دهنده هنر و تکنولوژی</p>
+            <p class="crypto-discount" id="cryptoDiscount">۱۰ درصد تخفیف برای پرداخت با رمزارز</p>
+        </div>
+        <div class="site-info-card" id="contactSection">
+            <h2 id="contactHeading">تماس با ما</h2>
+            <p class="site-contact-line" id="contactEmail">kaveh-m@live.com</p>
+            <p class="site-contact-line" id="contactPhone">00989030287529</p>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div><strong>NIX-BUILDS</strong> — 3D Printed Products &amp; Advanced Builds</div>
+        <div class="footer-links">
+            <a href="/products">محصولات</a>
+            <a href="/about">درباره ما</a>
+            <a href="/contact">تماس</a>
+            <a href="/shipping">ارسال</a>
+            <a href="/returns">مرجوعی</a>
+            <a href="/privacy">حریم خصوصی</a>
+            <a href="/terms">قوانین</a>
+        </div>
+        <div>© <span id="copyrightYear"></span> NIX-BUILDS. All rights reserved.</div>
+        <div>نسخه <span id="siteVersion">2.4.0</span></div>
+    </footer>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content" style="max-width:420px;">
+            <span class="close-btn" onclick="closeLogin()">&times;</span>
+            <h2 style="margin-bottom:20px;">ورود مدیر</h2>
+            <div class="form-group">
+                <label>ایمیل مدیر</label>
+                <input type="email" id="adminEmail" autocomplete="username" placeholder="admin@example.com">
+            </div>
+            <div class="form-group">
+                <label>رمز عبور</label>
+                <input type="password" id="adminPassword" autocomplete="current-password" placeholder="••••••••">
+            </div>
+            <button class="btn-accent" style="width:100%;padding:12px;" onclick="loginAdmin()">ورود</button>
+            <p id="loginError" style="color:#ef4444;margin-top:12px;font-size:13px;"></p>
+            <button onclick="testSupabaseConnection()" style="margin-top:10px;width:100%;padding:10px;background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;">
+                تست اتصال به Supabase
+            </button>
+            <p id="connectionTest" style="color:var(--muted);margin-top:10px;font-size:12px;direction:ltr;text-align:left;word-break:break-word;"></p>
+        </div>
+    </div>
+
+
+    <div class="modal detail-modal" id="productDetailModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeProductDetail()">&times;</span>
+            <div id="productDetailContent"></div>
+        </div>
+    </div>
+
+    <div class="modal cart-modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCart()">&times;</span>
+            <h2 style="margin-bottom:20px;" id="cartHeading">سبد خرید</h2>
+            <div id="cartItems"></div>
+            <div class="cart-summary"><span id="cartTotalLabel">جمع</span><span id="cartTotal">0</span></div>
+            <div class="checkout-box">
+                <div class="form-group"><label id="orderNameLabel">نام</label><input id="orderName" type="text"></div>
+                <div class="form-group"><label id="orderContactLabel">ایمیل یا شماره تماس</label><input id="orderContact" type="tel" inputmode="tel" autocomplete="tel"></div>
+                <button class="btn-accent" style="width:100%;padding:12px;" onclick="sendOrderRequest()" id="checkoutBtn">ارسال درخواست سفارش</button>
+                <p id="checkoutNote" style="color:var(--muted);font-size:12px;line-height:1.7;margin-top:10px;">با زدن این دکمه، برنامه پیامک گوشی باز می‌شود و متن سفارش آماده ارسال به شماره ادمین خواهد بود. ارسال نهایی پیامک نیاز به تأیید کاربر دارد.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdmin()">&times;</span>
+            <h2 style="margin-bottom: 20px;">تنظیمات کاتالوگ ادمین</h2>
+<button onclick="logoutAdmin()" style="margin-bottom:20px;">خروج از حساب مدیر</button>
+            
+            <div class="admin-header-box">
+                <h4 style="margin-bottom: 10px;">ویرایش شعار هدر سایت (۵ زبان)</h4>
+                <div class="form-group"><label>فارسی</label><input type="text" id="h_fa"></div>
+                <div class="form-group"><label>English</label><input type="text" id="h_en"></div>
+                <div class="form-group"><label>العربية</label><input type="text" id="h_ar"></div>
+                <div class="form-group"><label>中文</label><input type="text" id="h_zh"></div>
+                <div class="form-group"><label>Русский</label><input type="text" id="h_ru"></div>
+                <button class="btn-accent" onclick="saveSlogan()">بروزرسانی شعار هدر</button>
+            </div>
+
+            <div class="admin-header-box">
+                <h4 style="margin-bottom: 10px;">ویرایش تماس با ما و درباره ما</h4>
+                <div class="form-group">
+                    <label>ایمیل تماس</label>
+                    <input type="email" id="contact_email_admin">
+                </div>
+                <div class="form-group">
+                    <label>شماره تماس</label>
+                    <input type="text" id="contact_phone_admin">
+                </div>
+                <div class="form-group">
+                    <label>متن درباره ما</label>
+                    <input type="text" id="about_text_admin">
+                </div>
+                <div class="form-group">
+                    <label>متن تخفیف پرداخت با رمزارز</label>
+                    <input type="text" id="crypto_discount_admin">
+                </div>
+                <button class="btn-accent" onclick="saveSiteInfo()">بروزرسانی اطلاعات سایت</button>
+            </div>
+
+            <h3 id="adminFormTitle" style="margin-bottom: 15px;">افزودن محصول جدید</h3>
+            <div class="form-group">
+                <label>لاین محصول</label>
+                <select id="p_line">
+                    <option value="NIX-HOME">NIX-HOME</option>
+                    <option value="NIX-GEAR">NIX-GEAR</option>
+                    <option value="NIX-CARE">NIX-CARE</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>تصویر محصول (آپلود مستقیم)</label>
+                <input type="file" id="p_file" accept="image/*" multiple onchange="handleImageUpload(this)">
+                <input type="hidden" id="p_img_base64">
+                <input type="hidden" id="p_image_gallery">
+                <div class="tag-help">یک تصویر به‌عنوان تصویر اصلی و حداکثر 5 تصویر اضافی انتخاب کنید. تصاویر قبل از ذخیره فشرده می‌شوند.</div>
+            </div>
+
+            <div class="lang-tabs">
+                <div class="lang-tab active" onclick="switchFormLang('fa')">FA</div>
+                <div class="lang-tab" onclick="switchFormLang('en')">EN</div>
+                <div class="lang-tab" onclick="switchFormLang('ar')">AR</div>
+                <div class="lang-tab" onclick="switchFormLang('zh')">ZH</div>
+                <div class="lang-tab" onclick="switchFormLang('ru')">RU</div>
+            </div>
+
+            <div id="f_lang_fa" class="lang-content active">
+                <div class="form-group"><label>نام محصول (فارسی)</label><input type="text" id="p_title_fa"></div>
+                <div class="form-group"><label>متریال</label><input type="text" id="p_mat_fa" placeholder="مثلا: PLA پلاس"></div>
+                <div class="form-group"><label>ابعاد</label><input type="text" id="p_dim_fa" placeholder="مثلا: 20x20x30 سانتی‌متر"></div>
+            </div>
+            <div id="f_lang_en" class="lang-content">
+                <div class="form-group"><label>Product Name (English)</label><input type="text" id="p_title_en"></div>
+                <div class="form-group"><label>Material</label><input type="text" id="p_mat_en"></div>
+                <div class="form-group"><label>Dimensions</label><input type="text" id="p_dim_en"></div>
+            </div>
+            <div id="f_lang_ar" class="lang-content">
+                <div class="form-group"><label>اسم المنتج (العربية)</label><input type="text" id="p_title_ar"></div>
+                <div class="form-group"><label>المواد</label><input type="text" id="p_mat_ar"></div>
+                <div class="form-group"><label>الأبعاد</label><input type="text" id="p_dim_ar"></div>
+            </div>
+            <div id="f_lang_zh" class="lang-content">
+                <div class="form-group"><label>产品名称 (中文)</label><input type="text" id="p_title_zh"></div>
+                <div class="form-group"><label>材料</label><input type="text" id="p_mat_zh"></div>
+                <div class="form-group"><label>尺寸</label><input type="text" id="p_dim_zh"></div>
+            </div>
+            <div id="f_lang_ru" class="lang-content">
+                <div class="form-group"><label>Название продукта (Русский)</label><input type="text" id="p_title_ru"></div>
+                <div class="form-group"><label>Материал</label><input type="text" id="p_mat_ru"></div>
+                <div class="form-group"><label>Размеры</label><input type="text" id="p_dim_ru"></div>
+            </div>
+
+            <div class="form-group" style="margin-top:15px;">
+                <label>URL اختصاصی محصول (Slug)</label>
+                <input type="text" id="p_slug" placeholder="مثلاً: pill-box">
+                <div class="tag-help">فقط حروف انگلیسی، عدد و خط تیره توصیه می‌شود. اگر خالی باشد، خودکار ساخته می‌شود.</div>
+            </div>
+            <div class="form-group">
+                <label>SEO Title</label>
+                <input type="text" id="p_seo_title" maxlength="70" placeholder="عنوان مناسب برای Google">
+            </div>
+            <div class="form-group">
+                <label>SEO Description</label>
+                <textarea id="p_seo_description" rows="3" maxlength="170" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;resize:vertical;" placeholder="توضیح کوتاه و طبیعی برای نتیجه جستجو"></textarea>
+            </div>
+            <div class="form-group">
+                <label>توضیحات محصول (فارسی)</label>
+                <textarea id="p_desc_fa" rows="5" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;resize:vertical;"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Product Description (English)</label>
+                <textarea id="p_desc_en" rows="5" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;resize:vertical;"></textarea>
+            </div>
+            <div class="form-group">
+                <label>توضیحات العربية</label>
+                <textarea id="p_desc_ar" rows="4" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;resize:vertical;"></textarea>
+            </div>
+            <div class="form-group">
+                <label>产品描述 (中文)</label>
+                <textarea id="p_desc_zh" rows="4" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;resize:vertical;"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Описание продукта (Русский)</label>
+                <textarea id="p_desc_ru" rows="4" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;resize:vertical;"></textarea>
+            </div>
+            <div class="form-group">
+                <label>تگ‌های SEO محصول</label>
+                <input type="text" id="p_seo_tags" placeholder="مثلاً: 3D printing, ESP32, NIX-HOME, lamp, wood">
+                <div class="tag-help">تگ‌ها را با ویرگول انگلیسی جدا کنید. این بخش برای SEO و داده‌های ساختاریافته است و به‌صورت عادی در صفحه نمایش داده نمی‌شود.</div>
+            </div>
+
+            <div class="form-group" style="margin-top:15px;"><label>قیمت و ولت USDT (Tether)</label>
+                <input type="text" id="p_p_usdt" placeholder="قیمت مثلا: 50" style="margin-bottom:5px;">
+                <input type="text" id="p_w_usdt" placeholder="آدرس ولت USDT">
+            </div>
+            <div class="form-group"><label>قیمت و ولت BTC (Bitcoin)</label>
+                <input type="text" id="p_p_btc" placeholder="قیمت" style="margin-bottom:5px;">
+                <input type="text" id="p_w_btc" placeholder="آدرس ولت BTC">
+            </div>
+            <div class="form-group"><label>قیمت و ولت ETH (Ethereum)</label>
+                <input type="text" id="p_p_eth" placeholder="قیمت" style="margin-bottom:5px;">
+                <input type="text" id="p_w_eth" placeholder="آدرس ولت ETH">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button id="saveProductBtn" class="btn-accent" style="flex: 1; padding: 12px;" onclick="saveProduct()">ثبت محصول در Supabase</button>
+                <button id="cancelEditBtn" class="btn-cancel-edit" type="button" onclick="cancelEdit()">انصراف از ویرایش</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const DB_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
+        // This is the public Supabase key (anon key). It is safe to expose in browser code
+        // when Row Level Security (RLS) is configured correctly.
+        const DB_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
+
+        let currentLang = 'fa';
+        let allProducts = [];
+        let currentFilter = 'ALL';
+        let adminAccessToken = null;
+        const imageCache = new Map();
+        let cart = readCache('nix_builds_cart_v1') || [];
+        let currentDetailProduct = null;
+        let productSearchTerm = '';
+        let productSortMode = 'newest';
+
+        const dictionary = {
+            fa: { detail: "مشاهده محصول", addCart: "افزودن به سبد", cart: "سبد خرید", emptyCart: "سبد خرید خالی است", total: "جمع کل", remove: "حذف", name: "نام", contact: "تلفن", checkout: "ارسال درخواست سفارش", checkoutNote: "با زدن این دکمه، برنامه پیامک گوشی باز می‌شود و متن سفارش آماده ارسال به شماره ادمین خواهد بود. ارسال نهایی پیامک نیاز به تأیید کاربر دارد.", orderSent: "درخواست سفارش آماده شد", slogan: "اکوسیستم اختصاصی سازه‌های پیشرفته پرینت سه بعدی", all: "همه محصولات", mat: "متریال", dim: "ابعاد", pay: "پرداخت رمز‌ارز", about: "درباره ما", contact: "تماس با ما", aboutText: "پیوند دهنده هنر و تکنولوژی", cryptoDiscount: "۱۰ درصد تخفیف برای پرداخت با رمزارز" },
+            en: { detail: "View Product", addCart: "Add to Cart", cart: "Cart", emptyCart: "Your cart is empty", total: "Total", remove: "Remove", name: "Name", contact: "Phone", checkout: "Send Order Request", checkoutNote: "Online payment is not available in this version. The phone’s SMS app will open with the order prefilled; final sending requires user confirmation.", orderSent: "Order request ready", slogan: "Exclusive Ecosystem of Advanced 3D Printed Structures", all: "All Products", mat: "Material", dim: "Dimensions", pay: "Crypto Pay", about: "About Us", contact: "Contact Us", aboutText: "Bridging Art and Technology", cryptoDiscount: "10% discount for cryptocurrency payments" },
+            ar: { detail: "عرض المنتج", addCart: "أضف إلى السلة", cart: "السلة", emptyCart: "السلة فارغة", total: "الإجمالي", remove: "حذف", name: "الاسم", contact: "الهاتف", checkout: "إرسال طلب الشراء", checkoutNote: "الدفع الإلكتروني غير متاح في هذه النسخة؛ سيتم إرسال طلب الشراء عبر البريد الإلكتروني.", orderSent: "تم تجهيز طلب الشراء", slogan: "النظام البيئي الحصري للهياكل المتقدمة المطبوعة ثلاثية الأبعاد", all: "جميع المنتجات", mat: "المواد", dim: "الأبعاد", pay: "دفع الكريپتو", about: "من نحن", contact: "اتصل بنا", aboutText: "حلقة وصل بين الفن والتكنولوجيا", cryptoDiscount: "خصم 10٪ عند الدفع بالعملات المشفرة" },
+            zh: { detail: "查看产品", addCart: "加入购物车", cart: "购物车", emptyCart: "购物车为空", total: "总计", remove: "删除", name: "姓名", contact: "电话", checkout: "发送订单请求", checkoutNote: "此版本暂不支持在线支付；订单请求将通过电子邮件发送。", orderSent: "订单请求已准备", slogan: "先进3D打印结构的专属生态系统", all: "所有产品", mat: "材料", dim: "尺寸", pay: "加密货币支付", about: "关于我们", contact: "联系我们", aboutText: "连接艺术与科技", cryptoDiscount: "使用加密货币支付可享受10%优惠" },
+            ru: { detail: "Открыть товар", addCart: "В корзину", cart: "Корзина", emptyCart: "Корзина пуста", total: "Итого", remove: "Удалить", name: "Имя", contact: "Телефон", checkout: "Отправить запрос заказа", checkoutNote: "Онлайн-оплата в этой версии недоступна; запрос заказа будет отправлен по электронной почте.", orderSent: "Запрос заказа готов", slogan: "Эксклюзивная экосистема передовых 3D-печатных конструкций", all: "Все продукты", mat: "Материал", dim: "Размеры", pay: "Крипто оплата", about: "О нас", contact: "Связаться с нами", aboutText: "Объединяем искусство и технологии", cryptoDiscount: "Скидка 10% при оплате криптовалютой" }
+        };
+
+        function authHeaders() {
+            const token = adminAccessToken || DB_KEY;
+            return {
+                "apikey": DB_KEY,
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Prefer": "return=representation"
+            };
+        }
+
+        async function dbRequest(endpoint, method = 'GET', body = null, requiresAdmin = false) {
+            if (requiresAdmin && !adminAccessToken) {
+                throw new Error("برای این عملیات باید وارد حساب مدیر شوید.");
+            }
+
+            const options = { method, headers: authHeaders() };
+            if (body !== null) options.body = JSON.stringify(body);
+
+            const res = await fetch(`${DB_URL}/rest/v1/${endpoint}`, options);
+            const text = await res.text();
+
+            let data = null;
+            try { data = text ? JSON.parse(text) : null; }
+            catch { data = text; }
+
+            if (!res.ok) {
+                const message =
+                    (data && data.message) ||
+                    (data && data.error_description) ||
+                    (data && data.hint) ||
+                    `Supabase error ${res.status}`;
+                throw new Error(message);
+            }
+
+            return data;
+        }
+
+        const SITE_CACHE_KEY = 'nix_builds_site_settings_v1';
+        const PRODUCTS_CACHE_KEY = 'nix_builds_products_v2';
+
+        function readCache(key) {
+            try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; } catch { return null; }
+        }
+        function writeCache(key, value) {
+            try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+        }
+
+        function applySiteSettings(s) {
+            if (!s) return;
+            dictionary.fa.slogan = s.header_fa || dictionary.fa.slogan;
+            dictionary.en.slogan = s.header_en || dictionary.en.slogan;
+            dictionary.ar.slogan = s.header_ar || dictionary.ar.slogan;
+            dictionary.zh.slogan = s.header_zh || dictionary.zh.slogan;
+            dictionary.ru.slogan = s.header_ru || dictionary.ru.slogan;
+
+            const fields = {
+                h_fa:s.header_fa||'', h_en:s.header_en||'', h_ar:s.header_ar||'', h_zh:s.header_zh||'', h_ru:s.header_ru||'',
+                contact_email_admin:s.contact_email||'', contact_phone_admin:s.contact_phone||'',
+                about_text_admin:s.about_text||'', crypto_discount_admin:s.crypto_discount_text||''
+            };
+            Object.entries(fields).forEach(([id,v]) => { const el=document.getElementById(id); if(el) el.value=v; });
+
+            window.siteInfo = {
+                email:s.contact_email || 'kaveh-m@live.com',
+                phone:s.contact_phone || '00989030287529',
+                about:s.about_text || '',
+                discount:s.crypto_discount_text || ''
+            };
+            updateSiteInfoLanguage();
+        }
+
+        function updateSiteInfoLanguage() {
+            const d = dictionary[currentLang], info = window.siteInfo || {};
+            const defaultAbout = !info.about || info.about === 'پیوند دهنده هنر و تکنولوژی';
+            const defaultDiscount = !info.discount || info.discount === '۱۰ درصد تخفیف برای پرداخت با رمزارز';
+            document.getElementById('aboutHeading').innerText = d.about;
+            document.getElementById('contactHeading').innerText = d.contact;
+            document.getElementById('aboutText').innerText = defaultAbout ? d.aboutText : info.about;
+            document.getElementById('cryptoDiscount').innerText = defaultDiscount ? d.cryptoDiscount : info.discount;
+            document.getElementById('contactEmail').innerText = info.email || '';
+            document.getElementById('contactPhone').innerText = info.phone || '';
+        }
+
+
+        function sanitizeProductsForCache(products) {
+            return (Array.isArray(products) ? products : []).map(p => {
+                const copy = { ...p };
+                // Never persist multi-megabyte base64 images in localStorage.
+                delete copy.image_data;
+                return copy;
+            });
+        }
+
+        function productTitle(p) {
+            return p?.[`name_${currentLang}`] || p?.name_en || p?.name_fa || 'Product';
+        }
+
+        function productPrice(p) {
+            if (p?.price_usdt) return `${p.price_usdt} USDT`;
+            if (p?.price_btc) return `${p.price_btc} BTC`;
+            if (p?.price_eth) return `${p.price_eth} ETH`;
+            return '';
+        }
+
+        async function fetchProductImage(id) {
+            if (!id) return null;
+            if (imageCache.has(String(id))) return imageCache.get(String(id));
+            try {
+                const data = await dbRequest(`products?id=eq.${encodeURIComponent(id)}&select=id,image_data`);
+                const image = data?.[0]?.image_data || null;
+                if (image) imageCache.set(String(id), image);
+                return image;
+            } catch (e) {
+                console.error('fetchProductImage:', e);
+                return null;
+            }
+        }
+
+        async function loadCardImage(id, img, placeholder) {
+            const image = await fetchProductImage(id);
+            if (!image) return;
+            img.onload = () => {
+                img.style.visibility = 'visible';
+                if (placeholder) placeholder.style.display = 'none';
+            };
+            img.onerror = () => {
+                img.style.visibility = 'hidden';
+                if (placeholder) placeholder.style.display = 'flex';
+            };
+            img.src = image;
+        }
+
+        function setupLazyProductImages() {
+            const images = document.querySelectorAll('img[data-product-image-id]');
+            if (!('IntersectionObserver' in window)) {
+                images.forEach(img => loadCardImage(img.dataset.productImageId, img, img.previousElementSibling));
+                return;
+            }
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const img = entry.target;
+                    observer.unobserve(img);
+                    loadCardImage(img.dataset.productImageId, img, img.previousElementSibling);
+                });
+            }, { rootMargin: '500px 0px' });
+            images.forEach(img => observer.observe(img));
+        }
+
+        async function init() {
+            const yearEl = document.getElementById('copyrightYear');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+            // Cache-first: display the previous products immediately; refresh from Supabase in parallel.
+            const cachedSettings = readCache(SITE_CACHE_KEY);
+            const cachedProducts = readCache(PRODUCTS_CACHE_KEY);
+            if (cachedSettings) applySiteSettings(cachedSettings);
+            if (Array.isArray(cachedProducts)) { allProducts = sanitizeProductsForCache(cachedProducts); renderProducts(); }
+            changeLanguage('fa');
+            setupCatalogControls();
+            const initialQ = new URLSearchParams(location.search).get('q') || '';
+            if (initialQ) { productSearchTerm = initialQ; const searchEl=document.getElementById('productSearch'); if(searchEl) searchEl.value=initialQ; }
+            updateCartUI();
+            await Promise.allSettled([loadSlogan(), loadProducts()]);
+            const pathMatch = location.pathname.match(/^\/product\/([^/]+)\/?$/);
+            if (pathMatch) {
+                const slug = decodeURIComponent(pathMatch[1]);
+                const serverProduct = window.__NIX_PRODUCT__ || null;
+                if (serverProduct && !getProductById(serverProduct.id)) allProducts.unshift(serverProduct);
+                const p = allProducts.find(x => String(x.slug || '') === slug) || (serverProduct && getProductById(serverProduct.id));
+                if (p) setTimeout(() => openProductDetail(p.id, false), 120);
+            } else {
+                const productParam = new URLSearchParams(location.search).get('product');
+                if (productParam) {
+                    const p = getProductById(productParam);
+                    if (p) setTimeout(() => openProductDetail(p.id, true), 120);
+                }
+            }
+        }
+
+        async function loadSlogan() {
+            try {
+                const data = await dbRequest("site_settings?id=eq.main_settings&select=id,header_fa,header_en,header_ar,header_zh,header_ru,contact_email,contact_phone,about_text,crypto_discount_text");
+                if (data && data.length) {
+                    writeCache(SITE_CACHE_KEY, data[0]);
+                    applySiteSettings(data[0]);
+                    changeLanguage(currentLang);
+                }
+            } catch (e) { console.error("loadSlogan:", e); }
+        }
+
+        async function loadProducts() {
+            try {
+                const data = await dbRequest("products?select=id,created_at,product_line,slug,seo_title,seo_description,image_data,image_gallery,description_fa,description_en,description_ar,description_zh,description_ru,seo_tags,name_fa,name_en,name_ar,name_zh,name_ru,material_fa,material_en,material_ar,material_zh,material_ru,dimensions_fa,dimensions_en,dimensions_ar,dimensions_zh,dimensions_ru,price_usdt,price_btc,price_eth&order=created_at.desc");
+                allProducts = Array.isArray(data) ? data : [];
+                writeCache(PRODUCTS_CACHE_KEY, sanitizeProductsForCache(allProducts));
+                renderProducts();
+            } catch (e) {
+                console.error("loadProducts:", e);
+                if (!allProducts.length) document.getElementById('productsGrid').innerHTML =
+                    `<p style="color:#ef4444;text-align:center;grid-column:1/-1;">خطا در دریافت محصولات از سرور.<br><small style="color:var(--muted);">${e.message || ''}</small></p>`;
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'fa' || lang === 'ar') ? 'rtl' : 'ltr';
+            document.getElementById('headerSlogan').innerText = dictionary[lang].slogan;
+            document.getElementById('tabAll').innerText = dictionary[lang].all;
+            updateSiteInfoLanguage();
+            const d = dictionary[lang];
+            const cartHeading=document.getElementById('cartHeading'); if(cartHeading) cartHeading.innerText=d.cart;
+            const cartTotalLabel=document.getElementById('cartTotalLabel'); if(cartTotalLabel) cartTotalLabel.innerText=d.total;
+            const orderNameLabel=document.getElementById('orderNameLabel'); if(orderNameLabel) orderNameLabel.innerText=d.name;
+            const orderContactLabel=document.getElementById('orderContactLabel'); if(orderContactLabel) orderContactLabel.innerText=d.contact;
+            const checkoutBtn=document.getElementById('checkoutBtn'); if(checkoutBtn) checkoutBtn.innerText=d.checkout;
+            const checkoutNote=document.getElementById('checkoutNote'); if(checkoutNote) checkoutNote.innerText=d.checkoutNote;
+            renderProducts();
+            if (currentDetailProduct) { renderServerProductSEO(currentDetailProduct); updateClientProductSEO(currentDetailProduct); updateProductStructuredData(currentDetailProduct, window.currentDetailImages || []); }
+            if (document.getElementById('cartModal')?.style.display === 'flex') renderCart();
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', target);
+            document.getElementById('themeBtn').innerText = target === 'light' ? '☀️' : '🌙';
+        }
+
+        function filterLine(line) {
+            currentFilter = line;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if (window.event && window.event.target) window.event.target.classList.add('active');
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const term = productSearchTerm.trim().toLowerCase();
+            let filtered = currentFilter === 'ALL' ? [...allProducts] : allProducts.filter(p => p.product_line === currentFilter);
+            if (term) {
+                filtered = filtered.filter(p => {
+                    const haystack = [
+                        p.name_fa,p.name_en,p.name_ar,p.name_zh,p.name_ru,
+                        p.material_fa,p.material_en,p.material_ar,p.material_zh,p.material_ru,
+                        p.seo_tags,p.product_line,p.description_fa,p.description_en
+                    ].filter(Boolean).join(' ').toLowerCase();
+                    return haystack.includes(term);
+                });
+            }
+
+            if (productSortMode === 'name') filtered.sort((a,b) => productTitle(a).localeCompare(productTitle(b), currentLang));
+            if (productSortMode === 'price') filtered.sort((a,b) => {
+                const pa = parseFloat(String(a.price_usdt || '').replace(/,/g,'')) || Number.POSITIVE_INFINITY;
+                const pb = parseFloat(String(b.price_usdt || '').replace(/,/g,'')) || Number.POSITIVE_INFINITY;
+                return pa - pb;
+            });
+            if (productSortMode === 'newest') filtered.sort((a,b) => String(b.created_at||'').localeCompare(String(a.created_at||'')));
+
+            const count = document.getElementById('resultCount');
+            if (count) count.textContent = `${filtered.length} ${currentLang === 'fa' ? 'محصول' : 'products'}`;
+
+            const isAdmin = !!adminAccessToken;
+            if (!filtered.length) {
+                grid.innerHTML = `<p style="color:var(--muted);text-align:center;grid-column:1/-1;padding:30px;">${currentLang === 'fa' ? 'محصولی مطابق جستجو پیدا نشد.' : 'No products found.'}</p>`;
+                updateItemListStructuredData([]);
+                return;
+            }
+
+            filtered.forEach(p => {
+                const title = productTitle(p);
+                const mat = p[`material_${currentLang}`] || p.material_en || 'PLA+';
+                const dim = p[`dimensions_${currentLang}`] || p.dimensions_en || '20x20cm';
+                const activePrice = productPrice(p);
+                const slug = productSlug(p);
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.productId = p.id;
+                card.innerHTML = `
+                    <div class="card-img-wrap">
+                        <div class="image-placeholder">NIX-BUILDS</div>
+                        <img src="" class="card-img" data-product-image-id="${p.id}" alt="${escapeHtml(title)} — NIX-BUILDS" style="visibility:hidden;" loading="lazy" decoding="async">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag">${escapeHtml(p.product_line || '')}</div>
+                        <h3 class="card-title"><a href="${escapeHtml(`/product/${encodeURIComponent(slug)}`)}" style="color:inherit;text-decoration:none;">${escapeHtml(title)}</a></h3>
+                        <div class="spec-list">
+                            <div class="spec-item"><span>${dictionary[currentLang].mat}</span><span>${escapeHtml(mat)}</span></div>
+                            <div class="spec-item"><span>${dictionary[currentLang].dim}</span><span>${escapeHtml(dim)}</span></div>
+                        </div>
+                        ${activePrice ? `<div class="crypto-pay"><div class="pay-details"><span style="font-size:11px;color:var(--muted);">${dictionary[currentLang].pay}</span><span class="pay-price">${escapeHtml(activePrice)}</span></div></div>` : ''}
+                        <div class="card-actions">
+                            <a class="btn-secondary" href="${escapeHtml(`/product/${encodeURIComponent(slug)}`)}" onclick="event.preventDefault();openProductDetail('${p.id}')" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">${dictionary[currentLang].detail}</a>
+                            <button class="btn-accent" onclick="addToCart('${p.id}')">🛒 ${dictionary[currentLang].addCart}</button>
+                        </div>
+                        ${isAdmin ? `<div class="actions-cell"><button class="btn-edit" onclick="editProduct('${p.id}')">✏️ ویرایش</button><button class="btn-danger" onclick="deleteProduct('${p.id}')">🗑️ حذف</button></div>` : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            setupLazyProductImages();
+            updateCartUI();
+            updateItemListStructuredData(filtered);
+        }
+
+        function setupCatalogControls() {
+            const search = document.getElementById('productSearch');
+            const sort = document.getElementById('productSort');
+            if (search && !search.dataset.bound) {
+                search.dataset.bound = '1';
+                search.addEventListener('input', () => { productSearchTerm = search.value; renderProducts(); });
+            }
+            if (sort && !sort.dataset.bound) {
+                sort.dataset.bound = '1';
+                sort.addEventListener('change', () => { productSortMode = sort.value; renderProducts(); });
+            }
+        }
+
+        function updateItemListStructuredData(products) {
+            const el = document.getElementById('itemListStructuredData');
+            if (!el) return;
+            el.textContent = JSON.stringify({
+                "@context":"https://schema.org",
+                "@type":"ItemList",
+                "name":"NIX-BUILDS Products",
+                "itemListElement": products.slice(0,100).map((p,i)=>({
+                    "@type":"ListItem","position":i+1,
+                    "name": productTitle(p),
+                    "url": productUrl(p)
+                }))
+            });
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+        }
+
+        function getProductById(id) {
+            return allProducts.find(p => String(p.id) === String(id));
+        }
+
+        function productSlug(p) {
+            return p?.slug || `product-${p?.id || ''}`;
+        }
+
+        function productUrl(p) {
+            return `${location.origin}/product/${encodeURIComponent(productSlug(p))}`;
+        }
+
+        function renderServerProductSEO(p) {
+            const box = document.getElementById('serverProductSEO');
+            if (!box || !p) return;
+            const title = productTitle(p);
+            const desc = p[`description_${currentLang}`] || p.description_en || p.description_fa || `${title} — NIX-BUILDS`;
+            const price = productPrice(p);
+            let gallery = [];
+            try { gallery = Array.isArray(p.image_gallery) ? p.image_gallery : JSON.parse(p.image_gallery || '[]'); } catch {}
+            const image = p.image_data || gallery[0] || '';
+            box.innerHTML = `<div class="server-product-seo-card">
+                <div class="product-breadcrumbs"><a href="/" onclick="event.preventDefault();history.pushState({},'', '/');location.reload();">NIX-BUILDS</a> / ${escapeHtml(p.product_line || 'Product')}</div>
+                <h1>${escapeHtml(title)}</h1>
+                <p>${escapeHtml(desc).replace(/\n/g,'<br>')}</p>
+                ${price ? `<div class="seo-price">${escapeHtml(price)}</div>` : ''}
+                ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="eager">` : ''}
+            </div>`;
+            box.style.display = 'block';
+            document.body.classList.add('product-route');
+        }
+
+        function updateClientProductSEO(p) {
+            if (!p) return;
+            const title = p.seo_title || `${productTitle(p)} | NIX-BUILDS`;
+            const desc = (p.seo_description || p[`description_${currentLang}`] || p.description_en || p.description_fa || `${productTitle(p)} — NIX-BUILDS`).replace(/\s+/g,' ').slice(0,170);
+            document.title = title;
+            const setMeta = (selector, attr, value) => { const el=document.querySelector(selector); if(el) el.setAttribute(attr,value); };
+            setMeta('meta[name="description"]','content',desc);
+            setMeta('meta[property="og:title"]','content',title);
+            setMeta('meta[property="og:description"]','content',desc);
+            setMeta('meta[property="og:url"]','content',productUrl(p));
+            const canonical=document.querySelector('link[rel="canonical"]'); if(canonical) canonical.href=productUrl(p);
+        }
+
+        async function shareProduct(id) {
+            const p = getProductById(id);
+            if (!p) return;
+            const url = productUrl(p);
+            const title = productTitle(p);
+            try {
+                if (navigator.share) await navigator.share({title, text:title, url});
+                else await navigator.clipboard.writeText(url);
+                if (!navigator.share) alert(currentLang === 'fa' ? 'لینک محصول کپی شد.' : 'Product link copied.');
+            } catch {}
+        }
+
+        function normalizeSlug(value) {
+            return String(value || '')
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-z0-9\u0600-\u06ff\u4e00-\u9fff\u0400-\u04ff]+/g, '-')
+                .replace(/^-+|-+$/g, '')
+                .slice(0, 90);
+        }
+
+        function makeProductSlug() {
+            const english = document.getElementById('p_title_en')?.value || '';
+            const line = document.getElementById('p_line')?.value || '';
+            const id = document.getElementById('saveProductBtn')?.dataset.editId || '';
+            const base = normalizeSlug(english) || normalizeSlug(document.getElementById('p_title_fa')?.value) || 'product';
+            const suffix = id ? `-${id}` : `-${Date.now().toString(36)}`;
+            return `${base}${line ? `-${normalizeSlug(line).replace(/^nix-/, '')}` : ''}${suffix}`.replace(/-+/g,'-').replace(/-$/,'');
+        }
+
+        function navigateToProduct(p, replace = false) {
+            if (!p) return;
+            const url = productUrl(p);
+            if (replace) history.replaceState({productSlug: productSlug(p)}, '', url);
+            else history.pushState({productSlug: productSlug(p)}, '', url);
+        }
+
+        async function openProductDetail(id, updateUrl = true) {
+            const p = getProductById(id);
+            if (!p) return;
+            if (updateUrl && location.pathname !== productUrl(p).replace(location.origin, '')) {
+                navigateToProduct(p);
+            }
+            currentDetailProduct = p;
+            renderServerProductSEO(p);
+            updateClientProductSEO(p);
+            const title = productTitle(p);
+            const mat = p[`material_${currentLang}`] || p.material_en || 'PLA+';
+            const dim = p[`dimensions_${currentLang}`] || p.dimensions_en || '';
+            const price = productPrice(p);
+            const description = p[`description_${currentLang}`] || p.description_en || p.description_fa || '';
+            let gallery = [];
+            try { gallery = Array.isArray(p.image_gallery) ? p.image_gallery : JSON.parse(p.image_gallery || '[]'); } catch {}
+            const primary = p.image_data || gallery[0] || '';
+            const allImages = [primary, ...gallery].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i);
+            const modal = document.getElementById('productDetailModal');
+            const content = document.getElementById('productDetailContent');
+
+            content.innerHTML = `
+                <div class="detail-layout">
+                    <div>
+                        <img id="detailProductImage" class="detail-image" src="${escapeHtml(primary)}" alt="${escapeHtml(title)}">
+                        ${allImages.length > 1 ? `<div class="detail-gallery">${allImages.map((src,i)=>`<button type="button" onclick="selectDetailImage(${i})" aria-label="Image ${i+1}"><img src="${escapeHtml(src)}" alt=""></button>`).join('')}</div>` : ''}
+                    </div>
+                    <div class="detail-meta">
+                        <div class="detail-tag">${escapeHtml(p.product_line || '')}</div>
+                        <h2 class="detail-title">${escapeHtml(title)}</h2>
+                        <div class="detail-specs">
+                            <div class="detail-spec"><span>${dictionary[currentLang].mat}</span><span>${escapeHtml(mat)}</span></div>
+                            <div class="detail-spec"><span>${dictionary[currentLang].dim}</span><span>${escapeHtml(dim)}</span></div>
+                            ${price ? `<div class="detail-spec"><span>${dictionary[currentLang].pay}</span><strong>${escapeHtml(price)}</strong></div>` : ''}
+                        </div>
+                        ${description ? `<div class="detail-description"><h3>${currentLang === 'fa' ? 'توضیحات محصول' : currentLang === 'en' ? 'Product Description' : currentLang === 'ar' ? 'وصف المنتج' : currentLang === 'zh' ? '产品描述' : 'Описание продукта'}</h3><div>${escapeHtml(description).replace(/\n/g,'<br>')}</div></div>` : ''}
+                        <div class="detail-actions">
+                            <button class="btn-accent" style="padding:12px;" onclick="addToCart('${p.id}');closeProductDetail();">🛒 ${dictionary[currentLang].addCart}</button>
+                            <button class="btn-secondary" style="padding:12px;" onclick="shareProduct('${p.id}')">↗️ ${currentLang === 'fa' ? 'اشتراک‌گذاری' : 'Share'}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.style.display = 'flex';
+            window.currentDetailImages = allImages;
+            updateProductStructuredData(p, allImages);
+        }
+
+        function selectDetailImage(index) {
+            const images = window.currentDetailImages || [];
+            const img = document.getElementById('detailProductImage');
+            if (img && images[index]) img.src = images[index];
+        }
+
+        function updateProductStructuredData(p, images = []) {
+            const title = productTitle(p);
+            const desc = p[`description_${currentLang}`] || p.description_en || p.description_fa || `${title} — NIX-BUILDS`;
+            const data = {
+                "@context":"https://schema.org",
+                "@type":"Product",
+                "name": title,
+                "description": desc,
+                "brand":{"@type":"Brand","name":"NIX-BUILDS"},
+                "category": p.product_line || "3D Printed Product",
+                "image": images.length ? images : undefined,
+                "sku": String(p.id),
+                "url": productUrl(p),
+                "keywords": p.seo_tags || undefined
+            };
+            const el = document.getElementById('dynamicProductSchema');
+            if (el) el.textContent = JSON.stringify(data);
+        }
+
+        function closeProductDetail() {
+            document.getElementById('productDetailModal').style.display = 'none';
+            const seoBox = document.getElementById('serverProductSEO');
+            if (/^\/product\//.test(location.pathname)) {
+                history.pushState({}, '', '/');
+            }
+            document.body.classList.remove('product-route');
+            if (seoBox) seoBox.style.display = 'none';
+            currentDetailProduct = null;
+            document.title = 'NIX-BUILDS | فروشگاه محصولات پرینت سه‌بعدی و تجهیزات';
+            const homeCanonical=document.querySelector('link[rel="canonical"]'); if(homeCanonical) homeCanonical.href='https://nixbuilds.nixshop.workers.dev/';
+        }
+
+        function addToCart(id) {
+            const p = getProductById(id);
+            if (!p) return;
+            const existing = cart.find(i => String(i.id) === String(id));
+            if (existing) existing.qty += 1;
+            else cart.push({ id: p.id, qty: 1 });
+            writeCache('nix_builds_cart_v1', cart);
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => String(i.id) !== String(id));
+            writeCache('nix_builds_cart_v1', cart);
+            renderCart();
+        }
+
+        function changeCartQty(id, delta) {
+            const item = cart.find(i => String(i.id) === String(id));
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) cart = cart.filter(i => String(i.id) !== String(id));
+            writeCache('nix_builds_cart_v1', cart);
+            renderCart();
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((sum, i) => sum + Number(i.qty || 0), 0);
+            const badge = document.getElementById('cartBadge');
+            if (badge) badge.textContent = count;
+            const btn = document.getElementById('cartBtn');
+            if (btn) btn.title = `${dictionary[currentLang].cart}: ${count}`;
+        }
+
+        async function renderCart() {
+            const box = document.getElementById('cartItems');
+            const items = cart.map(i => ({...i, product:getProductById(i.id)})).filter(i => i.product);
+
+            if (!items.length) {
+                box.innerHTML = `<div class="cart-empty">${dictionary[currentLang].emptyCart}</div>`;
+                document.getElementById('cartTotal').textContent = '0';
+                updateCartUI();
+                return;
+            }
+
+            box.innerHTML = '';
+            const currencyTotals = {};
+
+            for (const item of items) {
+                const p = item.product;
+                const rawPrice = p.price_usdt || p.price_btc || p.price_eth || '';
+                const priceText = productPrice(p) || '—';
+                const currency = p.price_usdt ? 'USDT' : (p.price_btc ? 'BTC' : (p.price_eth ? 'ETH' : ''));
+                const numericPrice = parseFloat(String(rawPrice).replace(/,/g, '').trim());
+
+                if (currency && Number.isFinite(numericPrice)) {
+                    currencyTotals[currency] = (currencyTotals[currency] || 0) + numericPrice * Number(item.qty || 0);
+                }
+
+                const row = document.createElement('div');
+                row.className = 'cart-item';
+                row.innerHTML = `
+                    <img src="" alt="${escapeHtml(productTitle(p))}" style="visibility:hidden;">
+                    <div>
+                        <div class="cart-item-title">${escapeHtml(productTitle(p))}</div>
+                        <div style="color:var(--muted);font-size:12px;">${escapeHtml(priceText)}</div>
+                        <div class="cart-controls">
+                            <button onclick="changeCartQty('${p.id}',-1)">−</button>
+                            <span>${item.qty}</span>
+                            <button onclick="changeCartQty('${p.id}',1)">+</button>
+                            <button class="btn-danger" onclick="removeFromCart('${p.id}')">${escapeHtml(dictionary[currentLang].remove)}</button>
+                        </div>
+                    </div>
+                    <div class="cart-price">${escapeHtml(priceText)} × ${item.qty}</div>
+                `;
+                box.appendChild(row);
+
+                const img = row.querySelector('img');
+                const image = await fetchProductImage(p.id);
+                if (image) {
+                    img.onload = () => { img.style.visibility = 'visible'; };
+                    img.src = image;
+                }
+            }
+
+            const totalText = Object.entries(currencyTotals)
+                .map(([currency, total]) => `${Number(total.toFixed(8)).toString()} ${currency}`)
+                .join(' + ');
+
+            document.getElementById('cartTotal').textContent = totalText || '—';
+            updateCartUI();
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'flex';
+            renderCart();
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function normalizePhoneForSms(phone) {
+            return String(phone || '').trim().replace(/[^\d+]/g,'');
+        }
+
+        function sendOrderRequest() {
+            const items = cart.map(i => ({...i, product:getProductById(i.id)})).filter(i => i.product);
+            if (!items.length) {
+                alert(dictionary[currentLang].emptyCart);
+                return;
+            }
+            const name = document.getElementById('orderName').value.trim();
+            const contact = document.getElementById('orderContact').value.trim();
+            if (!name) {
+                alert(currentLang === 'fa' ? 'لطفاً نام را وارد کنید.' : 'Please enter your name.');
+                document.getElementById('orderName').focus();
+                return;
+            }
+
+            const lines = items.map(i => `- ${productTitle(i.product)} | ${productPrice(i.product) || 'Price on request'} | Qty: ${i.qty}`);
+            const body = `NIX-BUILDS ORDER\nName: ${name}\nPhone: ${contact || '-'}\n\nProducts:\n${lines.join('\n')}\n\nTotal: ${document.getElementById('cartTotal').textContent}`;
+            const adminPhone = normalizePhoneForSms(window.siteInfo && window.siteInfo.phone);
+
+            if (!adminPhone) {
+                alert(currentLang === 'fa' ? 'شماره ادمین در تنظیمات سایت ثبت نشده است.' : 'Admin phone number is not configured.');
+                return;
+            }
+
+            const smsUrl = `sms:${adminPhone}?body=${encodeURIComponent(body)}`;
+            window.location.href = smsUrl;
+        }
+
+        function openAdmin() {
+            if (adminAccessToken) {
+                document.getElementById('adminModal').style.display = 'flex';
+                return;
+            }
+            document.getElementById('loginError').innerText = '';
+            document.getElementById('adminEmail').value = '';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginModal').style.display = 'flex';
+            setTimeout(() => document.getElementById('adminEmail').focus(), 100);
+        }
+
+        function closeLogin() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        async function testSupabaseConnection() {
+            const out = document.getElementById('connectionTest');
+            out.innerText = 'در حال تست اتصال...';
+
+            try {
+                const res = await fetch(`${DB_URL}/rest/v1/site_settings?select=id&limit=1`, {
+                    method: 'GET',
+                    headers: {
+                        "apikey": DB_KEY,
+                        "Authorization": `Bearer ${DB_KEY}`
+                    }
+                });
+
+                const text = await res.text();
+                if (res.ok) {
+                    out.innerText = `OK — Supabase متصل است (HTTP ${res.status}).`;
+                } else {
+                    out.innerText = `Supabase پاسخ خطا داد — HTTP ${res.status} — ${text}`;
+                }
+            } catch (e) {
+                out.innerText = `خطای اتصال شبکه: ${e.message || e}`;
+            }
+        }
+
+        async function loginAdmin() {
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const errorEl = document.getElementById('loginError');
+
+            errorEl.innerText = '';
+
+            if (!email || !password) {
+                errorEl.innerText = 'ایمیل و رمز عبور را وارد کنید.';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${DB_URL}/auth/v1/token?grant_type=password`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": DB_KEY,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok || !data.access_token) {
+                    const details = [
+                        data.error_description,
+                        data.msg,
+                        data.error,
+                        `HTTP ${res.status}`
+                    ].filter(Boolean).join(' — ');
+                    throw new Error(details || 'ورود ناموفق بود.');
+                }
+
+                adminAccessToken = data.access_token;
+                closeLogin();
+                document.getElementById('adminModal').style.display = 'flex';
+                renderProducts();
+            } catch (e) {
+                console.error("loginAdmin:", e);
+                errorEl.innerText = `خطای واقعی ورود: ${e.message || e}`;
+            }
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminModal').style.display = 'none';
+            renderProducts();
+        }
+
+        function logoutAdmin() {
+            adminAccessToken = null;
+            document.getElementById('adminModal').style.display = 'none';
+            renderProducts();
+            alert('از حساب مدیر خارج شدید.');
+        }
+
+        function switchFormLang(lang) {
+            document.querySelectorAll('.lang-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.lang-content').forEach(c => c.classList.remove('active'));
+            if (window.event && window.event.target) window.event.target.classList.add('active');
+            document.getElementById(`f_lang_${lang}`).classList.add('active');
+        }
+
+        async function handleImageUpload(input) {
+            if (!(input.files && input.files.length)) return;
+            const files = Array.from(input.files).slice(0, 6);
+            try {
+                const images = [];
+                for (const file of files) {
+                    if (file.size > 12 * 1024 * 1024) throw new Error('هر تصویر باید کمتر از 12MB باشد.');
+                    images.push(await compressImageToDataUrl(file, 1800, 0.82));
+                }
+                document.getElementById('p_img_base64').value = images[0] || '';
+                document.getElementById('p_image_gallery').value = JSON.stringify(images.slice(1));
+            } catch (e) {
+                alert(e.message || 'پردازش تصاویر انجام نشد.');
+                input.value = '';
+            }
+        }
+
+        function compressImageToDataUrl(file, maxSide = 1800, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onerror = reject;
+                reader.onload = () => {
+                    const img = new Image();
+                    img.onerror = reject;
+                    img.onload = () => {
+                        const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.max(1, Math.round(img.width * scale));
+                        canvas.height = Math.max(1, Math.round(img.height * scale));
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function saveSlogan() {
+            if (!adminAccessToken) {
+                alert('ابتدا وارد حساب مدیر شوید.');
+                return;
+            }
+
+            const payload = {
+                header_fa: document.getElementById('h_fa').value,
+                header_en: document.getElementById('h_en').value,
+                header_ar: document.getElementById('h_ar').value,
+                header_zh: document.getElementById('h_zh').value,
+                header_ru: document.getElementById('h_ru').value
+            };
+
+            try {
+                await dbRequest("site_settings?id=eq.main_settings", "PATCH", payload, true);
+                alert("شعار آپدیت شد!");
+                await loadSlogan();
+                changeLanguage(currentLang);
+            } catch (e) {
+                console.error("saveSlogan:", e);
+                alert(`خطا در بروزرسانی شعار:\n${e.message}`);
+            }
+        }
+
+        async function saveSiteInfo() {
+            if (!adminAccessToken) {
+                alert('ابتدا وارد حساب مدیر شوید.');
+                return;
+            }
+
+            const payload = {
+                contact_email: document.getElementById('contact_email_admin').value.trim(),
+                contact_phone: document.getElementById('contact_phone_admin').value.trim(),
+                about_text: document.getElementById('about_text_admin').value.trim(),
+                crypto_discount_text: document.getElementById('crypto_discount_admin').value.trim()
+            };
+
+            try {
+                await dbRequest("site_settings?id=eq.main_settings", "PATCH", payload, true);
+                const updated = { ...(readCache(SITE_CACHE_KEY) || {id:'main_settings'}), ...payload };
+                writeCache(SITE_CACHE_KEY, updated);
+                applySiteSettings(updated);
+                changeLanguage(currentLang);
+                alert("اطلاعات تماس و درباره ما با موفقیت بروزرسانی شد.");
+            } catch (e) {
+                console.error("saveSiteInfo:", e);
+                alert(`خطا در بروزرسانی اطلاعات سایت:\n${e.message}`);
+            }
+        }
+
+        async function saveProduct() {
+            if (!adminAccessToken) {
+                alert('ابتدا وارد حساب مدیر شوید.');
+                return;
+            }
+
+            const editId = document.getElementById('saveProductBtn').dataset.editId;
+            const payload = {
+                product_line: document.getElementById('p_line').value,
+                image_data: document.getElementById('p_img_base64').value || null,
+                image_gallery: (() => { try { return JSON.parse(document.getElementById('p_image_gallery').value || '[]'); } catch { return []; } })(),
+                slug: normalizeSlug(document.getElementById('p_slug').value) || makeProductSlug(),
+                seo_title: document.getElementById('p_seo_title').value.trim(),
+                seo_description: document.getElementById('p_seo_description').value.trim(),
+                seo_tags: document.getElementById('p_seo_tags').value.trim(),
+                description_fa: document.getElementById('p_desc_fa').value.trim(),
+                description_en: document.getElementById('p_desc_en').value.trim(),
+                description_ar: document.getElementById('p_desc_ar').value.trim(),
+                description_zh: document.getElementById('p_desc_zh').value.trim(),
+                description_ru: document.getElementById('p_desc_ru').value.trim(),
+                price_usdt: document.getElementById('p_p_usdt').value,
+                price_btc: document.getElementById('p_p_btc').value,
+                price_eth: document.getElementById('p_p_eth').value,
+                name_fa: document.getElementById('p_title_fa').value,
+                name_en: document.getElementById('p_title_en').value,
+                name_ar: document.getElementById('p_title_ar').value,
+                name_zh: document.getElementById('p_title_zh').value,
+                name_ru: document.getElementById('p_title_ru').value,
+                material_fa: document.getElementById('p_mat_fa').value,
+                dimensions_fa: document.getElementById('p_dim_fa').value,
+                material_en: document.getElementById('p_mat_en').value,
+                dimensions_en: document.getElementById('p_dim_en').value,
+                material_ar: document.getElementById('p_mat_ar').value,
+                dimensions_ar: document.getElementById('p_dim_ar').value,
+                material_zh: document.getElementById('p_mat_zh').value,
+                dimensions_zh: document.getElementById('p_dim_zh').value,
+                material_ru: document.getElementById('p_mat_ru').value,
+                dimensions_ru: document.getElementById('p_dim_ru').value
+            };
+
+            try {
+                if (editId) {
+                    await dbRequest(`products?id=eq.${encodeURIComponent(editId)}`, "PATCH", payload, true);
+                    alert("محصول با موفقیت ویرایش شد.");
+                } else {
+                    await dbRequest("products", "POST", payload, true);
+                    alert("محصول با موفقیت ثبت شد!");
+                }
+                resetProductForm();
+                await loadProducts();
+                closeAdmin();
+            } catch (e) {
+                console.error("saveProduct:", e);
+                alert(`ذخیره محصول انجام نشد.\n${e.message}`);
+            }
+        }
+
+        async function editProduct(id) {
+            if (!adminAccessToken) return;
+            const p = getProductById(id);
+            if (!p) return;
+
+            document.getElementById('adminFormTitle').textContent = 'ویرایش محصول';
+            document.getElementById('saveProductBtn').textContent = 'ذخیره تغییرات';
+            document.getElementById('cancelEditBtn').style.display = 'block';
+            document.getElementById('saveProductBtn').dataset.editId = id;
+
+            const map = {
+                p_line:p.product_line, p_slug:p.slug||'', p_seo_title:p.seo_title||'', p_seo_description:p.seo_description||'', p_p_usdt:p.price_usdt||'', p_p_btc:p.price_btc||'', p_p_eth:p.price_eth||'', p_desc_fa:p.description_fa||'', p_desc_en:p.description_en||'', p_desc_ar:p.description_ar||'', p_desc_zh:p.description_zh||'', p_desc_ru:p.description_ru||'', p_seo_tags:p.seo_tags||'',
+                p_title_fa:p.name_fa||'', p_title_en:p.name_en||'', p_title_ar:p.name_ar||'', p_title_zh:p.name_zh||'', p_title_ru:p.name_ru||'',
+                p_mat_fa:p.material_fa||'', p_dim_fa:p.dimensions_fa||'', p_mat_en:p.material_en||'', p_dim_en:p.dimensions_en||'',
+                p_mat_ar:p.material_ar||'', p_dim_ar:p.dimensions_ar||'', p_mat_zh:p.material_zh||'', p_dim_zh:p.dimensions_zh||'',
+                p_mat_ru:p.material_ru||'', p_dim_ru:p.dimensions_ru||''
+            };
+            Object.entries(map).forEach(([id,v]) => { const el=document.getElementById(id); if(el) el.value=v; });
+            document.getElementById('p_file').value = '';
+            document.getElementById('p_img_base64').value = imageCache.get(String(id)) || ''; document.getElementById('p_image_gallery').value = JSON.stringify(Array.isArray(p.image_gallery) ? p.image_gallery : []);
+            document.getElementById('adminModal').style.display = 'flex';
+            if (!document.getElementById('p_img_base64').value) await fetchProductImage(id).then(img => {
+                if (img) document.getElementById('p_img_base64').value = img;
+            });
+        }
+
+        function resetProductForm() {
+            ['p_title_fa','p_title_en','p_title_ar','p_title_zh','p_title_ru',
+             'p_mat_fa','p_dim_fa','p_mat_en','p_dim_en','p_mat_ar','p_dim_ar','p_mat_zh','p_dim_zh','p_mat_ru','p_dim_ru',
+             'p_slug','p_seo_title','p_seo_description','p_p_usdt','p_w_usdt','p_p_btc','p_w_btc','p_p_eth','p_w_eth','p_img_base64','p_image_gallery','p_desc_fa','p_desc_en','p_desc_ar','p_desc_zh','p_desc_ru','p_seo_tags'].forEach(id => {
+                const el=document.getElementById(id); if(el) el.value='';
+            });
+            document.getElementById('p_file').value='';
+            document.getElementById('adminFormTitle').textContent='افزودن محصول جدید';
+            document.getElementById('saveProductBtn').textContent='ثبت محصول در Supabase';
+            document.getElementById('saveProductBtn').dataset.editId='';
+            document.getElementById('cancelEditBtn').style.display='none';
+        }
+
+        function cancelEdit() {
+            resetProductForm();
+        }
+
+        async function deleteProduct(id) {
+            if (!adminAccessToken) {
+                alert('ابتدا وارد حساب مدیر شوید.');
+                return;
+            }
+
+            if (!confirm("آیا مطمئن هستید که این محصول حذف شود؟")) return;
+
+            try {
+                await dbRequest(`products?id=eq.${encodeURIComponent(id)}`, "DELETE", null, true);
+                await loadProducts();
+                alert('محصول حذف شد.');
+            } catch (e) {
+                console.error("deleteProduct:", e);
+                alert(`حذف محصول انجام نشد.\n${e.message}`);
+            }
+        }
+
+        window.addEventListener('popstate', () => {
+            if (/^\/product\//.test(location.pathname)) {
+                const slug = decodeURIComponent(location.pathname.split('/')[2] || '');
+                const p = allProducts.find(x => String(x.slug || '') === slug);
+                if (p) openProductDetail(p.id, false);
+            } else {
+                closeProductDetail();
+            }
+        });
+
+        window.addEventListener('load', init);
+
+        // Allow pressing Enter in the password field to login.
+        document.addEventListener('DOMContentLoaded', () => {
+            const password = document.getElementById('adminPassword');
+            if (password) {
+                password.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') loginAdmin();
+                });
+            }
+        });
+
+    </script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+    }
+    </script>
+</body>
+</html>
