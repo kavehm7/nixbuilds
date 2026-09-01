@@ -1,4 +1,4 @@
-NIX-BUILDS v2.5.7
+NIX-BUILDS v2.5.11
 
 This release keeps the existing Supabase schema unchanged:
 - products.image_data = primary product image
