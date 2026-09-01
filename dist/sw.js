@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nix-builds-static-v2.5.11';
+const CACHE_NAME = 'nix-builds-static-v2.5.12';
 const STATIC_ASSETS = ['/manifest.webmanifest', '/icon.svg', '/sw.js'];
 
 self.addEventListener('install', event => {
