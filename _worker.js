@@ -11,7 +11,7 @@
  */
 
 const SITE_URL = "https://nixbuilds.nixshop.workers.dev";
-const SITE_VERSION = "2.5.11";
+const SITE_VERSION = "2.5.14";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
