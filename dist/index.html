@@ -1629,20 +1629,13 @@
                 return;
             }
 
-            const editId = document.getElementById('saveProductBtn').dataset.editId;
+            const saveBtn = document.getElementById('saveProductBtn');
+            const editId = saveBtn?.dataset.editId || '';
+            const imageEl = document.getElementById('p_img_base64');
+            const galleryEl = document.getElementById('p_image_gallery');
+
             const payload = {
                 product_line: document.getElementById('p_line').value,
-                image_data: document.getElementById('p_img_base64').value || null,
-                image_gallery: (() => { try { return JSON.parse(document.getElementById('p_image_gallery').value || '[]'); } catch { return []; } })(),
-                slug: normalizeSlug(document.getElementById('p_slug').value) || makeProductSlug(),
-                seo_title: document.getElementById('p_seo_title').value.trim(),
-                seo_description: document.getElementById('p_seo_description').value.trim(),
-                seo_tags: document.getElementById('p_seo_tags').value.trim(),
-                description_fa: document.getElementById('p_desc_fa').value.trim(),
-                description_en: document.getElementById('p_desc_en').value.trim(),
-                description_ar: document.getElementById('p_desc_ar').value.trim(),
-                description_zh: document.getElementById('p_desc_zh').value.trim(),
-                description_ru: document.getElementById('p_desc_ru').value.trim(),
                 price_usdt: document.getElementById('p_p_usdt').value,
                 price_btc: document.getElementById('p_p_btc').value,
                 price_eth: document.getElementById('p_p_eth').value,
@@ -1660,23 +1653,69 @@
                 material_zh: document.getElementById('p_mat_zh').value,
                 dimensions_zh: document.getElementById('p_dim_zh').value,
                 material_ru: document.getElementById('p_mat_ru').value,
-                dimensions_ru: document.getElementById('p_dim_ru').value
+                dimensions_ru: document.getElementById('p_dim_ru').value,
+                slug: normalizeSlug(document.getElementById('p_slug').value) || makeProductSlug(),
+                seo_title: document.getElementById('p_seo_title').value.trim(),
+                seo_description: document.getElementById('p_seo_description').value.trim(),
+                seo_tags: document.getElementById('p_seo_tags').value.trim(),
+                description_fa: document.getElementById('p_desc_fa').value.trim(),
+                description_en: document.getElementById('p_desc_en').value.trim(),
+                description_ar: document.getElementById('p_desc_ar').value.trim(),
+                description_zh: document.getElementById('p_desc_zh').value.trim(),
+                description_ru: document.getElementById('p_desc_ru').value.trim()
             };
+
+            // Keep the existing main image when editing unless a new image was selected.
+            const newImage = imageEl?.value?.trim() || '';
+            if (newImage) payload.image_data = newImage;
+
+            // image_gallery is JSONB in the existing Supabase schema.
+            try {
+                const rawGallery = galleryEl?.value?.trim() || '[]';
+                payload.image_gallery = JSON.parse(rawGallery);
+                if (!Array.isArray(payload.image_gallery)) payload.image_gallery = [];
+            } catch {
+                payload.image_gallery = [];
+            }
+
+            const originalText = saveBtn?.textContent || '';
+            if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = editId ? 'در حال ذخیره...' : 'در حال ثبت...'; }
 
             try {
                 if (editId) {
-                    await dbRequest(`products?id=eq.${encodeURIComponent(editId)}`, "PATCH", payload, true);
+                    // PATCH only the selected row. Do not send image_data=null on an edit without a new image.
+                    const result = await dbRequest(`products?id=eq.${encodeURIComponent(editId)}`, "PATCH", payload, true);
+                    if (!Array.isArray(result) || !result.length) {
+                        // A successful HTTP response with no returned row is not treated as a silent success.
+                        const verify = await dbRequest(`products?id=eq.${encodeURIComponent(editId)}&select=id,slug,name_fa,updated_at`, "GET", null, true);
+                        if (!Array.isArray(verify) || !verify.length) throw new Error('رکورد محصول پس از ویرایش قابل تأیید نیست.');
+                    }
                     alert("محصول با موفقیت ویرایش شد.");
                 } else {
-                    await dbRequest("products", "POST", payload, true);
+                    // The existing products.id is bigint backed by products_id_seq, but the current
+                    // column has no REST default. Allocate the next safe id explicitly for INSERT.
+                    const latest = await dbRequest('products?select=id&order=id.desc&limit=1');
+                    const maxId = Array.isArray(latest) && latest.length ? Number(latest[0].id) : 0;
+                    if (!Number.isSafeInteger(maxId) || maxId < 0) throw new Error('شناسه فعلی محصولات قابل تشخیص نیست.');
+                    payload.id = maxId + 1;
+
+                    const result = await dbRequest("products", "POST", payload, true);
+                    if (!Array.isArray(result) || !result.length) {
+                        const verify = await dbRequest(`products?id=eq.${encodeURIComponent(payload.id)}&select=id,slug,name_fa`, "GET", null, true);
+                        if (!Array.isArray(verify) || !verify.length) throw new Error('محصول پس از ثبت قابل تأیید نیست.');
+                    }
                     alert("محصول با موفقیت ثبت شد!");
                 }
+
                 resetProductForm();
+                imageCache.clear();
                 await loadProducts();
                 closeAdmin();
             } catch (e) {
                 console.error("saveProduct:", e);
-                alert(`ذخیره محصول انجام نشد.\n${e.message}`);
+                alert(`ذخیره محصول انجام نشد.\n${e.message || e}`);
+            } finally {
+                if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = originalText || (editId ? 'ذخیره تغییرات' : 'ثبت محصول در Supabase'); }
             }
         }
 
