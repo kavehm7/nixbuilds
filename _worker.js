@@ -11,12 +11,12 @@
  */
 
 const SITE_URL = "https://nixbuilds.nixshop.workers.dev";
-const SITE_VERSION = "2.5.11";
+const SITE_VERSION = "2.5.16";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
 const PRODUCT_SELECT = [
-  "id","created_at","product_line","slug","seo_title","seo_description","seo_tags",
+  "id","created_at","product_line","availability_status","slug","seo_title","seo_description","seo_tags",
   "image_data","image_gallery",
   "name_fa","name_en","name_ar","name_zh","name_ru",
   "material_fa","material_en","material_ar","material_zh","material_ru",
@@ -27,7 +27,7 @@ const PRODUCT_SELECT = [
 
 
 const PRODUCT_LIST_SELECT = [
-  "id","created_at","product_line","slug","seo_title","seo_description","seo_tags",
+  "id","created_at","product_line","availability_status","slug","seo_title","seo_description","seo_tags",
   "name_fa","name_en","name_ar","name_zh","name_ru",
   "material_fa","material_en","material_ar","material_zh","material_ru",
   "dimensions_fa","dimensions_en","dimensions_ar","dimensions_zh","dimensions_ru",
@@ -169,7 +169,7 @@ const STATIC_PAGES = {
     title: "درباره NIX-BUILDS | طراحی و ساخت محصولات مدرن",
     description: "آشنایی با NIX-BUILDS؛ برند طراحی و تولید محصولات کاربردی و مدرن با پرینت سه‌بعدی و ساخت دیجیتال.",
     h1: "درباره NIX-BUILDS",
-    body: `<p>NIX-BUILDS یک برند طراحی و ساخت است که روی محصولات کاربردی، مدرن و قابل تولید با فناوری‌های ساخت دیجیتال تمرکز دارد.</p><h2>لاین‌های NIX-BUILDS</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME"><strong>NIX-HOME</strong><br>محصولات خانه و دکور</a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR"><strong>NIX-GEAR</strong><br>ابزار و تجهیزات کاربردی</a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE"><strong>NIX-CARE</strong><br>محصولات مراقبت و زندگی روزمره</a></div><h2>طراحی با تمرکز بر کاربرد</h2><p>هدف ما ترکیب فرم، عملکرد و ساخت دیجیتال برای ارائه محصولاتی است که هم ظاهر حرفه‌ای داشته باشند و هم در استفاده روزمره مفید باشند.</p>`
+    body: `<p>NIX-BUILDS یک برند طراحی و ساخت است که روی محصولات کاربردی، مدرن و قابل تولید با فناوری‌های ساخت دیجیتال تمرکز دارد.</p><h2>لاین‌های NIX-BUILDS</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME"><strong>NIX-HOME</strong><br>محصولات خانه و دکور</a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR"><strong>NIX-GEAR</strong><br>ابزار و تجهیزات کاربردی</a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE"><strong>NIX-CARE</strong><br>محصولات مراقبت و زندگی روزمره</a><a class="route-link" href="/#nix-auto" data-filter-link="NIX-AUTO"><strong>NIX-AUTO</strong><br>قطعات خودرو و لوازم جانبی</a><a class="route-link" href="/#nix-custom" data-filter-link="NIX-CUSTOM"><strong>NIX-CUSTOM</strong><br>طراحی و تولید سفارشی</a></div><h2>طراحی با تمرکز بر کاربرد</h2><p>هدف ما ترکیب فرم، عملکرد و ساخت دیجیتال برای ارائه محصولاتی است که هم ظاهر حرفه‌ای داشته باشند و هم در استفاده روزمره مفید باشند.</p>`
   },
   "/contact": {
     title: "تماس و سفارش | NIX-BUILDS",
@@ -204,13 +204,15 @@ const STATIC_PAGES = {
 };
 
 const CATEGORY_INFO = {
+  "nix-auto": { line:"NIX-AUTO", title:"NIX-AUTO | قطعات خودرو و لوازم جانبی", description:"قطعات کاربردی، قاب‌ها و لوازم جانبی خودرو از NIX-BUILDS.", intro:"قطعات و لوازم جانبی خودرو؛ امکان بررسی ساخت سفارشی بر اساس مدل و ابعاد قطعه." },
+  "nix-custom": { line:"NIX-CUSTOM", title:"NIX-CUSTOM | طراحی و تولید سفارشی", description:"طراحی اختصاصی، نمونه‌سازی و تولید قطعات سفارشی با NIX-BUILDS.", intro:"برای سفارش سفارشی، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و برآورد هزینه بررسی شود." },
   "nix-home": { line:"NIX-HOME", title:"NIX-HOME | محصولات خانه و دکور مدرن", description:"محصولات NIX-HOME؛ اشیای کاربردی و دکوراتیو با طراحی مدرن و ساخت دیجیتال.", intro:"مجموعه‌ای از محصولات کاربردی و دکوراتیو برای خانه، با تمرکز بر طراحی مینیمال و ساخت با پرینت سه‌بعدی." },
   "nix-gear": { line:"NIX-GEAR", title:"NIX-GEAR | ابزار و تجهیزات کاربردی", description:"محصولات NIX-GEAR؛ ابزارها و تجهیزات کاربردی طراحی‌شده برای استفاده روزمره و پروژه‌های ساخت.", intro:"محصولات کاربردی NIX-GEAR برای ابزار، کارگاه، ساخت و استفاده روزمره." },
   "nix-care": { line:"NIX-CARE", title:"NIX-CARE | محصولات مراقبت و زندگی روزمره", description:"محصولات NIX-CARE؛ راهکارهای طراحی‌شده برای مراقبت شخصی و نیازهای روزمره.", intro:"محصولات NIX-CARE با تمرکز بر حمل آسان، استفاده روزمره و طراحی کاربردی." }
 };
 
 async function productsByLine(line) {
-  const rows = await supabaseGet(`products?product_line=eq.${encodeURIComponent(line)}&slug=not.is.null&select=id,slug,name_fa,name_en,created_at,seo_description,description_fa,description_en,product_line,price_usdt&order=created_at.desc&limit=100`);
+  const rows = await supabaseGet(`products?product_line=eq.${encodeURIComponent(line)}&slug=not.is.null&select=id,slug,availability_status,name_fa,name_en,created_at,seo_description,description_fa,description_en,product_line,price_usdt&order=created_at.desc&limit=100`);
   return Array.isArray(rows) ? rows : [];
 }
 
@@ -239,7 +241,7 @@ function routeShell(source, meta, bodyHtml, canonicalPath, schemaExtra = "") {
 
 async function staticRouteResponse(pathname, source) {
   if (pathname === "/products") {
-    const rows = await supabaseGet(`products?slug=not.is.null&select=id,slug,name_fa,name_en,created_at,seo_description,description_fa,description_en,product_line&order=created_at.desc&limit=100`);
+    const rows = await supabaseGet(`products?slug=not.is.null&select=id,slug,availability_status,name_fa,name_en,created_at,seo_description,description_fa,description_en,product_line&order=created_at.desc&limit=100`);
     const products = Array.isArray(rows) ? rows : [];
     const links = products.map(p => `<a class="route-link" href="${escHtml(productUrl(p))}"><strong>${escHtml(titleOf(p))}</strong><br><small>${escHtml(p.product_line||"Product")}</small></a>`).join('');
     const body = `<p>فهرست محصولات NIX-BUILDS شامل محصولات طراحی‌شده برای خانه، ابزار و زندگی روزمره است.</p><div class="route-links">${links || '<p>در حال حاضر محصولی برای نمایش وجود ندارد.</p>'}</div>`;
@@ -257,7 +259,17 @@ async function staticRouteResponse(pathname, source) {
     return routeShell(source,{title:info.title,description:info.description,h1:info.line},body,`/category/${key}`,schema);
   }
   if (STATIC_PAGES[pathname]) {
-    const meta=STATIC_PAGES[pathname];
+    const meta={...STATIC_PAGES[pathname]};
+    if (pathname === "/contact") {
+      const settingsRows = await supabaseGet("site_settings?id=eq.main_settings&select=contact_email,contact_phone&limit=1");
+      const settings = Array.isArray(settingsRows) ? (settingsRows[0] || {}) : {};
+      const phone = String(settings.contact_phone || "").trim();
+      const email = String(settings.contact_email || "").trim();
+      const phoneHref = phone.replace(/[^+\\d]/g, "");
+      const phoneHtml = phone ? `<a class="route-link" href="tel:${escHtml(phoneHref)}">📞 تلفن: ${escHtml(phone)}</a>` : "";
+      const emailHtml = email ? `<a class="route-link" href="mailto:${escHtml(email)}">✉️ ایمیل: ${escHtml(email)}</a>` : "";
+      meta.body = `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links">${phoneHtml}${emailHtml}<a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش سفارشی</h2><p>برای سفارش‌های NIX-CUSTOM یا قطعات خودرو در NIX-AUTO، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و هزینه بررسی شود.</p><h2>ثبت سفارش محصولات موجود</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید درخواست سفارش را ارسال کنید.</p>`;
+    }
     const schema=safeJson({"@context":"https://schema.org","@type":"WebPage","name":meta.title,"description":meta.description,"url":`${SITE_URL}${pathname}`,"isPartOf":{"@type":"WebSite","name":"NIX-BUILDS","url":SITE_URL+"/"}});
     return routeShell(source,meta,meta.body,pathname,schema);
   }
@@ -494,7 +506,7 @@ export default {
     }
 
     if (pathname === '/products') return Response.redirect(`${SITE_URL}/#all`, 301);
-    const oldCategory = pathname.match(/^\/category\/(nix-home|nix-gear|nix-care)\/?$/i);
+    const oldCategory = pathname.match(/^\/category\/(nix-home|nix-gear|nix-care|nix-auto|nix-custom)\/?$/i);
     if (oldCategory) return Response.redirect(`${SITE_URL}/#${oldCategory[1].toLowerCase()}`, 301);
 
     const sourceAsset = await env.ASSETS.fetch(new Request(new URL("/index.html", url), { method:"GET", headers:request.headers }));
