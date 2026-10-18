@@ -10,8 +10,8 @@
  * All other requests are served from the static assets directory.
  */
 
-const SITE_URL = "https://nixbuilds.nixshop.workers.dev";
-const SITE_VERSION = "2.5.16";
+const SITE_URL = "https://nixbuilds.ir";
+const SITE_VERSION = "2.5.17";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
@@ -143,6 +143,15 @@ function productSchema(p) {
 
   if (p.seo_tags) data.keywords = p.seo_tags;
   if (primary) data.image = [`${SITE_URL}/api/product-image/${encodeURIComponent(p.id)}?index=0`];
+  const price = Number(p.price_usdt);
+  if (p.price_usdt !== null && p.price_usdt !== undefined && p.price_usdt !== "" && Number.isFinite(price) && price > 0) {
+    const status = String(p.availability_status || "available");
+    data.offers = {
+      "@type":"Offer", "url":productUrl(p), "priceCurrency":"USD", "price":price,
+      "availability": status === "out_of_stock" ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      "itemCondition":"https://schema.org/NewCondition"
+    };
+  }
 
   return data;
 }
@@ -401,40 +410,25 @@ async function productBySlug(slug) {
 
 async function sitemapResponse() {
   const rows = await supabaseGet(
-    `products?select=id,slug,created_at,name_fa,name_en&slug=not.is.null&order=created_at.desc`
+    `products?select=id,slug,created_at,name_fa,name_en&slug=not.is.null&order=created_at.desc&limit=1000`
   );
-
-  const urls = [
-    `<url><loc>${SITE_URL}/</loc></url>`,
-
-
-
-
-    `<url><loc>${SITE_URL}/about</loc></url>`,
-    `<url><loc>${SITE_URL}/contact</loc></url>`,
-    `<url><loc>${SITE_URL}/shipping</loc></url>`,
-    `<url><loc>${SITE_URL}/returns</loc></url>`,
-    `<url><loc>${SITE_URL}/privacy</loc></url>`,
-    `<url><loc>${SITE_URL}/terms</loc></url>`
-  ];
-
+  const staticPaths = ["/", "/products", "/about", "/contact", "/shipping", "/returns", "/privacy", "/terms"];
+  const urls = staticPaths.map(path => `<url><loc>${escHtml(SITE_URL + path)}</loc></url>`);
   for (const p of (Array.isArray(rows) ? rows : [])) {
-    urls.push(
-      `<url><loc>${escHtml(productUrl(p))}</loc>${p.created_at ? `<lastmod>${new Date(p.created_at).toISOString()}</lastmod>` : ""}</url>`
-    );
+    if (!p.slug) continue;
+    const lastmod = p.created_at && Number.isFinite(Date.parse(p.created_at))
+      ? `<lastmod>${new Date(p.created_at).toISOString()}</lastmod>` : "";
+    urls.push(`<url><loc>${escHtml(productUrl(p))}</loc>${lastmod}</url>`);
   }
-
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.join("\n")}
 </urlset>`;
-
-  return new Response(xml, {
-    headers: {
-      "content-type":"application/xml; charset=UTF-8",
-      "cache-control":"public, max-age=300, s-maxage=900"
-    }
-  });
+  return new Response(xml, { headers: {
+    "content-type":"application/xml; charset=UTF-8",
+    "cache-control":"public, max-age=300, s-maxage=900",
+    "x-content-type-options":"nosniff"
+  }});
 }
 
 function robotsResponse() {
