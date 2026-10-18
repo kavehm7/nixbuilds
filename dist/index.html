@@ -27,14 +27,14 @@
     <meta name="application-name" content="NIX-BUILDS">
     <meta name="format-detection" content="telephone=yes">
     <meta name="color-scheme" content="dark light">
-    <link rel="canonical" href="https://nixbuilds.ir/">
+    <link rel="canonical" href="https://nixbuilds.nixshop.workers.dev/">
 
     <!-- ========== Open Graph (Telegram/WhatsApp/Twitter cards) ========== -->
     <meta property="og:site_name" content="NIX-BUILDS">
     <meta property="og:title" content="NIX-BUILDS | اکوسیستم پرینت سه‌بعدی و قطعات الکترونیکی">
     <meta property="og:description" content="محصولات پرینت سه‌بعدی با بامبو لب P1S، قطعات ESP32 و رزبری پای، متریال‌های چوب، فلز و زیست‌تخریب‌پذیر دوستدار طبیعت.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nixbuilds.ir/">
+    <meta property="og:url" content="https://nixbuilds.nixshop.workers.dev/">
     <meta property="og:locale" content="fa_IR">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -73,8 +73,8 @@
         .hero { text-align: center; margin-bottom: 60px; }
         .hero h1 { font-size: 32px; margin-bottom: 15px; font-weight: 700; }
         .hero p { color: var(--muted); font-size: 16px; }
-        .tabs { display: flex; flex-wrap:wrap; justify-content: center; gap: 10px; margin: 0 auto 40px; max-width:100%; padding:0 8px; }
-        .tab-btn { padding: 10px 18px; border-radius: 30px; font-weight: 600; white-space:nowrap; }
+        .tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .tab-btn { padding: 10px 24px; border-radius: 30px; font-weight: 600; }
         .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
@@ -258,6 +258,16 @@
 .product-page-gallery{display:flex;gap:9px;overflow:auto;margin-top:12px;padding-bottom:3px}
 .product-page-gallery button{width:70px;height:70px;min-width:70px;padding:3px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer}
 .product-page-gallery img{width:100%;height:100%;object-fit:cover;border-radius:7px}
+.product-page-main-image{cursor:zoom-in;touch-action:pan-y}
+.product-gallery-lightbox{position:fixed;inset:0;z-index:10050;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;padding:18px;touch-action:pan-y}
+.product-gallery-lightbox.open{display:flex}
+.product-gallery-lightbox img{max-width:100%;max-height:88vh;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.product-gallery-lightbox .pg-close,.product-gallery-lightbox .pg-prev,.product-gallery-lightbox .pg-next{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;width:44px;height:44px;font-size:26px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.product-gallery-lightbox .pg-close{top:16px;right:16px;font-size:30px}
+.product-gallery-lightbox .pg-prev{left:14px;top:50%;transform:translateY(-50%)}
+.product-gallery-lightbox .pg-next{right:14px;top:50%;transform:translateY(-50%)}
+.product-gallery-lightbox .pg-count{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#fff;font-size:14px}
+@media(max-width:600px){.product-gallery-lightbox{padding:8px}.product-gallery-lightbox .pg-prev{left:5px}.product-gallery-lightbox .pg-next{right:5px}}
 .product-page-tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:5px 10px;margin-bottom:12px}
 .product-page-title{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 18px}
 .product-page-description{margin:24px 0;padding:18px;border:1px solid var(--border);border-radius:14px;line-height:1.9}
@@ -292,9 +302,9 @@
       "@context":"https://schema.org",
       "@type":"WebSite",
       "name":"NIX-BUILDS",
-      "url":"https://nixbuilds.ir/",
+      "url":"https://nixbuilds.nixshop.workers.dev/",
       "inLanguage":["fa","en","ar","zh","ru"],
-      "potentialAction":{"@type":"SearchAction","target":"https://nixbuilds.ir/?q={search_term_string}","query-input":"required name=search_term_string"}
+      "potentialAction":{"@type":"SearchAction","target":"https://nixbuilds.nixshop.workers.dev/?q={search_term_string}","query-input":"required name=search_term_string"}
     }
     </script>
     <script type="application/ld+json" id="organizationStructuredData">
@@ -302,8 +312,8 @@
       "@context":"https://schema.org",
       "@type":"Organization",
       "name":"NIX-BUILDS",
-      "url":"https://nixbuilds.ir/",
-      "logo":"https://nixbuilds.ir/icon.svg",
+      "url":"https://nixbuilds.nixshop.workers.dev/",
+      "logo":"https://nixbuilds.nixshop.workers.dev/icon.svg",
       "description":"NIX-BUILDS — طراحی و تولید محصولات کاربردی و مدرن با پرینت سه‌بعدی و فناوری ساخت."
     }
     </script>
@@ -359,11 +369,6 @@
                 <option value="price_desc" id="sortPriceDesc">قیمت: زیاد به کم ↓</option>
             </select>
         </div>
-        <select id="availabilityFilter" class="sort-select" aria-label="وضعیت موجودی" style="margin-top:8px;width:100%;max-width:100%;">
-            <option value="all">نمایش همه محصولات</option>
-            <option value="available">فقط موجود</option>
-            <option value="orderable">موجود و سفارشی</option>
-        </select>
         <div class="result-count" id="resultCount" aria-live="polite"></div>
         <div class="grid" id="productsGrid"></div>
     </div>
@@ -407,7 +412,7 @@
             <a href="/terms" data-i18n="footerTerms">قوانین</a>
         </div>
         <div id="footerCopyright">© <span id="copyrightYear"></span> NIX-BUILDS. All rights reserved.</div>
-        <div id="footerVersion">Version <span id="siteVersion">2.5.16</span></div>
+        <div id="footerVersion">Version <span id="siteVersion">2.5.17</span></div>
     </footer>
 
     <div class="modal" id="shareModal" onclick="handleShareBackdrop(event)">
@@ -457,7 +462,6 @@
             <div class="checkout-box">
                 <div class="form-group"><label id="orderNameLabel">نام</label><input id="orderName" type="text"></div>
                 <div class="form-group"><label id="orderContactLabel">ایمیل یا شماره تماس</label><input id="orderContact" type="tel" inputmode="tel" autocomplete="tel"></div>
-                <div class="form-group"><label for="orderDescription" id="orderDescriptionLabel">توضیحات سفارش (اختیاری)</label><textarea id="orderDescription" rows="3" maxlength="1000" placeholder="رنگ، ابعاد یا توضیحات دیگر..."></textarea></div>
                 <button class="btn-accent" style="width:100%;padding:12px;" onclick="sendOrderRequest()" id="checkoutBtn">ارسال درخواست سفارش</button>
                 <p id="checkoutNote" style="color:var(--muted);font-size:12px;line-height:1.7;margin-top:10px;">با زدن این دکمه، برنامه پیامک گوشی باز می‌شود و متن سفارش آماده ارسال به شماره ادمین خواهد بود. ارسال نهایی پیامک نیاز به تأیید کاربر دارد.</p>
             </div>
@@ -646,7 +650,6 @@
         let currentDetailProduct = null;
         let productSearchTerm = '';
         let productSortMode = 'newest_desc';
-        let productAvailabilityFilter = 'all';
 
         const dictionary = {
             fa: { detail:"مشاهده محصول", addCart:"افزودن به سبد", cart:"سبد خرید", emptyCart:"سبد خرید خالی است", total:"جمع کل", remove:"حذف", name:"نام", contact:"تلفن", checkout:"ارسال درخواست سفارش", checkoutNote:"با زدن این دکمه، برنامه پیامک گوشی باز می‌شود و متن سفارش آماده ارسال به شماره ادمین خواهد بود. ارسال نهایی پیامک نیاز به تأیید کاربر دارد.", orderSent:"درخواست سفارش آماده شد", slogan:"اکوسیستم اختصاصی سازه‌های پیشرفته پرینت سه بعدی", all:"همه محصولات", mat:"متریال", dim:"ابعاد", pay:"پرداخت رمز‌ارز", about:"درباره ما", contactUs:"تماس با ما", aboutText:"طراحی و تولید محصولات کاربردی و مدرن با تمرکز بر پرینت سه‌بعدی، ساخت دیجیتال و راهکارهای خلاقانه برای خانه، ابزار و زندگی روزمره.", cryptoDiscount:"۱۰ درصد تخفیف برای پرداخت با رمزارز", navProducts:"همه محصولات", navHome:"NIX-HOME", navGear:"NIX-GEAR", navCare:"NIX-CARE", navAbout:"درباره ما", navContact:"تماس و سفارش", searchPlaceholder:"جستجوی محصول، متریال یا تگ...", searchLabel:"جستجوی محصولات", sortLabel:"مرتب‌سازی محصولات", sortNewest:"جدیدترین", sortName:"نام محصول", sortPrice:"قیمت", footerProducts:"محصولات", footerAbout:"درباره ما", footerContact:"تماس", footerShipping:"ارسال", footerReturns:"مرجوعی", footerPrivacy:"حریم خصوصی", footerTerms:"قوانین", footerCopyright:"تمامی حقوق محفوظ است", footerVersion:"نسخه", shareTitle:"اشتراک‌گذاری محصول", shareCopy:"کپی لینک", shareCopied:"لینک محصول کپی شد.", shareNative:"اشتراک‌گذاری بیشتر" },
@@ -749,9 +752,6 @@
             document.querySelectorAll('[data-i18n]').forEach(el=>{ const key=el.dataset.i18n; if(d[key]) el.textContent=d[key]; });
             const search=document.getElementById('productSearch');
             if(search){ search.placeholder=d.searchPlaceholder; search.setAttribute('aria-label',d.searchLabel); }
-            const availabilityFilter=document.getElementById('availabilityFilter');
-            if(availabilityFilter){ const opts=availabilityFilter.options; if(currentLang==='fa'){opts[0].text='همه محصولات';opts[1].text='فقط موجود';opts[2].text='موجود و سفارشی';} else {opts[0].text='All products';opts[1].text='In stock only';opts[2].text='In stock and made to order';} }
-            const orderDescLabel=document.getElementById('orderDescriptionLabel'); if(orderDescLabel) orderDescLabel.textContent=currentLang==='fa'?'توضیحات سفارش (اختیاری)':'Order notes (optional)';
             const sort=document.getElementById('productSort');
             if(sort){
                 sort.setAttribute('aria-label',d.sortLabel);
@@ -766,7 +766,7 @@
             }
             const year=document.getElementById('copyrightYear');
             const fc=document.getElementById('footerCopyright'); if(fc) fc.innerHTML=`© ${new Date().getFullYear()} NIX-BUILDS. ${d.footerCopyright}`;
-            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.16</span>`;
+            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.17</span>`;
             const st=document.getElementById('shareTitle'); if(st) st.innerText=d.shareTitle;
             const cb=document.getElementById('shareCopyBtn'); if(cb) cb.innerText=d.shareCopy;
             const ns=document.getElementById('shareNativeBtn'); if(ns) ns.innerText=d.shareNative;
@@ -890,8 +890,6 @@
                 sort.dataset.bound='1';
                 sort.addEventListener('change', () => { productSortMode=sort.value || 'newest_desc'; renderProducts(); });
             }
-            const availabilityFilter=document.getElementById('availabilityFilter');
-            if(availabilityFilter && !availabilityFilter.dataset.bound){ availabilityFilter.dataset.bound='1'; availabilityFilter.addEventListener('change',()=>{productAvailabilityFilter=availabilityFilter.value||'all';renderProducts();}); }
         }
 
         function numericProductPrice(p) {
@@ -916,8 +914,6 @@
             const q=String(productSearchTerm||'').toLowerCase();
             let list=Array.isArray(allProducts) ? [...allProducts] : [];
             list=list.filter(p=>currentFilter==='ALL' || p.product_line===currentFilter);
-            if(productAvailabilityFilter==='available') list=list.filter(p=>(p.availability_status||'available')==='available');
-            else if(productAvailabilityFilter==='orderable') list=list.filter(p=>(p.availability_status||'available')!=='out_of_stock');
             if(q) list=list.filter(p=>{
                 const hay=[p.name_fa,p.name_en,p.name_ar,p.name_zh,p.name_ru,p.material_fa,p.material_en,p.material_ar,p.material_zh,p.material_ru,p.dimensions_fa,p.dimensions_en,p.dimensions_ar,p.dimensions_zh,p.dimensions_ru,p.seo_tags,p.product_line].filter(Boolean).join(' ').toLowerCase();
                 return hay.includes(q);
@@ -1013,8 +1009,18 @@
             }
             document.getElementById('productPageBreadcrumb').textContent=title;
             const gallery=document.getElementById('dedicatedGallery');
+            const galleryImages=Array.from({length:imageCount},(_,i)=>imageUrl(i));
+            let activeImageIndex=0;
+            const mainImageEl=document.getElementById('dedicatedMainImage');
+            if(mainImageEl){
+                mainImageEl.style.cursor='zoom-in';
+                mainImageEl.onclick=()=>window.openProductGallery(galleryImages,activeImageIndex);
+                let swipeX=0,swipeY=0;
+                mainImageEl.addEventListener('touchstart',e=>{if(e.touches[0]){swipeX=e.touches[0].clientX;swipeY=e.touches[0].clientY;}},{passive:true});
+                mainImageEl.addEventListener('touchend',e=>{if(!e.changedTouches[0]||imageCount<2)return;const dx=e.changedTouches[0].clientX-swipeX,dy=e.changedTouches[0].clientY-swipeY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){activeImageIndex=(activeImageIndex+(dx<0?1:-1)+imageCount)%imageCount;mainImageEl.src=galleryImages[activeImageIndex];}},{passive:true});
+            }
             for(let i=0;i<imageCount;i++){
-                const b=document.createElement('button'); b.type='button'; b.innerHTML=`<img src="${imageUrl(i)}" alt="${escapeHtml(title)} ${i+1}" loading="lazy" decoding="async">`; b.onclick=()=>{const main=document.getElementById('dedicatedMainImage'); if(main){main.src=imageUrl(i);}}; gallery.appendChild(b);
+                const b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label',`View image ${i+1}`); b.innerHTML=`<img src="${imageUrl(i)}" alt="${escapeHtml(title)} ${i+1}" loading="lazy" decoding="async">`; b.onclick=()=>{activeImageIndex=i;const main=document.getElementById('dedicatedMainImage'); if(main){main.src=imageUrl(i);}}; gallery.appendChild(b);
             }
             const canonical=document.querySelector('link[rel="canonical"]'); if(canonical) canonical.href=location.origin+`/product/${encodeURIComponent(slug)}`;
             document.title=(p.seo_title||title+' | NIX-BUILDS');
@@ -1170,18 +1176,18 @@
 
         const ROUTE_I18N = {
             '/about': {
-                fa:{title:'درباره NIX-BUILDS',body:`<p>NIX-BUILDS یک برند طراحی و ساخت است که روی محصولات کاربردی، مدرن و قابل تولید با فناوری‌های ساخت دیجیتال تمرکز دارد.</p><h2>لاین‌های NIX-BUILDS</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME">NIX-HOME<br><small>محصولات خانه و دکور</small></a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR">NIX-GEAR<br><small>ابزار و تجهیزات کاربردی</small></a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE">NIX-CARE<br><small>محصولات مراقبت و زندگی روزمره</small></a><a class="route-link" href="/#nix-auto" data-filter-link="NIX-AUTO">NIX-AUTO<br><small>قطعات خودرو و لوازم جانبی</small></a><a class="route-link" href="/#nix-custom" data-filter-link="NIX-CUSTOM">NIX-CUSTOM<br><small>طراحی و تولید سفارشی</small></a></div><h2>طراحی با تمرکز بر کاربرد</h2><p>هدف ما ترکیب فرم، عملکرد و ساخت دیجیتال برای ارائه محصولاتی است که هم ظاهر حرفه‌ای داشته باشند و هم در استفاده روزمره مفید باشند.</p>`},
-                en:{title:'About NIX-BUILDS',body:`<p>NIX-BUILDS is a design and manufacturing brand focused on practical, modern products and digital fabrication.</p><h2>NIX-BUILDS Lines</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME">NIX-HOME<br><small>Home and décor products</small></a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR">NIX-GEAR<br><small>Tools and practical equipment</small></a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE">NIX-CARE<br><small>Care and everyday products</small></a><a class="route-link" href="/#nix-auto" data-filter-link="NIX-AUTO">NIX-AUTO<br><small>Automotive parts and accessories</small></a><a class="route-link" href="/#nix-custom" data-filter-link="NIX-CUSTOM">NIX-CUSTOM<br><small>Custom design and manufacturing</small></a></div><h2>Design with purpose</h2><p>We combine form, function and digital fabrication to create products that look refined and remain useful in everyday life.</p>`},
+                fa:{title:'درباره NIX-BUILDS',body:`<p>NIX-BUILDS یک برند طراحی و ساخت است که روی محصولات کاربردی، مدرن و قابل تولید با فناوری‌های ساخت دیجیتال تمرکز دارد.</p><h2>لاین‌های NIX-BUILDS</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME">NIX-HOME<br><small>محصولات خانه و دکور</small></a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR">NIX-GEAR<br><small>ابزار و تجهیزات کاربردی</small></a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE">NIX-CARE<br><small>محصولات مراقبت و زندگی روزمره</small></a></div><h2>طراحی با تمرکز بر کاربرد</h2><p>هدف ما ترکیب فرم، عملکرد و ساخت دیجیتال برای ارائه محصولاتی است که هم ظاهر حرفه‌ای داشته باشند و هم در استفاده روزمره مفید باشند.</p>`},
+                en:{title:'About NIX-BUILDS',body:`<p>NIX-BUILDS is a design and manufacturing brand focused on practical, modern products and digital fabrication.</p><h2>NIX-BUILDS Lines</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME">NIX-HOME<br><small>Home and décor products</small></a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR">NIX-GEAR<br><small>Tools and practical equipment</small></a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE">NIX-CARE<br><small>Care and everyday products</small></a></div><h2>Design with purpose</h2><p>We combine form, function and digital fabrication to create products that look refined and remain useful in everyday life.</p>`},
                 ar:{title:'عن NIX-BUILDS',body:`<p>NIX-BUILDS هي علامة للتصميم والتصنيع تركز على المنتجات العملية والحديثة والتصنيع الرقمي.</p><h2>خطوط NIX-BUILDS</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME">NIX-HOME<br><small>منتجات المنزل والديكور</small></a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR">NIX-GEAR<br><small>الأدوات والمعدات العملية</small></a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE">NIX-CARE<br><small>منتجات العناية والحياة اليومية</small></a></div><h2>تصميم يركز على الاستخدام</h2><p>نجمع بين الشكل والوظيفة والتصنيع الرقمي لتقديم منتجات ذات مظهر احترافي وفائدة يومية.</p>`},
                 zh:{title:'关于 NIX-BUILDS',body:`<p>NIX-BUILDS 是一个专注于实用、现代产品设计与数字制造的设计与制造品牌。</p><h2>NIX-BUILDS 产品线</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME">NIX-HOME<br><small>家居与装饰产品</small></a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR">NIX-GEAR<br><small>工具与实用设备</small></a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE">NIX-CARE<br><small>护理与日常用品</small></a></div><h2>以功能为核心的设计</h2><p>我们结合形式、功能与数字制造，打造外观精致且适合日常使用的产品。</p>`},
                 ru:{title:'О NIX-BUILDS',body:`<p>NIX-BUILDS — бренд дизайна и производства практичных современных продуктов с использованием цифрового производства.</p><h2>Линейки NIX-BUILDS</h2><div class="route-links"><a class="route-link" href="/#nix-home" data-filter-link="NIX-HOME">NIX-HOME<br><small>Товары для дома и декора</small></a><a class="route-link" href="/#nix-gear" data-filter-link="NIX-GEAR">NIX-GEAR<br><small>Инструменты и оборудование</small></a><a class="route-link" href="/#nix-care" data-filter-link="NIX-CARE">NIX-CARE<br><small>Товары для ухода и повседневной жизни</small></a></div><h2>Дизайн с акцентом на практичность</h2><p>Мы объединяем форму, функциональность и цифровое производство, создавая профессионально выглядящие и полезные в повседневной жизни продукты.</p>`}
             },
             '/contact': {
-                fa:{title:'تماس و سفارش',body:`<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links"><a class="route-link" href="tel:${(window.siteInfo&&window.siteInfo.phone||'').replace(/[^+\d]/g,'')}">📞 تلفن: ${window.siteInfo&&window.siteInfo.phone||''}</a><a class="route-link" href="mailto:${window.siteInfo&&window.siteInfo.email||''}">✉️ ایمیل: ${window.siteInfo&&window.siteInfo.email||''}</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید، درخواست سفارش را ارسال کنید. در موبایل، متن سفارش در برنامه پیامک آماده می‌شود و ارسال نهایی با تأیید شما انجام خواهد شد.</p>`},
-                en:{title:'Contact & Order',body:`<p>Contact NIX-BUILDS for product questions, specifications, pricing or orders.</p><div class="route-links"><a class="route-link" href="tel:${(window.siteInfo&&window.siteInfo.phone||'').replace(/[^+\d]/g,'')}">📞 Phone: ${window.siteInfo&&window.siteInfo.phone||''}</a><a class="route-link" href="mailto:${window.siteInfo&&window.siteInfo.email||''}">✉️ Email: ${window.siteInfo&&window.siteInfo.email||''}</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ View products</a></div><h2>Ordering</h2><p>Open a product page, add the item to the cart and send an order request. On mobile, the order text is prepared in the SMS app and final sending requires your confirmation.</p>`},
-                ar:{title:'الاتصال والطلب',body:`<p>تواصل مع NIX-BUILDS للاستفسار عن المنتجات والمواصفات والأسعار أو الطلب.</p><div class="route-links"><a class="route-link" href="tel:${(window.siteInfo&&window.siteInfo.phone||'').replace(/[^+\d]/g,'')}">📞 الهاتف: ${window.siteInfo&&window.siteInfo.phone||''}</a><a class="route-link" href="mailto:${window.siteInfo&&window.siteInfo.email||''}">✉️ البريد الإلكتروني: ${window.siteInfo&&window.siteInfo.email||''}</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ عرض المنتجات</a></div><h2>الطلب</h2><p>افتح صفحة المنتج وأضفه إلى السلة ثم أرسل طلب الشراء. على الهاتف سيتم تجهيز نص الطلب في تطبيق الرسائل ويتطلب الإرسال النهائي تأكيدك.</p>`},
-                zh:{title:'联系与订购',body:`<p>如需咨询产品、规格、价格或下单，请联系 NIX-BUILDS。</p><div class="route-links"><a class="route-link" href="tel:${(window.siteInfo&&window.siteInfo.phone||'').replace(/[^+\d]/g,'')}">📞 电话：${window.siteInfo&&window.siteInfo.phone||''}</a><a class="route-link" href="mailto:${window.siteInfo&&window.siteInfo.email||''}">✉️ 邮箱：${window.siteInfo&&window.siteInfo.email||''}</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ 查看产品</a></div><h2>订购方式</h2><p>打开产品页面，将商品加入购物车并发送订单请求。在手机上，订单文本会预填到短信应用中，最终发送需要您的确认。</p>`},
-                ru:{title:'Контакты и заказ',body:`<p>Свяжитесь с NIX-BUILDS по вопросам товаров, характеристик, цен или заказа.</p><div class="route-links"><a class="route-link" href="tel:${(window.siteInfo&&window.siteInfo.phone||'').replace(/[^+\d]/g,'')}">📞 Телефон: ${window.siteInfo&&window.siteInfo.phone||''}</a><a class="route-link" href="mailto:${window.siteInfo&&window.siteInfo.email||''}">✉️ Email: ${window.siteInfo&&window.siteInfo.email||''}</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ Смотреть товары</a></div><h2>Заказ</h2><p>Откройте страницу товара, добавьте его в корзину и отправьте заявку. На телефоне текст заказа будет подготовлен в SMS, а окончательная отправка потребует вашего подтверждения.</p>`}
+                fa:{title:'تماس و سفارش',body:`<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 تلفن: 00989030287529</a><a class="route-link" href="mailto:kaveh-m@live.com">✉️ ایمیل: kaveh-m@live.com</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید، درخواست سفارش را ارسال کنید. در موبایل، متن سفارش در برنامه پیامک آماده می‌شود و ارسال نهایی با تأیید شما انجام خواهد شد.</p>`},
+                en:{title:'Contact & Order',body:`<p>Contact NIX-BUILDS for product questions, specifications, pricing or orders.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 Phone: 00989030287529</a><a class="route-link" href="mailto:kaveh-m@live.com">✉️ Email: kaveh-m@live.com</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ View products</a></div><h2>Ordering</h2><p>Open a product page, add the item to the cart and send an order request. On mobile, the order text is prepared in the SMS app and final sending requires your confirmation.</p>`},
+                ar:{title:'الاتصال والطلب',body:`<p>تواصل مع NIX-BUILDS للاستفسار عن المنتجات والمواصفات والأسعار أو الطلب.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 الهاتف: 00989030287529</a><a class="route-link" href="mailto:kaveh-m@live.com">✉️ البريد الإلكتروني: kaveh-m@live.com</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ عرض المنتجات</a></div><h2>الطلب</h2><p>افتح صفحة المنتج وأضفه إلى السلة ثم أرسل طلب الشراء. على الهاتف سيتم تجهيز نص الطلب في تطبيق الرسائل ويتطلب الإرسال النهائي تأكيدك.</p>`},
+                zh:{title:'联系与订购',body:`<p>如需咨询产品、规格、价格或下单，请联系 NIX-BUILDS。</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 电话：00989030287529</a><a class="route-link" href="mailto:kaveh-m@live.com">✉️ 邮箱：kaveh-m@live.com</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ 查看产品</a></div><h2>订购方式</h2><p>打开产品页面，将商品加入购物车并发送订单请求。在手机上，订单文本会预填到短信应用中，最终发送需要您的确认。</p>`},
+                ru:{title:'Контакты и заказ',body:`<p>Свяжитесь с NIX-BUILDS по вопросам товаров, характеристик, цен или заказа.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 Телефон: 00989030287529</a><a class="route-link" href="mailto:kaveh-m@live.com">✉️ Email: kaveh-m@live.com</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ Смотреть товары</a></div><h2>Заказ</h2><p>Откройте страницу товара, добавьте его в корзину и отправьте заявку. На телефоне текст заказа будет подготовлен в SMS, а окончательная отправка потребует вашего подтверждения.</p>`}
             },
             '/shipping': {
                 fa:{title:'ارسال سفارش',body:`<p>پس از دریافت درخواست سفارش، مشخصات محصول، تعداد، رنگ و روش ارسال با شما هماهنگ می‌شود.</p><h2>زمان و هزینه</h2><p>هزینه و زمان ارسال بر اساس مقصد، ابعاد سفارش و روش حمل مشخص می‌شود و پیش از نهایی شدن سفارش به شما اعلام خواهد شد.</p>`},
@@ -1438,7 +1444,6 @@
             }
             const name = document.getElementById('orderName').value.trim();
             const contact = document.getElementById('orderContact').value.trim();
-            const orderDescription = (document.getElementById('orderDescription')?.value || '').trim();
             if (!name) {
                 alert(currentLang === 'fa' ? 'لطفاً نام را وارد کنید.' : 'Please enter your name.');
                 document.getElementById('orderName').focus();
@@ -1446,7 +1451,7 @@
             }
 
             const lines = items.map(i => `- ${productTitle(i.product)} | ${productPrice(i.product) || 'Price on request'} | Qty: ${i.qty}`);
-            const body = `NIX-BUILDS ORDER\nName: ${name}\nPhone: ${contact || '-'}\n\nProducts:\n${lines.join('\n')}\n\nOrder notes: ${orderDescription || '-'}\n\nTotal: ${document.getElementById('cartTotal').textContent}`;
+            const body = `NIX-BUILDS ORDER\nName: ${name}\nPhone: ${contact || '-'}\n\nProducts:\n${lines.join('\n')}\n\nTotal: ${document.getElementById('cartTotal').textContent}`;
             const adminPhone = normalizePhoneForSms(window.siteInfo && window.siteInfo.phone);
 
             if (!adminPhone) {
@@ -1661,12 +1666,15 @@
                 crypto_discount_text: document.getElementById('crypto_discount_admin').value.trim()
             };
             try {
-                await dbRequest("site_settings?id=eq.main_settings", "PATCH", payload, true);
-                const updated = { ...(readCache(SITE_CACHE_KEY) || {id:'main_settings'}), ...payload };
+                await dbRequest("site_settings?id=eq.main_settings", "PATCH", payload, true, {"Prefer":"return=representation"});
+                const verifyRows = await dbRequest("site_settings?id=eq.main_settings&select=id,contact_email,contact_phone,about_text,about_text_fa,about_text_en,about_text_ar,about_text_zh,about_text_ru,catalog_intro_fa,catalog_intro_en,catalog_intro_ar,catalog_intro_zh,catalog_intro_ru,crypto_discount_text", "GET", null, true);
+                const saved = Array.isArray(verifyRows) ? verifyRows[0] : null;
+                if (!saved || String(saved.contact_email || '') !== payload.contact_email || String(saved.contact_phone || '') !== payload.contact_phone) throw new Error("اطلاعات تماس در پایگاه داده تأیید نشد. دسترسی UPDATE یا وجود ردیف main_settings را بررسی کنید.");
+                const updated = { ...(readCache(SITE_CACHE_KEY) || {id:'main_settings'}), ...saved, ...payload };
                 writeCache(SITE_CACHE_KEY, updated);
                 applySiteSettings(updated);
                 changeLanguage(currentLang);
-                alert("اطلاعات سایت با موفقیت بروزرسانی شد.");
+                alert("اطلاعات سایت ذخیره و بررسی شد.");
             } catch (e) { console.error("saveSiteInfo:", e); alert(`خطا در بروزرسانی اطلاعات سایت:\n${e.message}`); }
         }
 
@@ -1895,6 +1903,26 @@
             if (mq.addEventListener) mq.addEventListener('change', applyDeviceTheme);
             else if (mq.addListener) mq.addListener(applyDeviceTheme);
         } catch {}
+</script>
+
+<div id="productGalleryLightbox" class="product-gallery-lightbox" role="dialog" aria-modal="true" aria-label="Product image gallery">
+  <button type="button" class="pg-close" id="pgClose" aria-label="Close">×</button>
+  <button type="button" class="pg-prev" id="pgPrev" aria-label="Previous image">‹</button>
+  <img id="pgImage" alt="Product image">
+  <button type="button" class="pg-next" id="pgNext" aria-label="Next image">›</button>
+  <div class="pg-count" id="pgCount"></div>
+</div>
+<script>
+(function(){
+  let images=[], index=0, startX=0, startY=0;
+  const box=()=>document.getElementById('productGalleryLightbox');
+  function show(i){if(!images.length)return;index=(i+images.length)%images.length;const img=document.getElementById('pgImage');if(img)img.src=images[index];const count=document.getElementById('pgCount');if(count)count.textContent=(index+1)+' / '+images.length;}
+  window.openProductGallery=function(list,i){images=list||[];if(!images.length)return;box().classList.add('open');document.body.style.overflow='hidden';show(i||0);};
+  function close(){const b=box();if(b)b.classList.remove('open');document.body.style.overflow='';}
+  document.addEventListener('click',function(e){if(e.target.closest('#pgClose'))close();else if(e.target.closest('#pgPrev'))show(index-1);else if(e.target.closest('#pgNext'))show(index+1);else if(e.target===box())close();});
+  document.addEventListener('keydown',function(e){if(!box()||!box().classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(index+1);if(e.key==='ArrowRight')show(index-1);});
+  const b=box();if(b){b.addEventListener('touchstart',e=>{if(e.touches[0]){startX=e.touches[0].clientX;startY=e.touches[0].clientY;}},{passive:true});b.addEventListener('touchend',e=>{if(!e.changedTouches[0])return;const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))show(index+(dx<0?1:-1));},{passive:true});}
+})();
 </script>
 </body>
 </html>
