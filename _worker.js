@@ -144,6 +144,27 @@ function productSchema(p) {
   if (p.seo_tags) data.keywords = p.seo_tags;
   if (primary) data.image = [`${SITE_URL}/api/product-image/${encodeURIComponent(p.id)}?index=0`];
 
+  // Google Product rich results require offers, review, or aggregateRating.
+  // Only emit an Offer when a real positive price exists; never fabricate price/reviews.
+  // price_usdt is the storefront's USD-pegged USDT price, represented as USD for schema.org/Google.
+  const numericPrice = Number(String(p.price_usdt ?? '').replace(/,/g, '').trim());
+  if (Number.isFinite(numericPrice) && numericPrice > 0) {
+    const status = String(p.availability_status || '').toLowerCase();
+    const availability = /custom|سفارشی/.test(status)
+      ? 'https://schema.org/PreOrder'
+      : (/unavailable|out.of.stock|ناموجود|عدم موجودی/.test(status)
+          ? 'https://schema.org/OutOfStock'
+          : 'https://schema.org/InStock');
+    data.offers = {
+      '@type': 'Offer',
+      'url': productUrl(p),
+      'priceCurrency': 'USD',
+      'price': numericPrice.toFixed(2).replace(/\.00$/, ''),
+      'availability': availability,
+      'itemCondition': 'https://schema.org/NewCondition'
+    };
+  }
+
   return data;
 }
 
