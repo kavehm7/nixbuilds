@@ -10,8 +10,8 @@
  * All other requests are served from the static assets directory.
  */
 
-const SITE_URL = "https://nixbuilds.ir";
-const SITE_VERSION = "2.5.17";
+const SITE_URL = "https://nixbuilds.nixshop.workers.dev";
+const SITE_VERSION = "2.5.16";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
@@ -145,23 +145,19 @@ function productSchema(p) {
   if (primary) data.image = [`${SITE_URL}/api/product-image/${encodeURIComponent(p.id)}?index=0`];
 
   // Google Product rich results require offers, review, or aggregateRating.
-  // Only emit an Offer when a real positive price exists; never fabricate price/reviews.
-  // price_usdt is the storefront's USD-pegged USDT price, represented as USD for schema.org/Google.
-  const numericPrice = Number(String(p.price_usdt ?? '').replace(/,/g, '').trim());
-  if (Number.isFinite(numericPrice) && numericPrice > 0) {
+  // Use the actual configured product price; never invent reviews or ratings.
+  const price = Number(String(p.price_usdt ?? '').replace(/,/g, '').trim());
+  if (Number.isFinite(price) && price > 0) {
     const status = String(p.availability_status || '').toLowerCase();
-    const availability = /custom|سفارشی/.test(status)
-      ? 'https://schema.org/PreOrder'
-      : (/unavailable|out.of.stock|ناموجود|عدم موجودی/.test(status)
-          ? 'https://schema.org/OutOfStock'
-          : 'https://schema.org/InStock');
+    const unavailable = /out|unavailable|ناموجود|غیرفعال/.test(status);
     data.offers = {
-      '@type': 'Offer',
-      'url': productUrl(p),
-      'priceCurrency': 'USD',
-      'price': numericPrice.toFixed(2).replace(/\.00$/, ''),
-      'availability': availability,
-      'itemCondition': 'https://schema.org/NewCondition'
+      "@type": "Offer",
+      "url": productUrl(p),
+      "priceCurrency": "USD",
+      "price": price.toFixed(2),
+      "availability": unavailable ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {"@type":"Organization","name":"NIX-BUILDS"}
     };
   }
 
