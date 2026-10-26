@@ -246,7 +246,7 @@
         }
 
     
-/* v2.5.20 product image fullscreen + touch gallery */
+/* v2.5.21 cart approximate toman pricing; preserves v2.5.20 product image fullscreen + touch gallery */
 .product-page-main-image{cursor:zoom-in;touch-action:pan-y}
 .nix-image-lightbox{position:fixed;inset:0;z-index:10050;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;padding:54px 16px 24px}
 .nix-image-lightbox.open{display:flex}
@@ -413,7 +413,7 @@
             <a href="/terms" data-i18n="footerTerms">قوانین</a>
         </div>
         <div id="footerCopyright">© <span id="copyrightYear"></span> NIX-BUILDS. All rights reserved.</div>
-        <div id="footerVersion">Version <span id="siteVersion">2.5.20</span></div>
+        <div id="footerVersion">Version <span id="siteVersion">2.5.21</span></div>
     </footer>
 
     <div class="modal" id="shareModal" onclick="handleShareBackdrop(event)">
@@ -460,6 +460,8 @@
             <h2 style="margin-bottom:20px;" id="cartHeading">سبد خرید</h2>
             <div id="cartItems"></div>
             <div class="cart-summary"><span id="cartTotalLabel">جمع</span><span id="cartTotal">0</span></div>
+            <div id="cartTomanSummary" class="cart-summary" style="display:none;border-top:0;padding-top:0;"><span id="cartTomanTotalLabel">جمع تقریبی به تومان</span><span id="cartTomanTotal" style="color:var(--accent);font-weight:700;"></span></div>
+            <p id="cartTomanNote" class="nix-rate-note" style="display:none;margin:0 0 12px;line-height:1.8;">مبلغ تومانی تقریبی است و فقط محصولات قیمت‌گذاری‌شده با USDT را شامل می‌شود؛ مبلغ نهایی هنگام ثبت سفارش بر اساس نرخ روز محاسبه می‌شود.</p>
             <div class="checkout-box">
                 <div class="form-group"><label id="orderNameLabel">نام</label><input id="orderName" type="text"></div>
                 <div class="form-group"><label id="orderContactLabel">ایمیل یا شماره تماس</label><input id="orderContact" type="tel" inputmode="tel" autocomplete="tel"></div>
@@ -768,7 +770,7 @@
             }
             const year=document.getElementById('copyrightYear');
             const fc=document.getElementById('footerCopyright'); if(fc) fc.innerHTML=`© ${new Date().getFullYear()} NIX-BUILDS. ${d.footerCopyright}`;
-            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.20</span>`;
+            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.21</span>`;
             const st=document.getElementById('shareTitle'); if(st) st.innerText=d.shareTitle;
             const cb=document.getElementById('shareCopyBtn'); if(cb) cb.innerText=d.shareCopy;
             const ns=document.getElementById('shareNativeBtn'); if(ns) ns.innerText=d.shareNative;
@@ -809,6 +811,19 @@
             const label = currentLang==='fa' ? 'حدود ' : 'Approx. ';
             const note = currentLang==='fa' ? `منبع: نرخ‌سنج · نرخ دلار آزاد · بروزرسانی ${updated}` : `Source: Nerkhsanj · Free-market USD rate · updated ${updated}`;
             return `<span class="nix-price-toman">${label}${formatToman(amount)}<span class="nix-rate-note">${note}</span></span>`;
+        }
+        function cartTomanPriceHtml(p, qty=1) {
+            const usd = Number(p?.price_usdt);
+            if (!usdTomanRate || !Number.isFinite(usd) || usd <= 0) return '';
+            const amount = usd * usdTomanRate;
+            const lineAmount = amount * Math.max(1, Number(qty) || 1);
+            const label = currentLang==='fa' ? 'حدود ' : 'Approx. ';
+            return `<div class="nix-price-toman">${label}${formatToman(amount)}${Number(qty)>1 ? ` <span class="nix-rate-note">× ${Number(qty)} = ${formatToman(lineAmount)}</span>` : ''}</div>`;
+        }
+        function cartTomanNoteText() {
+            return currentLang==='fa'
+                ? 'مبلغ تومانی تقریبی است و فقط محصولات دارای قیمت USDT را شامل می‌شود. اگر سبد شامل رمزارزهای دیگر باشد، آن‌ها در جمع تومانی محاسبه نشده‌اند. مبلغ نهایی هنگام ثبت سفارش بر اساس نرخ روز تأیید می‌شود.'
+                : 'Toman amounts are estimates and include only items priced in USDT. Other cryptocurrency-priced items are excluded from the toman subtotal. The final amount is confirmed using the rate at order time.';
         }
         async function loadUsdTomanRate() {
             try {
@@ -1421,12 +1436,15 @@
             if (!items.length) {
                 box.innerHTML = `<div class="cart-empty">${dictionary[currentLang].emptyCart}</div>`;
                 document.getElementById('cartTotal').textContent = '0';
+                document.getElementById('cartTomanSummary').style.display = 'none';
+                document.getElementById('cartTomanNote').style.display = 'none';
                 updateCartUI();
                 return;
             }
 
             box.innerHTML = '';
             const currencyTotals = {};
+            let usdTomanSubtotal = 0;
 
             for (const item of items) {
                 const p = item.product;
@@ -1438,6 +1456,9 @@
                 if (currency && Number.isFinite(numericPrice)) {
                     currencyTotals[currency] = (currencyTotals[currency] || 0) + numericPrice * Number(item.qty || 0);
                 }
+                if (currency === 'USDT' && Number.isFinite(numericPrice) && numericPrice > 0) {
+                    usdTomanSubtotal += numericPrice * Number(item.qty || 0);
+                }
 
                 const row = document.createElement('div');
                 row.className = 'cart-item';
@@ -1445,7 +1466,7 @@
                     <img src="" alt="${escapeHtml(productTitle(p))}" style="visibility:hidden;">
                     <div>
                         <div class="cart-item-title">${escapeHtml(productTitle(p))}</div>
-                        <div style="color:var(--muted);font-size:12px;">${escapeHtml(priceText)}</div>
+                        <div style="color:var(--muted);font-size:12px;">${escapeHtml(priceText)}${cartTomanPriceHtml(p, item.qty)}</div>
                         <div class="cart-controls">
                             <button onclick="changeCartQty('${p.id}',-1)">−</button>
                             <span>${item.qty}</span>
@@ -1470,6 +1491,18 @@
                 .join(' + ');
 
             document.getElementById('cartTotal').textContent = totalText || '—';
+            const tomanSummary = document.getElementById('cartTomanSummary');
+            const tomanNote = document.getElementById('cartTomanNote');
+            if (usdTomanRate && usdTomanSubtotal > 0) {
+                document.getElementById('cartTomanTotalLabel').textContent = currentLang==='fa' ? 'جمع تقریبی به تومان' : 'Approx. toman subtotal';
+                document.getElementById('cartTomanTotal').textContent = formatToman(usdTomanSubtotal * usdTomanRate);
+                tomanSummary.style.display = 'flex';
+                tomanNote.textContent = cartTomanNoteText();
+                tomanNote.style.display = 'block';
+            } else {
+                tomanSummary.style.display = 'none';
+                tomanNote.style.display = 'none';
+            }
             updateCartUI();
         }
 
