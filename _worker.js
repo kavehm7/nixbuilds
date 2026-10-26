@@ -11,7 +11,7 @@
  */
 
 const SITE_URL = "https://nixbuilds.ir";
-const SITE_VERSION = "2.5.19";
+const SITE_VERSION = "2.5.20";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
@@ -469,6 +469,28 @@ Sitemap: ${SITE_URL}/sitemap.xml
   );
 }
 
+async function exchangeRateResponse() {
+  const cache = caches.default;
+  const cacheKey = new Request("https://nixbuilds.ir/__cache/usd-toman-rate-v1");
+  const cached = await cache.match(cacheKey);
+  if (cached) return new Response(cached.body, {status:200, headers:{"content-type":"application/json; charset=UTF-8","cache-control":"public, max-age=300","x-rate-source":"nerkhsanj"}});
+  try {
+    const upstream = await fetch("https://nerkh.jahankhahan.shop/data/live.json", {headers:{"Accept":"application/json"}, signal:AbortSignal.timeout(8000)});
+    if (!upstream.ok) throw new Error(`Rate provider HTTP ${upstream.status}`);
+    const data = await upstream.json();
+    const rate = Number(data?.rates?.dollar ?? data?.rates?.usd ?? data?.rates?.USD);
+    if (!Number.isFinite(rate) || rate < 1000) throw new Error("USD rate missing/invalid");
+    const payload = {rate, updatedAt: data?.date && data?.time ? `${data.date} ${data.time}` : new Date().toISOString(), source:"Nerkhsanj", sourceUrl:"https://nerkh.jahankhahan.shop/data/live.json"};
+    const response = jsonApi(payload, 200, 300);
+    await cache.put(cacheKey, response.clone());
+    return response;
+  } catch (error) {
+    console.error("Exchange rate fetch failed", error);
+    if (cached) return new Response(cached.body, {status:200, headers:{"content-type":"application/json; charset=UTF-8","cache-control":"public, max-age=300","x-rate-stale":"1"}});
+    return jsonApi({error:"Exchange rate temporarily unavailable"}, 503);
+  }
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -493,6 +515,7 @@ export default {
     const productSlugApi = url.pathname.match(/^\/api\/product-by-slug\/([^/]+)\/?$/i);
     if (productSlugApi) return productBySlugApiResponse(decodeURIComponent(productSlugApi[1]));
     if (url.pathname === "/api/site-settings") return siteSettingsApiResponse();
+    if (url.pathname === "/api/exchange-rate") return exchangeRateResponse();
 
     const imageMatch = url.pathname.match(/^\/api\/product-image\/([^/]+)\/?$/i);
     if (imageMatch) {
