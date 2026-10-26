@@ -11,7 +11,7 @@
  */
 
 const SITE_URL = "https://nixbuilds.ir";
-const SITE_VERSION = "2.5.18";
+const SITE_VERSION = "2.5.19";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
@@ -190,7 +190,7 @@ const STATIC_PAGES = {
     title: "تماس و سفارش | NIX-BUILDS",
     description: "راه‌های تماس و ثبت سفارش محصولات NIX-BUILDS.",
     h1: "تماس و سفارش",
-    body: `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 تلفن: 00989030287529</a><a class="route-link" href="mailto:info@nixbuilds.ir">✉️ ایمیل: info@nixbuilds.ir</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید، درخواست سفارش را ارسال کنید. در موبایل، متن سفارش در برنامه پیامک آماده می‌شود و ارسال نهایی با تأیید شما انجام خواهد شد.</p><p><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت‌ها به دلار درج شده‌اند؛ مبلغ نهایی سفارش بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p>`
+    body: `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><p style="margin:14px 0;padding:12px 14px;border-right:3px solid var(--accent);background:var(--bg);border-radius:8px;"><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت محصولات به دلار درج شده است؛ مبلغ نهایی سفارش برای خریداران داخل ایران بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 تلفن: 00989030287529</a><a class="route-link" href="mailto:info@nixbuilds.ir">✉️ ایمیل: info@nixbuilds.ir</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید، درخواست سفارش را ارسال کنید. در موبایل، متن سفارش در برنامه پیامک آماده می‌شود و ارسال نهایی با تأیید شما انجام خواهد شد.</p><p><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت‌ها به دلار درج شده‌اند؛ مبلغ نهایی سفارش بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p>`
   },
   "/shipping": {
     title: "ارسال سفارش‌ها | NIX-BUILDS",
@@ -283,7 +283,7 @@ async function staticRouteResponse(pathname, source) {
       const phoneHref = phone.replace(/[^+\\d]/g, "");
       const phoneHtml = phone ? `<a class="route-link" href="tel:${escHtml(phoneHref)}">📞 تلفن: ${escHtml(phone)}</a>` : "";
       const emailHtml = email ? `<a class="route-link" href="mailto:${escHtml(email)}">✉️ ایمیل: ${escHtml(email)}</a>` : "";
-      meta.body = `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links">${phoneHtml}${emailHtml}<a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش سفارشی</h2><p>برای سفارش‌های NIX-CUSTOM یا قطعات خودرو در NIX-AUTO، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و هزینه بررسی شود.</p><h2>ثبت سفارش محصولات موجود</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید درخواست سفارش را ارسال کنید.</p><p><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت‌ها به دلار درج شده‌اند؛ مبلغ نهایی سفارش بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p>`;
+      meta.body = `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><p style="margin:14px 0;padding:12px 14px;border-right:3px solid var(--accent);background:var(--bg);border-radius:8px;"><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت محصولات به دلار درج شده است؛ مبلغ نهایی سفارش برای خریداران داخل ایران بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p><div class="route-links">${phoneHtml}${emailHtml}<a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش سفارشی</h2><p>برای سفارش‌های NIX-CUSTOM یا قطعات خودرو در NIX-AUTO، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و هزینه بررسی شود.</p><h2>ثبت سفارش محصولات موجود</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید درخواست سفارش را ارسال کنید.</p>`;
     }
     const schema=safeJson({"@context":"https://schema.org","@type":"WebPage","name":meta.title,"description":meta.description,"url":`${SITE_URL}${pathname}`,"isPartOf":{"@type":"WebSite","name":"NIX-BUILDS","url":SITE_URL+"/"}});
     return routeShell(source,meta,meta.body,pathname,schema);
