@@ -1,35 +1,13 @@
-NIX-BUILDS v2.5.11
+NIX-BUILDS Website — Version 2.5.18
 
-This release keeps the existing Supabase schema unchanged:
-- products.image_data = primary product image
-- products.image_gallery = JSONB gallery
+Files included:
+- index.html: frontend, About page, contact email, checkout USD exchange-rate note, and footer version.
+- _worker.js: Cloudflare Worker routes, server-rendered pages, email correction, custom-domain URL, and Worker version.
 
-Important architecture:
-- Public product catalog data is read through Cloudflare Worker API endpoints:
-  /api/products
-  /api/product-by-slug/<slug>
-  /api/site-settings
-- Product images are served through:
-  /api/product-image/<id>?index=0
-  /api/product-image/<id>?index=1 ...
-- Admin CRUD continues to use the existing Supabase connection from the dashboard.
+Deploy using the same structure and method as your existing GitHub/Cloudflare project. Replace the corresponding existing files; do not upload the ZIP itself as a site asset.
 
-Deploy the Worker with the existing Cloudflare static-assets configuration.
-Keep your current icon.svg if you previously customized it.
-
-
-CLOUDFLARE DEPLOYMENT FIX
--------------------------
-The asset directory is: ./dist
-The Worker entry point is: ./_worker.js
-
-Both of these files are intentionally present:
-- .assetsignore at project root
-- dist/.assetsignore inside the asset directory
-
-Both contain exactly:
-_worker.js
-
-IMPORTANT:
-Do not move _worker.js into dist. It must remain beside wrangler.jsonc.
-The dist folder should contain the static site files and dist/.assetsignore only.
+Changes in 2.5.18:
+1. Contact email updated to info@nixbuilds.ir across frontend and Worker-rendered contact page.
+2. About page shows all five product lines: NIX-HOME, NIX-GEAR, NIX-CARE, NIX-AUTO, NIX-CUSTOM (all site languages).
+3. Added USD exchange-rate note to cart checkout and contact/order page.
+4. Version incremented to 2.5.18.

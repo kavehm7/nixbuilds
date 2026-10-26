@@ -10,8 +10,8 @@
  * All other requests are served from the static assets directory.
  */
 
-const SITE_URL = "https://nixbuilds.nixshop.workers.dev";
-const SITE_VERSION = "2.5.16";
+const SITE_URL = "https://nixbuilds.ir";
+const SITE_VERSION = "2.5.18";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
@@ -144,20 +144,18 @@ function productSchema(p) {
   if (p.seo_tags) data.keywords = p.seo_tags;
   if (primary) data.image = [`${SITE_URL}/api/product-image/${encodeURIComponent(p.id)}?index=0`];
 
-  // Google Product rich results require offers, review, or aggregateRating.
-  // Use the actual configured product price; never invent reviews or ratings.
-  const price = Number(String(p.price_usdt ?? '').replace(/,/g, '').trim());
-  if (Number.isFinite(price) && price > 0) {
-    const status = String(p.availability_status || '').toLowerCase();
-    const unavailable = /out|unavailable|ناموجود|غیرفعال/.test(status);
+  // Only publish an Offer when a real numeric USD price is present; never invent prices.
+  const usdPrice = Number(p.price_usdt);
+  if (p.price_usdt !== null && p.price_usdt !== undefined && String(p.price_usdt).trim() !== "" && Number.isFinite(usdPrice) && usdPrice > 0) {
     data.offers = {
       "@type": "Offer",
       "url": productUrl(p),
       "priceCurrency": "USD",
-      "price": price.toFixed(2),
-      "availability": unavailable ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
-      "itemCondition": "https://schema.org/NewCondition",
-      "seller": {"@type":"Organization","name":"NIX-BUILDS"}
+      "price": usdPrice,
+      "availability": (p.availability_status || "available") === "out_of_stock"
+        ? "https://schema.org/OutOfStock"
+        : "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition"
     };
   }
 
@@ -192,7 +190,7 @@ const STATIC_PAGES = {
     title: "تماس و سفارش | NIX-BUILDS",
     description: "راه‌های تماس و ثبت سفارش محصولات NIX-BUILDS.",
     h1: "تماس و سفارش",
-    body: `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 تلفن: 00989030287529</a><a class="route-link" href="mailto:kaveh-m@live.com">✉️ ایمیل: kaveh-m@live.com</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید، درخواست سفارش را ارسال کنید. در موبایل، متن سفارش در برنامه پیامک آماده می‌شود و ارسال نهایی با تأیید شما انجام خواهد شد.</p>`
+    body: `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links"><a class="route-link" href="tel:+989030287529">📞 تلفن: 00989030287529</a><a class="route-link" href="mailto:info@nixbuilds.ir">✉️ ایمیل: info@nixbuilds.ir</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید، درخواست سفارش را ارسال کنید. در موبایل، متن سفارش در برنامه پیامک آماده می‌شود و ارسال نهایی با تأیید شما انجام خواهد شد.</p><p><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت‌ها به دلار درج شده‌اند؛ مبلغ نهایی سفارش بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p>`
   },
   "/shipping": {
     title: "ارسال سفارش‌ها | NIX-BUILDS",
@@ -285,7 +283,7 @@ async function staticRouteResponse(pathname, source) {
       const phoneHref = phone.replace(/[^+\\d]/g, "");
       const phoneHtml = phone ? `<a class="route-link" href="tel:${escHtml(phoneHref)}">📞 تلفن: ${escHtml(phone)}</a>` : "";
       const emailHtml = email ? `<a class="route-link" href="mailto:${escHtml(email)}">✉️ ایمیل: ${escHtml(email)}</a>` : "";
-      meta.body = `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links">${phoneHtml}${emailHtml}<a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش سفارشی</h2><p>برای سفارش‌های NIX-CUSTOM یا قطعات خودرو در NIX-AUTO، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و هزینه بررسی شود.</p><h2>ثبت سفارش محصولات موجود</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید درخواست سفارش را ارسال کنید.</p>`;
+      meta.body = `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><div class="route-links">${phoneHtml}${emailHtml}<a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش سفارشی</h2><p>برای سفارش‌های NIX-CUSTOM یا قطعات خودرو در NIX-AUTO، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و هزینه بررسی شود.</p><h2>ثبت سفارش محصولات موجود</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید درخواست سفارش را ارسال کنید.</p><p><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت‌ها به دلار درج شده‌اند؛ مبلغ نهایی سفارش بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p>`;
     }
     const schema=safeJson({"@context":"https://schema.org","@type":"WebPage","name":meta.title,"description":meta.description,"url":`${SITE_URL}${pathname}`,"isPartOf":{"@type":"WebSite","name":"NIX-BUILDS","url":SITE_URL+"/"}});
     return routeShell(source,meta,meta.body,pathname,schema);
