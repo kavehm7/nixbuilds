@@ -1,15 +1,16 @@
-NIX-BUILDS Website — Version 2.5.20
+NIX-BUILDS Website — Version 2.5.21
 
 Files included:
-- index.html: existing frontend and features, restored swipe/fullscreen product image gallery, approximate toman price display, and footer version.
-- _worker.js: existing Cloudflare Worker routes plus cached exchange-rate endpoint and Worker version.
+- index.html: existing frontend, product gallery, and cart with approximate toman estimates.
+- _worker.js: existing Cloudflare Worker routes and cached exchange-rate endpoint.
 
 Deploy using the same structure and method as your existing GitHub/Cloudflare project. Replace the corresponding existing files; do not upload the ZIP itself as a site asset.
 
-Changes in 2.5.20:
-1. Restored product-image swipe left/right on touch devices and fullscreen image viewing with previous/next controls, keyboard arrows, and Escape to close.
-2. Added approximate toman prices beside USDT prices, using Nerkhsanj's public free-market USD rate feed. The Worker fetches/caches the rate for 5 minutes; the browser also keeps the last successfully received rate as a fallback.
-3. Shows source and update time beside the approximate toman amount. The displayed toman amount is an estimate, not the final payable price.
-4. Version incremented to 2.5.20.
+Changes in 2.5.21:
+1. Added approximate toman estimates beside each USDT-priced cart item. For quantities greater than one, the cart shows the approximate line total.
+2. Added an approximate toman subtotal under the original cart total. It includes only products priced in USDT; BTC/ETH items are excluded to avoid a misleading conversion.
+3. Added a clear note explaining that toman values are estimates and the final amount is confirmed using the rate at order time.
+4. Preserved the v2.5.20 touch gallery/fullscreen behavior and existing features.
+5. Incremented the frontend and Worker version to 2.5.21.
 
-No Supabase schema or product records were changed. Existing product prices remain stored/displayed in their original currencies; the toman value is calculated for display only.
+No Supabase schema or product records were changed. Original product prices and currencies remain unchanged; toman values are calculated for display only.
