@@ -246,6 +246,17 @@
         }
 
     
+/* v2.5.20 product image fullscreen + touch gallery */
+.product-page-main-image{cursor:zoom-in;touch-action:pan-y}
+.nix-image-lightbox{position:fixed;inset:0;z-index:10050;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;padding:54px 16px 24px}
+.nix-image-lightbox.open{display:flex}
+.nix-image-lightbox img{max-width:100%;max-height:calc(100dvh - 100px);object-fit:contain;touch-action:pan-y}
+.nix-lightbox-close,.nix-lightbox-prev,.nix-lightbox-next{position:absolute;border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:50%;width:44px;height:44px;font-size:27px;display:grid;place-items:center;cursor:pointer}
+.nix-lightbox-close{top:12px;right:12px}.nix-lightbox-prev{left:12px;top:50%;transform:translateY(-50%)}.nix-lightbox-next{right:12px;top:50%;transform:translateY(-50%)}
+.nix-price-toman{display:block;color:var(--accent,#ff8c00);font-size:13px;font-weight:700;margin-top:4px}
+.nix-rate-note{font-size:11px;color:var(--muted);font-weight:400;display:block;margin-top:2px}
+@media(max-width:650px){.product-page-layout{grid-template-columns:minmax(0,1fr)}.nix-lightbox-prev{left:6px}.nix-lightbox-next{right:6px}}
+
 /* v2.4.4 dedicated product routes */
 .product-page{width:100%;padding:28px 16px 70px;min-height:60vh;flex:1}
 .product-page-inner{max-width:1180px;margin:0 auto}
@@ -402,7 +413,7 @@
             <a href="/terms" data-i18n="footerTerms">قوانین</a>
         </div>
         <div id="footerCopyright">© <span id="copyrightYear"></span> NIX-BUILDS. All rights reserved.</div>
-        <div id="footerVersion">Version <span id="siteVersion">2.5.19</span></div>
+        <div id="footerVersion">Version <span id="siteVersion">2.5.20</span></div>
     </footer>
 
     <div class="modal" id="shareModal" onclick="handleShareBackdrop(event)">
@@ -757,7 +768,7 @@
             }
             const year=document.getElementById('copyrightYear');
             const fc=document.getElementById('footerCopyright'); if(fc) fc.innerHTML=`© ${new Date().getFullYear()} NIX-BUILDS. ${d.footerCopyright}`;
-            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.19</span>`;
+            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.20</span>`;
             const st=document.getElementById('shareTitle'); if(st) st.innerText=d.shareTitle;
             const cb=document.getElementById('shareCopyBtn'); if(cb) cb.innerText=d.shareCopy;
             const ns=document.getElementById('shareNativeBtn'); if(ns) ns.innerText=d.shareNative;
@@ -782,6 +793,37 @@
 
         function productTitle(p) {
             return p?.[`name_${currentLang}`] || p?.name_en || p?.name_fa || 'Product';
+        }
+
+        let usdTomanRate = null;
+        let usdTomanUpdatedAt = null;
+        function formatToman(value) {
+            if (!Number.isFinite(Number(value)) || Number(value) <= 0) return '';
+            return Math.round(Number(value)).toLocaleString('fa-IR') + ' تومان';
+        }
+        function tomanPriceHtml(p) {
+            const usd = Number(p?.price_usdt);
+            if (!usdTomanRate || !Number.isFinite(usd) || usd <= 0) return '';
+            const amount = usd * usdTomanRate;
+            const updated = usdTomanUpdatedAt ? (String(usdTomanUpdatedAt).match(/(\d{1,2}:\d{2})/)||[])[1] || new Date(usdTomanUpdatedAt).toLocaleTimeString(currentLang==='fa'?'fa-IR':'en-GB',{hour:'2-digit',minute:'2-digit'}) : ''; 
+            const label = currentLang==='fa' ? 'حدود ' : 'Approx. ';
+            const note = currentLang==='fa' ? `منبع: نرخ‌سنج · نرخ دلار آزاد · بروزرسانی ${updated}` : `Source: Nerkhsanj · Free-market USD rate · updated ${updated}`;
+            return `<span class="nix-price-toman">${label}${formatToman(amount)}<span class="nix-rate-note">${note}</span></span>`;
+        }
+        async function loadUsdTomanRate() {
+            try {
+                const res = await fetch('/api/exchange-rate', {cache:'no-store',headers:{'Accept':'application/json'}});
+                if (!res.ok) throw new Error('Rate endpoint unavailable');
+                const data = await res.json();
+                const rate = Number(data.rate);
+                if (!Number.isFinite(rate) || rate < 1000) throw new Error('Invalid USD rate');
+                usdTomanRate = rate; usdTomanUpdatedAt = data.updatedAt || new Date().toISOString();
+                try { localStorage.setItem('nixUsdTomanRate', JSON.stringify({rate:usdTomanRate,updatedAt:usdTomanUpdatedAt})); } catch {}
+                renderCurrentView();
+            } catch (e) {
+                try { const cached=JSON.parse(localStorage.getItem('nixUsdTomanRate')||'null'); if(cached && Number(cached.rate)>1000){usdTomanRate=Number(cached.rate);usdTomanUpdatedAt=cached.updatedAt;renderCurrentView();} } catch {}
+                console.warn('USD/Toman estimate unavailable:',e);
+            }
         }
 
         function productPrice(p) {
@@ -931,7 +973,7 @@
                 const price=productPrice(p);
                 const href=p.slug ? `/product/${encodeURIComponent(p.slug)}` : `/#all`;
                 const card=document.createElement('article'); card.className='card'; card.dataset.productId=p.id;
-                card.innerHTML=`<div class="card-img-wrap"><div class="image-placeholder">NIX-BUILDS</div><img class="card-img" data-product-image-id="${escapeHtml(p.id)}" src="/api/product-image/${encodeURIComponent(p.id)}?index=0" alt="${escapeHtml(title)}" loading="lazy" decoding="async"></div><div class="card-body"><div class="card-tag">${escapeHtml(p.product_line||'')} · <span>${escapeHtml(availabilityLabel(p))}</span></div><h3 class="card-title"><a href="${href}" style="color:inherit;text-decoration:none;">${escapeHtml(title)}</a></h3><div class="spec-list"><div class="spec-item"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="spec-item"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div>${price?`<div class="crypto-pay"><div class="pay-details"><span style="font-size:11px;color:var(--muted);">${escapeHtml(d.pay)}</span><span class="pay-price">${escapeHtml(price)}</span></div></div>`:''}<div class="card-actions"><a class="view-product-btn" href="${href}">${escapeHtml(d.detail)}</a><button class="btn-accent" type="button" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button></div>${isAdmin?`<div class="actions-cell"><button class="btn-edit" onclick="editProduct('${escapeHtml(p.id)}')">✏️ ویرایش</button><button class="btn-danger" onclick="deleteProduct('${escapeHtml(p.id)}')">🗑️ حذف</button></div>`:''}</div>`;
+                card.innerHTML=`<div class="card-img-wrap"><div class="image-placeholder">NIX-BUILDS</div><img class="card-img" data-product-image-id="${escapeHtml(p.id)}" src="/api/product-image/${encodeURIComponent(p.id)}?index=0" alt="${escapeHtml(title)}" loading="lazy" decoding="async"></div><div class="card-body"><div class="card-tag">${escapeHtml(p.product_line||'')} · <span>${escapeHtml(availabilityLabel(p))}</span></div><h3 class="card-title"><a href="${href}" style="color:inherit;text-decoration:none;">${escapeHtml(title)}</a></h3><div class="spec-list"><div class="spec-item"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="spec-item"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div>${price?`<div class="crypto-pay"><div class="pay-details"><span style="font-size:11px;color:var(--muted);">${escapeHtml(d.pay)}</span><span class="pay-price">${escapeHtml(price)}${tomanPriceHtml(p)}</span></div></div>`:''}<div class="card-actions"><a class="view-product-btn" href="${href}">${escapeHtml(d.detail)}</a><button class="btn-accent" type="button" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button></div>${isAdmin?`<div class="actions-cell"><button class="btn-edit" onclick="editProduct('${escapeHtml(p.id)}')">✏️ ویرایش</button><button class="btn-danger" onclick="deleteProduct('${escapeHtml(p.id)}')">🗑️ حذف</button></div>`:''}</div>`;
                 grid.appendChild(card);
                 const addBtn = card.querySelector('[data-product-action="add"]');
                 if (addBtn) addBtn.addEventListener('click', (event) => {
@@ -988,7 +1030,7 @@
             const imageCount=Number(p.image_count||1);
             const slug=p.slug||'';
             const imageUrl=(i)=>`/api/product-image/${encodeURIComponent(p.id)}?index=${i}`;
-            content.innerHTML=`<div class="product-page-card"><div class="product-page-layout"><div><div class="product-main-image-wrap"><div class="image-placeholder">NIX-BUILDS</div><img id="dedicatedMainImage" class="product-page-main-image" src="${imageUrl(0)}" alt="${escapeHtml(title)}" loading="eager" decoding="async" style="opacity:1;" onload="this.style.opacity='1';this.previousElementSibling.style.display='none';" onerror="this.style.opacity='0';this.previousElementSibling.style.display='flex';"></div><div class="product-page-gallery" id="dedicatedGallery"></div></div><div><div class="product-page-tag">${escapeHtml(p.product_line||'')} · ${escapeHtml(availabilityLabel(p))}</div><h1 class="product-page-title">${escapeHtml(title)}</h1>${price?`<div class="product-page-price">${escapeHtml(price)}</div>`:''}<div class="product-page-specs"><div class="product-page-spec"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="product-page-spec"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div><div class="product-page-actions"><button class="btn-accent" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button><button class="btn-secondary" data-product-action="share">↗ ${escapeHtml(d.shareTitle)}</button></div></div></div>${desc?`<section class="product-page-description"><h2>${escapeHtml(d.desc)}</h2><p>${escapeHtml(desc).replace(/\n/g,'<br>')}</p></section>`:''}<section class="product-page-related" id="dedicatedRelated"><h2>${escapeHtml(productPageLabels().related)}</h2><div class="product-page-related-grid" id="relatedGrid"><p style="color:var(--muted);">${currentLang==='fa'?'در حال بارگذاری...':'Loading...'}</p></div></section></div>`;
+            content.innerHTML=`<div class="product-page-card"><div class="product-page-layout"><div><div class="product-main-image-wrap"><div class="image-placeholder">NIX-BUILDS</div><img id="dedicatedMainImage" class="product-page-main-image" src="${imageUrl(0)}" alt="${escapeHtml(title)}" loading="eager" decoding="async" style="opacity:1;" onload="this.style.opacity='1';this.previousElementSibling.style.display='none';" onerror="this.style.opacity='0';this.previousElementSibling.style.display='flex';"></div><div class="product-page-gallery" id="dedicatedGallery"></div></div><div><div class="product-page-tag">${escapeHtml(p.product_line||'')} · ${escapeHtml(availabilityLabel(p))}</div><h1 class="product-page-title">${escapeHtml(title)}</h1>${price?`<div class="product-page-price">${escapeHtml(price)}${tomanPriceHtml(p)}</div>`:''}<div class="product-page-specs"><div class="product-page-spec"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="product-page-spec"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div><div class="product-page-actions"><button class="btn-accent" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button><button class="btn-secondary" data-product-action="share">↗ ${escapeHtml(d.shareTitle)}</button></div></div></div>${desc?`<section class="product-page-description"><h2>${escapeHtml(d.desc)}</h2><p>${escapeHtml(desc).replace(/\n/g,'<br>')}</p></section>`:''}<section class="product-page-related" id="dedicatedRelated"><h2>${escapeHtml(productPageLabels().related)}</h2><div class="product-page-related-grid" id="relatedGrid"><p style="color:var(--muted);">${currentLang==='fa'?'در حال بارگذاری...':'Loading...'}</p></div></section></div>`;
             const addBtn = content.querySelector('[data-product-action="add"]');
             const shareBtn = content.querySelector('[data-product-action="share"]');
             if (addBtn) addBtn.addEventListener('click', () => addToCart(p.id));
@@ -1003,9 +1045,33 @@
             for(let i=0;i<imageCount;i++){
                 const b=document.createElement('button'); b.type='button'; b.innerHTML=`<img src="${imageUrl(i)}" alt="${escapeHtml(title)} ${i+1}" loading="lazy" decoding="async">`; b.onclick=()=>{const main=document.getElementById('dedicatedMainImage'); if(main){main.src=imageUrl(i);}}; gallery.appendChild(b);
             }
+            setupProductImageGestures(p, imageCount, imageUrl);
             const canonical=document.querySelector('link[rel="canonical"]'); if(canonical) canonical.href=location.origin+`/product/${encodeURIComponent(slug)}`;
             document.title=(p.seo_title||title+' | NIX-BUILDS');
             loadRelatedProducts(p);
+        }
+
+        let lightboxIndex = 0, lightboxImages = [], lightboxTitle = 'Product image';
+        function setupProductImageGestures(product, count, imageUrl) {
+            lightboxIndex=0;
+            const main=document.getElementById('dedicatedMainImage');
+            if(!main) return;
+            const setIndex=(i)=>{lightboxIndex=(i+count)%count;main.src=imageUrl(lightboxIndex);const lb=document.getElementById('nixLightboxImage');if(lb && document.getElementById('nixImageLightbox').classList.contains('open'))lb.src=imageUrl(lightboxIndex);};
+            main.onclick=()=>{lightboxImages=Array.from({length:count},(_,i)=>imageUrl(i));lightboxTitle=productTitle(product);const overlay=document.getElementById('nixImageLightbox');document.getElementById('nixLightboxImage').src=imageUrl(lightboxIndex);document.getElementById('nixLightboxImage').alt=lightboxTitle;overlay.classList.add('open');document.body.style.overflow='hidden';};
+            const gallery=document.getElementById('dedicatedGallery');
+            if(gallery) Array.from(gallery.querySelectorAll('button')).forEach((b,i)=>{b.onclick=()=>setIndex(i);});
+            let startX=0,startY=0;
+            const onStart=e=>{const t=e.touches?.[0];if(t){startX=t.clientX;startY=t.clientY;}};
+            const onEnd=e=>{const t=e.changedTouches?.[0];if(!t)return;const dx=t.clientX-startX,dy=t.clientY-startY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.25){setIndex(lightboxIndex+(dx<0?1:-1));}};
+            main.ontouchstart=onStart;main.ontouchend=onEnd;
+            const overlay=document.getElementById('nixImageLightbox');const lbimg=document.getElementById('nixLightboxImage');
+            const close=()=>{overlay.classList.remove('open');document.body.style.overflow='';};
+            document.getElementById('nixLightboxClose').onclick=close;
+            overlay.onclick=e=>{if(e.target===overlay)close();};
+            document.getElementById('nixLightboxPrev').onclick=()=>setIndex(lightboxIndex-1);
+            document.getElementById('nixLightboxNext').onclick=()=>setIndex(lightboxIndex+1);
+            lbimg.ontouchstart=onStart;lbimg.ontouchend=onEnd;
+            if(!window.nixLightboxKeysBound){window.nixLightboxKeysBound=true;document.addEventListener('keydown',e=>{const ov=document.getElementById('nixImageLightbox');if(!ov?.classList.contains('open'))return;if(e.key==='Escape'){ov.classList.remove('open');document.body.style.overflow='';}if(e.key==='ArrowLeft')document.getElementById('nixLightboxNext').click();if(e.key==='ArrowRight')document.getElementById('nixLightboxPrev').click();});}
         }
 
         async function loadRelatedProducts(p){
@@ -1084,6 +1150,7 @@
 
             // Refresh data without changing the current route.
             await Promise.allSettled([loadSlogan(), loadProducts(false)]);
+            loadUsdTomanRate();
 
             const finalPath = getRoutePath();
             if (finalPath === '/') {
@@ -1885,5 +1952,6 @@
             else if (mq.addListener) mq.addListener(applyDeviceTheme);
         } catch {}
 </script>
+<div class="nix-image-lightbox" id="nixImageLightbox" role="dialog" aria-modal="true" aria-label="Product image"><button type="button" class="nix-lightbox-close" id="nixLightboxClose" aria-label="Close">×</button><button type="button" class="nix-lightbox-prev" id="nixLightboxPrev" aria-label="Previous image">‹</button><img id="nixLightboxImage" alt="Product image fullscreen"><button type="button" class="nix-lightbox-next" id="nixLightboxNext" aria-label="Next image">›</button></div>
 </body>
 </html>
