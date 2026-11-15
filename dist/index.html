@@ -246,7 +246,22 @@
         }
 
     
-/* v2.5.21 cart approximate toman pricing; preserves v2.5.20 product image fullscreen + touch gallery */
+/* v2.5.22: responsive tabs, contact links, cart navigation, image feedback */
+@media(max-width:600px){
+ html,body{max-width:100%;overflow-x:clip}
+ .tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;width:100%;margin-bottom:22px}
+ .tabs .tab-btn{min-width:0;width:100%;padding:10px 3px;font-size:clamp(10px,2.8vw,12px);white-space:normal;overflow-wrap:anywhere}
+ .container{max-width:100%;min-width:0}
+ .catalog-tools,.grid,.site-info-sections{min-width:0;max-width:100%}
+}
+.nix-contact-link{display:block;color:var(--text);text-decoration:none;overflow-wrap:anywhere}
+.nix-contact-link:hover,.nix-cart-product-link:hover{color:var(--accent)}
+.nix-cart-product-link{color:inherit;text-decoration:none}
+.nix-cart-image-link{display:block;width:70px;height:70px}
+.nix-cart-image-link img{display:block;width:100%;height:100%;object-fit:cover;border-radius:10px}
+@media(max-width:700px){.nix-cart-image-link{width:55px;height:55px}}
+.nix-image-retry{background:var(--surface);color:var(--text);border:1px solid var(--accent);border-radius:8px;padding:7px;font-size:11px;cursor:pointer}
+/* v2.5.22 cart approximate toman pricing; preserves v2.5.20 product image fullscreen + touch gallery */
 .product-page-main-image{cursor:zoom-in;touch-action:pan-y}
 .nix-image-lightbox{position:fixed;inset:0;z-index:10050;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;padding:54px 16px 24px}
 .nix-image-lightbox.open{display:flex}
@@ -369,6 +384,7 @@
                 <option value="price_asc" id="sortPriceAsc">قیمت: کم به زیاد ↑</option>
                 <option value="price_desc" id="sortPriceDesc">قیمت: زیاد به کم ↓</option>
             </select>
+            <select id="availabilityFilter" class="sort-select" aria-label="فیلتر موجودی"><option value="all">همه محصولات</option><option value="available">فقط موجودها</option><option value="orderable">موجود و سفارشی</option></select>
         </div>
         <div class="result-count" id="resultCount" aria-live="polite"></div>
         <div class="grid" id="productsGrid"></div>
@@ -382,8 +398,9 @@
         </div>
         <div class="site-info-card" id="contactSection">
             <h2 id="contactHeading">تماس با ما</h2>
-            <p class="site-contact-line" id="contactEmail">info@nixbuilds.ir</p>
-            <p class="site-contact-line" id="contactPhone">00989030287529</p>
+            <a class="site-contact-line nix-contact-link" id="contactEmail" href="mailto:info@nixbuilds.ir">info@nixbuilds.ir</a>
+            <a class="site-contact-line nix-contact-link" id="contactPhone" href="tel:+989030287529">00989030287529</a>
+            <a class="site-contact-line nix-contact-link" href="https://www.instagram.com/nixbuilds.ir/" target="_blank" rel="noopener noreferrer">Instagram · @nixbuilds.ir</a>
         </div>
     </section>
 
@@ -413,7 +430,7 @@
             <a href="/terms" data-i18n="footerTerms">قوانین</a>
         </div>
         <div id="footerCopyright">© <span id="copyrightYear"></span> NIX-BUILDS. All rights reserved.</div>
-        <div id="footerVersion">Version <span id="siteVersion">2.5.21</span></div>
+        <div id="footerVersion">Version <span id="siteVersion">2.5.22</span></div>
     </footer>
 
     <div class="modal" id="shareModal" onclick="handleShareBackdrop(event)">
@@ -653,6 +670,7 @@
         let cart = readCache('nix_builds_cart_v1') || [];
         let currentDetailProduct = null;
         let productSearchTerm = '';
+        document.addEventListener('change',e=>{if(e.target?.id==='availabilityFilter')renderProducts();});
         let productSortMode = 'newest_desc';
 
         const dictionary = {
@@ -752,6 +770,8 @@
             setText('cryptoDiscount', discount);
             setText('contactEmail', info.email || '');
             setText('contactPhone', info.phone || '');
+            const emailLink=document.getElementById('contactEmail'); if(emailLink) emailLink.href='mailto:'+encodeURIComponent(info.email || 'info@nixbuilds.ir');
+            const phoneLink=document.getElementById('contactPhone'); if(phoneLink) phoneLink.href='tel:'+String(info.phone || '+989030287529').replace(/[^+\d]/g,'');
             setText('catalogIntro', (info.catalogIntros && info.catalogIntros[currentLang]) || d.aboutText);
             document.querySelectorAll('[data-i18n]').forEach(el=>{ const key=el.dataset.i18n; if(d[key]) el.textContent=d[key]; });
             const search=document.getElementById('productSearch');
@@ -770,7 +790,7 @@
             }
             const year=document.getElementById('copyrightYear');
             const fc=document.getElementById('footerCopyright'); if(fc) fc.innerHTML=`© ${new Date().getFullYear()} NIX-BUILDS. ${d.footerCopyright}`;
-            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.21</span>`;
+            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.22</span>`;
             const st=document.getElementById('shareTitle'); if(st) st.innerText=d.shareTitle;
             const cb=document.getElementById('shareCopyBtn'); if(cb) cb.innerText=d.shareCopy;
             const ns=document.getElementById('shareNativeBtn'); if(ns) ns.innerText=d.shareNative;
@@ -860,8 +880,9 @@
         async function loadCardImage(id,img,placeholder) {
             const image=await fetchProductImage(id);
             if(!image)return;
+            if(placeholder){placeholder.textContent=currentLang==='fa'?'در حال بارگذاری تصویر…':'Loading image…';placeholder.style.display='flex';}
             img.onload=()=>{img.style.visibility='visible';if(placeholder)placeholder.style.display='none';};
-            img.onerror=()=>{img.style.visibility='hidden';if(placeholder)placeholder.style.display='flex';};
+            img.onerror=()=>{img.style.visibility='hidden';if(placeholder){placeholder.innerHTML='';const retry=document.createElement('button');retry.type='button';retry.className='nix-image-retry';retry.textContent=currentLang==='fa'?'تصویر بارگذاری نشد · تلاش مجدد':'Image unavailable · Retry';retry.onclick=(e)=>{e.stopPropagation();img.src=image+(image.includes('?')?'&':'?')+'retry='+Date.now();placeholder.textContent=currentLang==='fa'?'در حال بارگذاری تصویر…':'Loading image…';};placeholder.appendChild(retry);placeholder.style.display='flex';}};
             img.src=image;
         }
 
@@ -962,6 +983,9 @@
             const q=String(productSearchTerm||'').toLowerCase();
             let list=Array.isArray(allProducts) ? [...allProducts] : [];
             list=list.filter(p=>currentFilter==='ALL' || p.product_line===currentFilter);
+            const stockFilter=document.getElementById('availabilityFilter')?.value || 'all';
+            if(stockFilter==='available') list=list.filter(p=>(p.availability_status||'available')==='available');
+            if(stockFilter==='orderable') list=list.filter(p=>(p.availability_status||'available')!=='out_of_stock');
             if(q) list=list.filter(p=>{
                 const hay=[p.name_fa,p.name_en,p.name_ar,p.name_zh,p.name_ru,p.material_fa,p.material_en,p.material_ar,p.material_zh,p.material_ru,p.dimensions_fa,p.dimensions_en,p.dimensions_ar,p.dimensions_zh,p.dimensions_ru,p.seo_tags,p.product_line].filter(Boolean).join(' ').toLowerCase();
                 return hay.includes(q);
@@ -988,7 +1012,7 @@
                 const price=productPrice(p);
                 const href=p.slug ? `/product/${encodeURIComponent(p.slug)}` : `/#all`;
                 const card=document.createElement('article'); card.className='card'; card.dataset.productId=p.id;
-                card.innerHTML=`<div class="card-img-wrap"><div class="image-placeholder">NIX-BUILDS</div><img class="card-img" data-product-image-id="${escapeHtml(p.id)}" src="/api/product-image/${encodeURIComponent(p.id)}?index=0" alt="${escapeHtml(title)}" loading="lazy" decoding="async"></div><div class="card-body"><div class="card-tag">${escapeHtml(p.product_line||'')} · <span>${escapeHtml(availabilityLabel(p))}</span></div><h3 class="card-title"><a href="${href}" style="color:inherit;text-decoration:none;">${escapeHtml(title)}</a></h3><div class="spec-list"><div class="spec-item"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="spec-item"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div>${price?`<div class="crypto-pay"><div class="pay-details"><span style="font-size:11px;color:var(--muted);">${escapeHtml(d.pay)}</span><span class="pay-price">${escapeHtml(price)}${tomanPriceHtml(p)}</span></div></div>`:''}<div class="card-actions"><a class="view-product-btn" href="${href}">${escapeHtml(d.detail)}</a><button class="btn-accent" type="button" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button></div>${isAdmin?`<div class="actions-cell"><button class="btn-edit" onclick="editProduct('${escapeHtml(p.id)}')">✏️ ویرایش</button><button class="btn-danger" onclick="deleteProduct('${escapeHtml(p.id)}')">🗑️ حذف</button></div>`:''}</div>`;
+                card.innerHTML=`<div class="card-img-wrap"><div class="image-placeholder">در حال بارگذاری تصویر…</div><img class="card-img" data-product-image-id="${escapeHtml(p.id)}" src="/api/product-image/${encodeURIComponent(p.id)}?index=0" alt="${escapeHtml(title)}" loading="lazy" decoding="async"></div><div class="card-body"><div class="card-tag">${escapeHtml(p.product_line||'')} · <span>${escapeHtml(availabilityLabel(p))}</span></div><h3 class="card-title"><a href="${href}" style="color:inherit;text-decoration:none;">${escapeHtml(title)}</a></h3><div class="spec-list"><div class="spec-item"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="spec-item"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div>${price?`<div class="crypto-pay"><div class="pay-details"><span style="font-size:11px;color:var(--muted);">${escapeHtml(d.pay)}</span><span class="pay-price">${escapeHtml(price)}${tomanPriceHtml(p)}</span></div></div>`:''}<div class="card-actions"><a class="view-product-btn" href="${href}">${escapeHtml(d.detail)}</a><button class="btn-accent" type="button" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button></div>${isAdmin?`<div class="actions-cell"><button class="btn-edit" onclick="editProduct('${escapeHtml(p.id)}')">✏️ ویرایش</button><button class="btn-danger" onclick="deleteProduct('${escapeHtml(p.id)}')">🗑️ حذف</button></div>`:''}</div>`;
                 grid.appendChild(card);
                 const addBtn = card.querySelector('[data-product-action="add"]');
                 if (addBtn) addBtn.addEventListener('click', (event) => {
@@ -1045,7 +1069,7 @@
             const imageCount=Number(p.image_count||1);
             const slug=p.slug||'';
             const imageUrl=(i)=>`/api/product-image/${encodeURIComponent(p.id)}?index=${i}`;
-            content.innerHTML=`<div class="product-page-card"><div class="product-page-layout"><div><div class="product-main-image-wrap"><div class="image-placeholder">NIX-BUILDS</div><img id="dedicatedMainImage" class="product-page-main-image" src="${imageUrl(0)}" alt="${escapeHtml(title)}" loading="eager" decoding="async" style="opacity:1;" onload="this.style.opacity='1';this.previousElementSibling.style.display='none';" onerror="this.style.opacity='0';this.previousElementSibling.style.display='flex';"></div><div class="product-page-gallery" id="dedicatedGallery"></div></div><div><div class="product-page-tag">${escapeHtml(p.product_line||'')} · ${escapeHtml(availabilityLabel(p))}</div><h1 class="product-page-title">${escapeHtml(title)}</h1>${price?`<div class="product-page-price">${escapeHtml(price)}${tomanPriceHtml(p)}</div>`:''}<div class="product-page-specs"><div class="product-page-spec"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="product-page-spec"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div><div class="product-page-actions"><button class="btn-accent" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button><button class="btn-secondary" data-product-action="share">↗ ${escapeHtml(d.shareTitle)}</button></div></div></div>${desc?`<section class="product-page-description"><h2>${escapeHtml(d.desc)}</h2><p>${escapeHtml(desc).replace(/\n/g,'<br>')}</p></section>`:''}<section class="product-page-related" id="dedicatedRelated"><h2>${escapeHtml(productPageLabels().related)}</h2><div class="product-page-related-grid" id="relatedGrid"><p style="color:var(--muted);">${currentLang==='fa'?'در حال بارگذاری...':'Loading...'}</p></div></section></div>`;
+            content.innerHTML=`<div class="product-page-card"><div class="product-page-layout"><div><div class="product-main-image-wrap"><div class="image-placeholder">در حال بارگذاری تصویر…</div><img id="dedicatedMainImage" class="product-page-main-image" src="${imageUrl(0)}" alt="${escapeHtml(title)}" loading="eager" decoding="async" style="opacity:1;" onload="this.style.opacity='1';this.previousElementSibling.style.display='none';" onerror="this.style.opacity='0';this.previousElementSibling.style.display='flex';"></div><div class="product-page-gallery" id="dedicatedGallery"></div></div><div><div class="product-page-tag">${escapeHtml(p.product_line||'')} · ${escapeHtml(availabilityLabel(p))}</div><h1 class="product-page-title">${escapeHtml(title)}</h1>${price?`<div class="product-page-price">${escapeHtml(price)}${tomanPriceHtml(p)}</div>`:''}<div class="product-page-specs"><div class="product-page-spec"><span>${escapeHtml(d.mat)}</span><span>${escapeHtml(mat)}</span></div><div class="product-page-spec"><span>${escapeHtml(d.dim)}</span><span>${escapeHtml(dim)}</span></div></div><div class="product-page-actions"><button class="btn-accent" data-product-action="add" ${!availabilityCanCart(p)?'disabled aria-disabled="true"':''}>${availabilityCanCart(p)?'🛒 '+escapeHtml(d.addCart):escapeHtml(currentLang==='fa'?'ناموجود':'Out of stock')}</button><button class="btn-secondary" data-product-action="share">↗ ${escapeHtml(d.shareTitle)}</button></div></div></div>${desc?`<section class="product-page-description"><h2>${escapeHtml(d.desc)}</h2><p>${escapeHtml(desc).replace(/\n/g,'<br>')}</p></section>`:''}<section class="product-page-related" id="dedicatedRelated"><h2>${escapeHtml(productPageLabels().related)}</h2><div class="product-page-related-grid" id="relatedGrid"><p style="color:var(--muted);">${currentLang==='fa'?'در حال بارگذاری...':'Loading...'}</p></div></section></div>`;
             const addBtn = content.querySelector('[data-product-action="add"]');
             const shareBtn = content.querySelector('[data-product-action="share"]');
             if (addBtn) addBtn.addEventListener('click', () => addToCart(p.id));
@@ -1094,7 +1118,7 @@
             try{
                 const rows=await dbRequest(`products?product_line=eq.${encodeURIComponent(p.product_line||'')}&slug=not.is.null&id=neq.${encodeURIComponent(p.id)}&select=id,slug,product_line,name_fa,name_en,name_ar,name_zh,name_ru&order=created_at.desc&limit=4`);
                 const arr=Array.isArray(rows)?rows:[];
-                grid.innerHTML=arr.length?arr.map(r=>`<a href="/product/${encodeURIComponent(r.slug)}"><div class="card-img-wrap" style="margin-bottom:8px;aspect-ratio:1;position:relative;"><div class="image-placeholder">NIX-BUILDS</div><img data-product-image-id="${escapeHtml(r.id)}" src="/api/product-image/${encodeURIComponent(r.id)}?index=0" class="card-img" alt="${escapeHtml(productTitle(r))}" loading="lazy" decoding="async"></div><strong>${escapeHtml(productTitle(r))}</strong><br><small>${escapeHtml(r.product_line||'')}</small></a>`).join(''):`<p style="color:var(--muted);">${currentLang==='fa'?'محصول مشابهی وجود ندارد.':'No related products.'}</p>`;
+                grid.innerHTML=arr.length?arr.map(r=>`<a href="/product/${encodeURIComponent(r.slug)}"><div class="card-img-wrap" style="margin-bottom:8px;aspect-ratio:1;position:relative;"><div class="image-placeholder">در حال بارگذاری تصویر…</div><img data-product-image-id="${escapeHtml(r.id)}" src="/api/product-image/${encodeURIComponent(r.id)}?index=0" class="card-img" alt="${escapeHtml(productTitle(r))}" loading="lazy" decoding="async"></div><strong>${escapeHtml(productTitle(r))}</strong><br><small>${escapeHtml(r.product_line||'')}</small></a>`).join(''):`<p style="color:var(--muted);">${currentLang==='fa'?'محصول مشابهی وجود ندارد.':'No related products.'}</p>`;
                 setupLazyProductImages();
             }catch(e){ grid.innerHTML=`<p style="color:var(--muted);">${currentLang==='fa'?'امکان دریافت محصولات مشابه وجود ندارد.':'Unable to load related products.'}</p>`; }
         }
@@ -1463,9 +1487,9 @@
                 const row = document.createElement('div');
                 row.className = 'cart-item';
                 row.innerHTML = `
-                    <img src="" alt="${escapeHtml(productTitle(p))}" style="visibility:hidden;">
+                    <a class="nix-cart-image-link" href="${p.slug?`/product/${encodeURIComponent(p.slug)}`:`/?product=${encodeURIComponent(p.id)}`}"><img src="" alt="${escapeHtml(productTitle(p))}" style="visibility:hidden;"></a>
                     <div>
-                        <div class="cart-item-title">${escapeHtml(productTitle(p))}</div>
+                        <div class="cart-item-title"><a class="nix-cart-product-link" href="${p.slug?`/product/${encodeURIComponent(p.slug)}`:`/?product=${encodeURIComponent(p.id)}`}">${escapeHtml(productTitle(p))}</a></div>
                         <div style="color:var(--muted);font-size:12px;">${escapeHtml(priceText)}${cartTomanPriceHtml(p, item.qty)}</div>
                         <div class="cart-controls">
                             <button onclick="changeCartQty('${p.id}',-1)">−</button>
