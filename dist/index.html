@@ -246,7 +246,7 @@
         }
 
     
-/* v2.5.23: responsive tabs, contact links, cart navigation, image feedback */
+/* v2.5.24: responsive tabs, contact links, cart navigation, image feedback */
 @media(max-width:600px){
  html,body{max-width:100%;overflow-x:clip}
  .tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;width:100%;margin-bottom:22px}
@@ -261,7 +261,7 @@
 .nix-cart-image-link img{display:block;width:100%;height:100%;object-fit:cover;border-radius:10px}
 @media(max-width:700px){.nix-cart-image-link{width:55px;height:55px}}
 .nix-image-retry{background:var(--surface);color:var(--text);border:1px solid var(--accent);border-radius:8px;padding:7px;font-size:11px;cursor:pointer}
-/* v2.5.23 cart approximate toman pricing; preserves v2.5.20 product image fullscreen + touch gallery */
+/* v2.5.24 cart approximate toman pricing; preserves v2.5.20 product image fullscreen + touch gallery */
 .product-page-main-image{cursor:zoom-in;touch-action:pan-y}
 .nix-image-lightbox{position:fixed;inset:0;z-index:10050;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;padding:54px 16px 24px}
 .nix-image-lightbox.open{display:flex}
@@ -313,7 +313,7 @@
         .product-main-image-wrap .image-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
         .product-main-image-wrap .product-page-main-image{position:relative;opacity:0;transition:opacity .15s ease;}
 
-/* v2.5.23: accessible four-way contact controls */
+/* v2.5.24: accessible four-way contact controls */
 .nix-contact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;direction:rtl;margin:16px 0}
 .nix-contact-method{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;min-height:84px;padding:12px 5px;border:1px solid var(--border,rgba(130,130,130,.28));border-radius:13px;background:var(--surface,var(--bg));color:var(--text);text-decoration:none;transition:transform .15s,border-color .15s,background .15s;text-align:center;font-size:12px;font-weight:600}
 .nix-contact-method svg{color:var(--accent);flex:none}
@@ -437,7 +437,7 @@
             <a href="/terms" data-i18n="footerTerms">قوانین</a>
         </div>
         <div id="footerCopyright">© <span id="copyrightYear"></span> NIX-BUILDS. All rights reserved.</div>
-        <div id="footerVersion">Version <span id="siteVersion">2.5.23</span></div>
+        <div id="footerVersion">Version <span id="siteVersion">2.5.24</span></div>
     </footer>
 
     <div class="modal" id="shareModal" onclick="handleShareBackdrop(event)">
@@ -798,7 +798,7 @@
             }
             const year=document.getElementById('copyrightYear');
             const fc=document.getElementById('footerCopyright'); if(fc) fc.innerHTML=`© ${new Date().getFullYear()} NIX-BUILDS. ${d.footerCopyright}`;
-            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.23</span>`;
+            const fv=document.getElementById('footerVersion'); if(fv) fv.innerHTML=`${d.footerVersion} <span id="siteVersion">2.5.24</span>`;
             const st=document.getElementById('shareTitle'); if(st) st.innerText=d.shareTitle;
             const cb=document.getElementById('shareCopyBtn'); if(cb) cb.innerText=d.shareCopy;
             const ns=document.getElementById('shareNativeBtn'); if(ns) ns.innerText=d.shareNative;
@@ -1703,6 +1703,8 @@
         async function handleImageUpload(input) {
             if (!(input.files && input.files.length)) return;
             const files = Array.from(input.files).slice(0, 6);
+            const saveButton = document.getElementById('saveProductBtn');
+            if (saveButton) saveButton.disabled = true;
             try {
                 const images = [];
                 for (const file of files) {
@@ -1714,6 +1716,8 @@
             } catch (e) {
                 alert(e.message || 'پردازش تصاویر انجام نشد.');
                 input.value = '';
+            } finally {
+                if (saveButton) saveButton.disabled = false;
             }
         }
 
@@ -1854,20 +1858,32 @@
                 description_ar: val('p_desc_ar').trim(), description_zh: val('p_desc_zh').trim(), description_ru: val('p_desc_ru').trim()
             };
 
+            // Only a newly selected upload may change stored image fields.
+            // Image endpoint URLs are display-only and must NEVER be persisted.
+            const uploadedFiles = document.getElementById('p_file')?.files;
+            const hasNewUpload = Boolean(uploadedFiles && uploadedFiles.length);
             const newImage = imageEl?.value?.trim() || '';
-            if (newImage) payload.image_data = newImage;
-
-            try {
-                const rawGallery = galleryEl?.value?.trim() || '';
-                if (rawGallery) {
-                    const parsed = JSON.parse(rawGallery);
-                    payload.image_gallery = Array.isArray(parsed) ? parsed : [];
-                } else if (!editId) {
-                    payload.image_gallery = [];
+            if (hasNewUpload) {
+                if (!/^data:image\/(?:jpeg|png|webp|gif|avif);base64,[A-Za-z0-9+/=\s]+$/i.test(newImage)) {
+                    alert('تصویر جدید هنوز آماده نیست یا معتبر نیست. لطفاً دوباره بارگذاری کنید.');
+                    return;
                 }
-            } catch {
-                alert('فرمت گالری تصاویر صحیح نیست.');
-                return;
+                payload.image_data = newImage;
+            }
+
+            if (hasNewUpload) {
+                try {
+                    const parsed = JSON.parse(galleryEl?.value || '[]');
+                    if (!Array.isArray(parsed) || parsed.some(v => typeof v !== 'string' || !/^data:image\/(?:jpeg|png|webp|gif|avif);base64,[A-Za-z0-9+/=\s]+$/i.test(v))) {
+                        throw new Error('invalid image gallery');
+                    }
+                    payload.image_gallery = parsed;
+                } catch {
+                    alert('گالری تصاویر جدید معتبر نیست؛ هیچ تغییری ذخیره نشد.');
+                    return;
+                }
+            } else if (!editId) {
+                payload.image_gallery = [];
             }
 
             // Defensive copy: even if another part of the page adds an id property,
@@ -1951,11 +1967,11 @@
             };
             Object.entries(map).forEach(([id,v]) => { const el=document.getElementById(id); if(el) el.value=v; });
             document.getElementById('p_file').value = '';
-            document.getElementById('p_img_base64').value = imageCache.get(String(id)) || ''; document.getElementById('p_image_gallery').value = JSON.stringify(Array.isArray(p.image_gallery) ? p.image_gallery : []);
+            // Editing metadata must not copy display URLs into image_data or clear image_gallery.
+            // Both image fields stay untouched unless the administrator selects new files.
+            document.getElementById('p_img_base64').value = '';
+            document.getElementById('p_image_gallery').value = '';
             document.getElementById('adminModal').style.display = 'flex';
-            if (!document.getElementById('p_img_base64').value) await fetchProductImage(id).then(img => {
-                if (img) document.getElementById('p_img_base64').value = img;
-            });
         }
 
         function resetProductForm() {
