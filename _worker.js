@@ -11,7 +11,7 @@
  */
 
 const SITE_URL = "https://nixbuilds.ir";
-const SITE_VERSION = "2.5.23";
+const SITE_VERSION = "2.5.24";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
@@ -300,7 +300,7 @@ function relatedLinksHtml(related) {
 function decodeImageData(value) {
   if (!value) return null;
   const s = String(value).trim();
-  if (!s) return null;
+  if (!s || s.startsWith('/api/product-image/')) return null;
   let mime = 'image/jpeg';
   let b64 = s;
   const m = s.match(/^data:([^;,]+);base64,(.*)$/is);
