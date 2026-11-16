@@ -11,7 +11,7 @@
  */
 
 const SITE_URL = "https://nixbuilds.ir";
-const SITE_VERSION = "2.5.22";
+const SITE_VERSION = "2.5.23";
 const SUPABASE_URL = "https://plnpudnkqeqfovqieqje.supabase.co";
 const SUPABASE_KEY = "sb_publishable_oTKJhQ9aoBr2CJWu65-Eag_KC58uBMQ";
 
@@ -283,7 +283,7 @@ async function staticRouteResponse(pathname, source) {
       const phoneHref = phone.replace(/[^+\\d]/g, "");
       const phoneHtml = phone ? `<a class="route-link" href="tel:${escHtml(phoneHref)}">📞 تلفن: ${escHtml(phone)}</a>` : "";
       const emailHtml = email ? `<a class="route-link" href="mailto:${escHtml(email)}">✉️ ایمیل: ${escHtml(email)}</a>` : "";
-      meta.body = `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><p style="margin:14px 0;padding:12px 14px;border-right:3px solid var(--accent);background:var(--bg);border-radius:8px;"><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت محصولات به دلار درج شده است؛ مبلغ نهایی سفارش برای خریداران داخل ایران بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p><div class="route-links">${phoneHtml}${emailHtml}<a class="route-link" href="https://www.instagram.com/nixbuilds.ir/" target="_blank" rel="noopener noreferrer">📷 Instagram: @nixbuilds.ir</a><a class="route-link" href="https://www.instagram.com/nixbuilds.ir/" target="_blank" rel="noopener noreferrer">📷 Instagram: @nixbuilds.ir</a><a class="route-link" href="/#all" data-filter-link="ALL">🛍️ مشاهده محصولات</a></div><h2>ثبت سفارش سفارشی</h2><p>برای سفارش‌های NIX-CUSTOM یا قطعات خودرو در NIX-AUTO، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و هزینه بررسی شود.</p><h2>ثبت سفارش محصولات موجود</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید درخواست سفارش را ارسال کنید.</p>`;
+      meta.body = `<p>برای پرسش درباره محصول، رنگ، مشخصات، قیمت یا ثبت سفارش می‌توانید از اطلاعات تماس زیر استفاده کنید.</p><p style="margin:14px 0;padding:12px 14px;border-right:3px solid var(--accent);background:var(--bg);border-radius:8px;"><strong>توضیح قیمت:</strong> به‌دلیل نوسانات نرخ دلار، قیمت محصولات به دلار درج شده است؛ مبلغ نهایی سفارش برای خریداران داخل ایران بر اساس نرخ لحظه‌ای دلار هنگام ثبت سفارش محاسبه می‌شود.</p><div class="nix-contact-grid" id="nixContactMethods"><a class="nix-contact-method" data-contact-method="phone" href="tel:+989030287529" aria-label="تماس صوتی" title="تماس صوتی"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.08 3h3a2 2 0 0 1 2 1.72l.57 3a2 2 0 0 1-.57 1.72L8.2 11.3a16 16 0 0 0 4.5 4.5l1.86-1.88a2 2 0 0 1 1.72-.57l3 .57A2 2 0 0 1 22 16.92z"/></svg><span data-contact-label="phone">تماس صوتی</span></a><a class="nix-contact-method" data-contact-method="sms" href="sms:+989030287529" aria-label="پیامک" title="پیامک"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3H13a8.5 8.5 0 0 1 8 8v.5z"/><path d="M8 11h9M8 14h6"/></svg><span data-contact-label="sms">پیامک</span></a><a class="nix-contact-method" data-contact-method="email" href="mailto:info@nixbuilds.ir" aria-label="ایمیل" title="ایمیل"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg><span data-contact-label="email">ایمیل</span></a><a class="nix-contact-method" data-contact-method="instagram" href="https://www.instagram.com/nixbuilds.ir/" aria-label="اینستاگرام" title="اینستاگرام" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg><span data-contact-label="instagram">اینستاگرام</span></a></div><h2>ثبت سفارش سفارشی</h2><p>برای سفارش‌های NIX-CUSTOM یا قطعات خودرو در NIX-AUTO، تصویر، ابعاد یا فایل سه‌بعدی قطعه را ارسال کنید تا امکان ساخت و هزینه بررسی شود.</p><h2>ثبت سفارش محصولات موجود</h2><p>در صفحه محصول، کالا را به سبد اضافه کنید و از بخش سبد خرید درخواست سفارش را ارسال کنید.</p>`;
     }
     const schema=safeJson({"@context":"https://schema.org","@type":"WebPage","name":meta.title,"description":meta.description,"url":`${SITE_URL}${pathname}`,"isPartOf":{"@type":"WebSite","name":"NIX-BUILDS","url":SITE_URL+"/"}});
     return routeShell(source,meta,meta.body,pathname,schema);
@@ -299,13 +299,15 @@ function relatedLinksHtml(related) {
 
 function decodeImageData(value) {
   if (!value) return null;
-  const s = String(value);
+  const s = String(value).trim();
+  if (!s) return null;
   let mime = 'image/jpeg';
   let b64 = s;
-  const m = s.match(/^data:([^;,]+);base64,(.*)$/s);
+  const m = s.match(/^data:([^;,]+);base64,(.*)$/is);
   if (m) { mime = m[1] || mime; b64 = m[2]; }
   try {
-    const bin = atob(b64.replace(/\s/g, ''));
+    b64=b64.replace(/\s/g,'').replace(/-/g,'+').replace(/_/g,'/');
+    const bin = atob(b64);
     const bytes = new Uint8Array(bin.length);
     for (let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
     return {bytes,mime};
@@ -323,7 +325,8 @@ async function productImageResponse(id, index, request) {
   let gallery=[];
   try { gallery=Array.isArray(p.image_gallery)?p.image_gallery:JSON.parse(p.image_gallery||'[]'); } catch {}
   const n=Math.max(0,Number(index)||0);
-  const value=n===0?(p.image_data||gallery[0]):gallery[n-1];
+  const primary = p.image_data || gallery[0];
+  const value=n===0?primary:(p.image_data ? gallery[n-1] : gallery[n]);
   if(!value) return new Response('Image not found',{status:404,headers:{'cache-control':'no-store'}});
   if(/^https?:\/\//i.test(String(value))){
     try { const r=await fetch(value); if(!r.ok)return new Response('Image unavailable',{status:502}); const h=new Headers(r.headers); h.set('cache-control','public,max-age=86400,s-maxage=604800'); const response=new Response(r.body,{status:r.status,headers:h}); try { await cache.put(cacheKey,response.clone()); } catch {} return response; } catch { return new Response('Image unavailable',{status:502}); }
@@ -349,7 +352,7 @@ function injectProductSEO(html, p, related = []) {
   let galleryCount = 0;
   try { galleryCount = (Array.isArray(p.image_gallery) ? p.image_gallery : JSON.parse(p.image_gallery || "[]")).filter(Boolean).length; } catch {}
   clientProduct.image_endpoint = imageEndpoint;
-  clientProduct.image_count = 1 + galleryCount;
+  clientProduct.image_count = (p.image_data ? 1 : 0) + galleryCount || 1;
   const productJson = safeJson(clientProduct);
 
   const replacements = [
